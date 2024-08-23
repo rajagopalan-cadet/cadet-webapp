@@ -24,7 +24,7 @@ const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; 
 async function createRecord() {
     const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // Replace with your Salesforce object API name
     const recordData = {
-        Name: document.getElementById("name").value,
+        FirstName: document.getElementById("name").value,
         Email: document.getElementById("email").value // Replace Email__c with the actual field API name in Salesforce
     };
 
