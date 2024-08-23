@@ -22,10 +22,10 @@ const accessToken = '00DC1000000P5Nt!AQEAQJUAT7njCVqFrjx_dwnH93f3jNcsSJjISLGTj53
 const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; // Replace with your actual instance URL
 
 async function createRecord() {
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // Replace with your Salesforce object API name
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // API endpoint for Contact
     const recordData = {
         FirstName: document.getElementById("name").value,
-        Email: document.getElementById("email").value // Replace Email__c with the actual field API name in Salesforce
+        Email: document.getElementById("email").value
     };
 
     try {
@@ -38,10 +38,11 @@ async function createRecord() {
         console.log("Record created:", response.data);
         alert("Record successfully created in Salesforce!");
     } catch (error) {
-        console.error("Error creating record:", error);
+        console.error("Error creating record:", error.response ? error.response.data : error.message);
         alert("There was an error creating the record. Please check the console for details.");
     }
 }
+
 
 document.getElementById("userForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent default form submission behavior
