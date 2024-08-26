@@ -42,7 +42,7 @@ document.getElementById("userForm").addEventListener("submit", async function(ev
 
 async function fetchTrainerDetails() {
     const trainerId = document.getElementById("trainerId").value;
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Replace Contact with your Salesforce object name
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`; // Replace Contact with your Salesforce object name
 
     try {
         const response = await axios.get(url, {
