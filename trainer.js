@@ -22,7 +22,13 @@ async function fetchTrainerDetails() {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch trainer details: ${response.statusText}`);
+            const errorData = await response.json();
+            let errorMessage = `Error ${response.errorCode}: ${response.message}`;
+            if (response.status === 401) {
+                errorMessage += ` - ${errorData.errorCode || 'Unauthorized access or Session Expired'}`;
+            }
+            alert(errorMessage);
+            return;
         }
 
         const data = await response.json();
