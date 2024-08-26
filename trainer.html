@@ -1,216 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Trainer Details</title>
-				<link rel="stylesheet" href="style.css">
-				</head>
-				<body>
-					<div class="container">
-						<h1>Trainer Details</h1>
-						<form id="trainerForm">
-							<label for="trainerId">Trainer ID:</label>
-							<input type="text" id="trainerId" name="trainerId" required>
-							<button type="button" onclick="fetchTrainerDetails()">Fetch Trainer Details</button>
-							<br>
-								<br>
-									<div id="trainerDetails">
-										<!-- Trainer ID and CADET Official Email -->
-										<div class="section">
-											<h2>Basic Information</h2>
-											<div class="two-columns">
-												<div class="column">
-													<label for="cadetTrainerId">CADET Trainer ID:</label>
-													<input type="text" id="cadetTrainerId" name="cadetTrainerId" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="cadetOfficialEmail">CADET Official Email:</label>
-													<input type="email" id="cadetOfficialEmail" name="cadetOfficialEmail" disabled><br><br>
-												</div>
-											</div>
-										</div>
-										<!-- Name Fields -->
-										<div class="section">
-											<h2>Name</h2>
-											<div class="two-columns">
-												<div class="column">
-													<label for="salutation">Salutation:</label>
-													<input type="text" id="salutation" name="salutation" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="firstName">First Name:</label>
-													<input type="text" id="firstName" name="firstName" disabled><br><br>
-												</div>
-											</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="lastName">Last Name:</label>
-													<input type="text" id="lastName" name="lastName" disabled><br><br>
-												</div>
-											</div>
-										</div>
-										<!-- Contact Fields -->
-										<div class="section">
-											<h2>Basic Information</h2>
-											<div class="two-columns">
-													<div class="column">
-														<label for="birthdate">Birthdate:</label>
-														<input type="date" id="birthdate" name="birthdate" disabled><br><br>
-													</div>
-													<div class="column">
-														<label for="gender">Gender:</label>
-														<input type="text" id="gender" name="gender" disabled><br><br>
-													</div>													
-												</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="mobilePhone">Mobile Number:</label>
-													<input type="text" id="mobilePhone" name="mobilePhone" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="otherPhone">Alternate Number:</label>
-													<input type="text" id="otherPhone" name="otherPhone" disabled><br><br>
-												</div>
-											</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="email">Email:</label>
-													<input type="email" id="email" name="email" disabled><br><br>
-												</div>
-												<div class="column">
-														<label for="educationalQualification">Educational Qualification:</label>
-														<input type="text" id="educationalQualification" name="educationalQualification" disabled><br><br>
-													</div>
-											</div>
-										</div>
-										<!-- Address Fields -->
-										<div class="section">
-											<h2>Address</h2>
-											<div class="two-columns">
-												<div class="column">
-													<label for="mailingStreet">Mailing Street:</label>
-													<input type="text" id="mailingStreet" name="mailingStreet" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="mailingPostalCode">Mailing Postal Code:</label>
-													<input type="text" id="mailingPostalCode" name="mailingPostalCode" disabled><br><br>
-												</div>
-											</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="mailingCountry">Mailing Country:</label>
-													<input type="text" id="mailingCountry" name="mailingCountry" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="currentCity">Current City:</label>
-													<input type="text" id="currentCity" name="currentCity" disabled><br><br>
-												</div>
-											</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="state">State:</label>
-													<input type="text" id="state" name="state" disabled><br><br>
-												</div>
-											</div>
-										</div>
-										<!-- CADET Training Fields -->
-										<div class="section">
-											<h2>Training History</h2>
-											<div class="two-columns">
-												<div class="column">
-													<label for="certificationStatus">Certification Status:</label>
-													<input type="text" id="certificationStatus" name="certificationStatus" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="numberOfCampsThisFY">Number of Camps This FY:</label>
-													<input type="number" id="numberOfCampsThisFY" name="numberOfCampsThisFY" disabled><br><br>
-												</div>
-											</div>
-											<div class="two-columns">
-												<div class="column">
-													<label for="numberOfCamps">Number of Camps:</label>
-													<input type="number" id="numberOfCamps" name="numberOfCamps" disabled><br><br>
-												</div>
-												<div class="column">
-													<label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
-													<input type="number" id="numberOfCampsAsLeadTrainer" name="numberOfCampsAsLeadTrainer" disabled><br><br>
-												</div>
-											</div>
-											<!-- Profession Related Fields -->
-											<div class="section">
-												<h2>Profession</h2>
-												<div class="two-columns">
-													<div class="column">
-														<label for="profession">Profession:</label>
-														<input type="text" id="profession" name="profession" disabled><br><br>
-													</div>
-												</div>
-												<div class="two-columns">
-													<div class="column">
-														<label for="employerName">Employer Name:</label>
-														<input type="text" id="employerName" name="employerName" disabled><br><br>
-													</div>
-													<div class="column">
-														<label for="jobTitle">Job Title:</label>
-														<input type="text" id="jobTitle" name="jobTitle" disabled><br><br>
-													</div>
-												</div>
-											</div>
-											<!-- NCC Related Fields -->
-											<div class="section">
-												<h2>NCC Information</h2>
-												<div class="two-columns">
-													<div class="column">
-														<label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
-														<input type="text" id="nccDirectorateUnitEtc" name="nccDirectorateUnitEtc" disabled><br><br>
-													</div>
-													<div class="column">
-														<label for="nccDirectorate">NCC Directorate:</label>
-														<input type="text" id="nccDirectorate" name="nccDirectorate" disabled><br><br>
-													</div>
-												</div>
-												<div class="two-columns">
-													<div class="column">
-														<label for="nccWing">NCC Wing:</label>
-														<input type="text" id="nccWing" name="nccWing" disabled><br><br>
-													</div>
-												</div>
-												<div class="two-columns">
-													<div class="column">
-														<label for="yepYear">YEP Year:</label>
-														<input type="text" id="yepYear" name="yepYear" disabled><br><br>
-													</div>
-												</div>
-												<div class="two-columns">
-													<div class="column">
-														<label for="yepCountry">YEP Country:</label>
-														<input type="text" id="yepCountry" name="yepCountry" disabled><br><br>
-													</div>
-												</div>
-											</div>
-											<!-- Other Fields -->
-											<div class="section">
-												<h2>Other Information</h2>							
-												<div class="two-columns">
-													<div class="column">
-														<label for="isExpamember">Is EXPA Member:</label>
-														<input type="text" id="isExpamember" name="isExpamember" disabled><br><br>
-													</div>
-													<div class="column">
-														<label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
-														<input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" disabled><br><br>
-													</div>
-												</div>
-											</div>
-											<button type="button" onclick="editDetails()">Edit</button>
-											<button type="button" onclick="saveDetails()" style="display:none;" id="saveButton">Save</button>
-										</div>
-									</form>
-								</div>
-								<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="trainer.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Details</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin: 0;
+        }
+        .section label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .section input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .two-columns {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trainer Details</h1>
+        <form id="trainerForm">
+            <label for="trainerId">Trainer ID:</label>
+            <input type="text" id="trainerId" name="trainerId" required>
+            <button type="button" onclick="fetchTrainerDetails()">Fetch Trainer Details</button>
+            <br><br>
 
-							</body>
-						</html>
+            <div id="trainerDetails">
+                <!-- Trainer ID and CADET Official Email -->
+                <div class="section">
+                    <h2>Basic Information</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="cadetTrainerId">CADET Trainer ID:</label>
+                            <input type="text" id="cadetTrainerId" name="cadetTrainerId" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="cadetOfficialEmail">CADET Official Email:</label>
+                            <input type="email" id="cadetOfficialEmail" name="cadetOfficialEmail" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Name Fields -->
+                <div class="section">
+                    <h2>Name</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="salutation">Salutation:</label>
+                            <input type="text" id="salutation" name="salutation" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Fields -->
+                <div class="section">
+                    <h2>Contact Information</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="birthdate">Birthdate:</label>
+                            <input type="date" id="birthdate" name="birthdate" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="gender">Gender:</label>
+                            <input type="text" id="gender" name="gender" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="mobilePhone">Mobile Number:</label>
+                            <input type="text" id="mobilePhone" name="mobilePhone" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="otherPhone">Alternate Number:</label>
+                            <input type="text" id="otherPhone" name="otherPhone" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="educationalQualification">Educational Qualification:</label>
+                            <input type="text" id="educationalQualification" name="educationalQualification" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Fields -->
+                <div class="section">
+                    <h2>Address</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="mailingStreet">Mailing Street:</label>
+                            <input type="text" id="mailingStreet" name="mailingStreet" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="mailingPostalCode">Mailing Postal Code:</label>
+                            <input type="text" id="mailingPostalCode" name="mailingPostalCode" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="mailingCountry">Mailing Country:</label>
+                            <input type="text" id="mailingCountry" name="mailingCountry" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="currentCity">Current City:</label>
+                            <input type="text" id="currentCity" name="currentCity" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="state">State:</label>
+                            <input type="text" id="state" name="state" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training History -->
+                <div class="section">
+                    <h2>Training History</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="certificationStatus">Certification Status:</label>
+                            <input type="text" id="certificationStatus" name="certificationStatus" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="numberOfCampsThisFY">Number of Camps This FY:</label>
+                            <input type="number" id="numberOfCampsThisFY" name="numberOfCampsThisFY" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="numberOfCamps">Number of Camps:</label>
+                            <input type="number" id="numberOfCamps" name="numberOfCamps" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
+                            <input type="number" id="numberOfCampsAsLeadTrainer" name="numberOfCampsAsLeadTrainer" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profession Related Fields -->
+                <div class="section">
+                    <h2>Profession</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="profession">Profession:</label>
+                            <input type="text" id="profession" name="profession" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="employerName">Employer Name:</label>
+                            <input type="text" id="employerName" name="employerName" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="jobTitle">Job Title:</label>
+                            <input type="text" id="jobTitle" name="jobTitle" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NCC Related Fields -->
+                <div class="section">
+                    <h2>NCC Information</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
+                            <input type="text" id="nccDirectorateUnitEtc" name="nccDirectorateUnitEtc" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="nccDirectorate">NCC Directorate:</label>
+                            <input type="text" id="nccDirectorate" name="nccDirectorate" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="nccWing">NCC Wing:</label>
+                            <input type="text" id="nccWing" name="nccWing" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="yepYear">YEP Year:</label>
+                            <input type="text" id="yepYear" name="yepYear" disabled><br><br>
+                        </div>
+                    </div>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="yepCountry">YEP Country:</label>
+                            <input type="text" id="yepCountry" name="yepCountry" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Fields -->
+                <div class="section">
+                    <h2>Other Information</h2>
+                    <div class="two-columns">
+                        <div class="column">
+                            <label for="isExpamember">Is EXPA Member:</label>
+                            <input type="text" id="isExpamember" name="isExpamember" disabled><br><br>
+                        </div>
+                        <div class="column">
+                            <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
+                            <input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="editDetails()">Edit</button>
+                <button type="button" onclick="saveDetails()" style="display:none;" id="saveButton">Save</button>
+            </div>
+        </form>
+    </div>
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="trainer.js"></script>
+</body>
+</html>
