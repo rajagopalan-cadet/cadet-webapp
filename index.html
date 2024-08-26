@@ -6,11 +6,18 @@
     <title>CADET Web App</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <style>
+        h1 {
+            margin-bottom: 20px; /* Adjust this value to change the space after the title */
+        }
+        h2 {
+            margin-top: 20px; /* Adjust this value to change the space before the user details */
+        }
+    </style>
 </head>
 <body>
     <h1>CADET Web App</h1>
-    <br>
+
     <form id="userForm">
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstname" required><br><br>
@@ -23,7 +30,7 @@
     
         <button type="submit">Submit</button>
     </form>
-    <br>
+    
     <h2>User Details</h2>
     <p id="userDetails"></p>  
     <script src="script.js"></script>
