@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.png" type="image/x-icon">
     <style>
-        /* Existing styling from your template */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -26,12 +25,14 @@
             top: 0;
             z-index: 1000;
         }
+
         header a {
             display: flex;
             align-items: center;
             text-decoration: none;
             color: white;
         }
+
         header img {
             width: 60px;
             height: 60px;
@@ -56,7 +57,7 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center; /* Center-align the title and button */
+            text-align: center;
         }
 
         .form-container h2 {
@@ -66,7 +67,7 @@
 
         .form-group {
             margin-bottom: 15px;
-            text-align: left; /* Align form elements to the left */
+            text-align: left;
         }
 
         .form-group label {
@@ -76,7 +77,7 @@
         }
 
         .form-group input, .form-group select {
-            width: calc(100% - 20px); /* Adjust width to fit within container */
+            width: calc(100% - 20px);
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -100,13 +101,14 @@
             display: flex;
             gap: 20px;
             justify-content: left;
-            padding: 10px 0; /* Padding around radio buttons */
+            padding: 10px 0;
         }
 
         .radio-group label {
             display: inline-flex;
             align-items: center;
             margin-right: 20px;
+            padding: 10px;
         }
 
         footer {
@@ -136,24 +138,20 @@
             </div>
             <div class="form-group">
                 <label style="display: inline-block; width: 200px;">Select Document Type:</label>
-                <div class="radio-group" style="display: inline-block; vertical-align: middle;">
-                    <label style="margin-right: 20px; padding: 10px;">
-                        <input type="radio" id="letter" name="documentType" value="letter" style="margin-right: 5px;">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" id="letter" name="documentType" value="letter">
                         Letter
                     </label>
-                    <label style="padding: 10px;">
-                        <input type="radio" id="certificate" name="documentType" value="certificate" style="margin-right: 5px;">
+                    <label>
+                        <input type="radio" id="certificate" name="documentType" value="certificate">
                         Certificate
                     </label>
                 </div>
             </div>
-
-            
-            
             <div class="form-group" style="text-align: center;">
-                <button onclick="generateDocument()">Generate Document</button>
+                <button id="generateButton">Generate Document</button>
             </div>
-            
         </div>
     </main>
 
