@@ -20,7 +20,7 @@ async function fetchTrainerDetails() {
             throw new Error(`Failed to fetch trainer details: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const result = await response.json();
         const data = result.records[0];
         salesforceId = data.Id;
         populateFields(data);
