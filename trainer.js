@@ -154,7 +154,13 @@ async function saveChanges() {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to save changes: ${response.statusText}`);
+            const errorData = await response.json();
+            let errorMessage = `Error ${response.errorCode}: ${response.message}`;
+            if (response.status === 401) {
+                errorMessage += ` - ${errorData.message || 'Unauthorized access or Session Expired'}`;
+            }
+            alert(errorMessage);
+            return;
         }
 
         alert('Changes saved successfully!');
