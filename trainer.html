@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Trainer Details</h1>
+    <form id="trainerForm">
+        <label for="trainerId">Trainer ID:</label>
+        <input type="text" id="trainerId" name="trainerId" required>
+        <button type="button" onclick="fetchTrainerDetails()">Fetch Trainer Details</button>
+        <br><br>
+        <div id="trainerDetails">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" disabled><br><br>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" disabled><br><br>
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="Email" disabled><br><br>
+            <button type="button" onclick="editDetails()">Edit</button>
+            <button type="button" onclick="saveDetails()" style="display:none;" id="saveButton">Save</button>
+        </div>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
