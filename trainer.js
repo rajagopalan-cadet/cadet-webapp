@@ -20,8 +20,7 @@ async function fetchTrainerDetails() {
             throw new Error(`Failed to fetch trainer details: ${response.statusText}`);
         }
 
-        const result = await response.json();
-        const data = result.records[0];
+        const data = await response.json();
         salesforceId = data.Id;
         populateFields(data);
     } catch (error) {
@@ -32,6 +31,7 @@ async function fetchTrainerDetails() {
 }
 
 function populateFields(data) {
+    document.getElementById('salesforceId').value = data.Id || '';
     document.getElementById('cadetTrainerId').value = data.CADET_Trainer_ID__c || '';
     document.getElementById('cadetOfficialEmail').value = data.CADET_Official_Email__c || '';
     document.getElementById('salutation').value = data.Salutation || '';
@@ -106,6 +106,7 @@ async function saveChanges() {
         return;
     }
     const data = {
+        Id: document.getElementById('Id').value,
         CADET_Trainer_ID__c: document.getElementById('cadetTrainerId').value,
         CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
         Salutation: document.getElementById('salutation').value,
