@@ -47,6 +47,9 @@ async function fetchTrainerDetails() {
             document.getElementById("numberOfCamps").value = trainer.Number_of_Camps__c;
             document.getElementById("numberOfCampsAsLeadTrainer").value = trainer.Number_of_Camps_as_Lead_Trainer__c;
             document.getElementById("numberOfCampsThisFY").value = trainer.Number_of_Camps_this_FY__c;
+            document.getElementById("firstname").value = trainer.FirstName;
+            document.getElementById("lastname").value = trainer.LastName;
+            
 
             // Make fields read-only initially
             document.querySelectorAll('#trainerDetails input').forEach(input => input.disabled = true);
