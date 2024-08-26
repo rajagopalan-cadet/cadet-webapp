@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const fetchButton = document.getElementById("fetchButton");
-    const editButton = document.getElementById("editButton"));
+    const editButton = document.getElementById("editButton");
     const saveButton = document.getElementById("saveButton");
     const cancelButton = document.getElementById("cancelButton");
 
