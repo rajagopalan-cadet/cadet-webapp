@@ -39,3 +39,63 @@ document.getElementById("userForm").addEventListener("submit", async function(ev
         alert("There was an error creating the record. Please check the console for details.");
     }
 });
+
+async function fetchTrainerDetails() {
+    const trainerId = document.getElementById("trainerId").value;
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Replace Contact with your Salesforce object name
+
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const trainer = response.data;
+        document.getElementById("trainerName").value = trainer.Name;
+        document.getElementById("trainerEmail").value = trainer.Email__c; // Adjust field names based on your Salesforce object
+
+        // Enable the fields and show the Save button
+        document.getElementById("trainerName").disabled = false;
+        document.getElementById("trainerEmail").disabled = false;
+        document.getElementById("saveButton").style.display = 'inline';
+    } catch (error) {
+        console.error("Error fetching trainer details:", error);
+        alert("Error fetching trainer details. Check the console for details.");
+    }
+}
+
+function editDetails() {
+    document.getElementById("trainerName").disabled = false;
+    document.getElementById("trainerEmail").disabled = false;
+    document.getElementById("saveButton").style.display = 'inline';
+}
+
+async function saveDetails() {
+    const trainerId = document.getElementById("trainerId").value;
+    const updatedData = {
+        Name: document.getElementById("trainerName").value,
+        Email__c: document.getElementById("trainerEmail").value // Adjust field names based on your Salesforce object
+    };
+
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`; // Replace Contact with your Salesforce object name
+
+    try {
+        const response = await axios.patch(url, updatedData, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        alert("Trainer details updated successfully!");
+        document.getElementById("saveButton").style.display = 'none';
+        document.getElementById("firstname").disabled = true;
+        document.getElementById("lastname").disabled = true;
+        document.getElementById("email").disabled = true;
+    } catch (error) {
+        console.error("Error saving trainer details:", error);
+        alert("Error saving trainer details. Check the console for details.");
+    }
+}
