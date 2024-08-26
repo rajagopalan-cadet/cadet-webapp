@@ -1,247 +1,137 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const fetchButton = document.querySelector("button[onclick='fetchTrainerDetails()']");
-    const editButton = document.querySelector("button[onclick='editDetails()']");
-    const saveButton = document.getElementById("saveButton");
-    const cancelButton = document.getElementById("cancelButton");
+ async function fetchTrainerDetails() {
+            const trainerId = document.getElementById('trainerId').value;
+            const pattern = /^CT-\d{3}$/;
 
-    if (fetchButton) {
-        fetchButton.addEventListener("click", fetchTrainerDetails);
-    } else {
-        console.error("Fetch button not found.");
-    }
-
-    if (editButton) {
-        editButton.addEventListener("click", editDetails);
-    } else {
-        console.error("Edit button not found.");
-    }
-
-    if (saveButton) {
-        saveButton.addEventListener("click", saveDetails);
-    } else {
-        console.error("Save button not found.");
-    }
-
-    if (cancelButton) {
-        cancelButton.addEventListener("click", cancelEdit);
-    } else {
-        console.error("Cancel button not found.");
-    }
-
-    populateSelectOptions(); // Populate select options on load
-});
-
-async function fetchTrainerDetails() {
-    const trainerId = document.getElementById("trainerId").value;
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
-
-    try {
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
+            if (!pattern.test(trainerId)) {
+                alert('Please enter a valid CADET Trainer ID in the format CT-123');
+                return;
             }
-        });
 
-        const trainer = response.data;
+            try {
+                const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQNUUA.dEjoN9ZqW4pvLVB45E.TN_6YEwdJOryaZqQXRowYL.FhnHPKkJmHtCUj9MY173jJD0.wd9YbRCn8bkIOW.G7WA',
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-        if (trainer) {
-            // Populate fields with fetched data
-            document.getElementById("salutation").value = trainer.Salutation || '';
-            document.getElementById("mailingStreet").value = trainer.MailingStreet || '';
-            document.getElementById("mailingPostalCode").value = trainer.MailingPostalCode || '';
-            document.getElementById("mailingCountry").value = trainer.MailingCountry || '';
-            document.getElementById("mobilePhone").value = trainer.MobilePhone || '';
-            document.getElementById("otherPhone").value = trainer.OtherPhone || '';
-            document.getElementById("birthdate").value = trainer.Birthdate || '';
-            document.getElementById("nccDirectorateUnitEtc").value = trainer.NCC_Directorate_Unit_Etc__c || '';
-            document.getElementById("nccDirectorate").value = trainer.NCC_Directorate__c || '';
-            document.getElementById("educationalQualification").value = trainer.Educational_Quaification__c || '';
-            document.getElementById("gender").value = trainer.Gender__c || '';
-            document.getElementById("yepYear").value = trainer.YEP_Year__c || '';
-            document.getElementById("yepCountry").value = trainer.YEP_Country__c || '';
-            document.getElementById("profession").value = trainer.Profession__c || '';
-            document.getElementById("nccaaMembershipNumber").value = trainer.NCCAA_Membership_Number__c || '';
-            document.getElementById("nccWing").value = trainer.NCC_Wing__c || '';
-            document.getElementById("cadetTrainerId").value = trainer.CADET_Trainer_ID__c || '';
-            document.getElementById("isExpamember").value = trainer.Is_EXPA_Member__c || '';
-            document.getElementById("certificationStatus").value = trainer.Certification_Status__c || '';
-            document.getElementById("cadetOfficialEmail").value = trainer.CADET_Official_Email__c || '';
-            document.getElementById("currentCity").value = trainer.Current_City__c || '';
-            document.getElementById("state").value = trainer.State__c || '';
-            document.getElementById("employerName").value = trainer.Employer_Name__c || '';
-            document.getElementById("jobTitle").value = trainer.Job_Title__c || '';
-            document.getElementById("numberOfCamps").value = trainer.Number_of_Camps__c || '';
-            document.getElementById("numberOfCampsAsLeadTrainer").value = trainer.Number_of_Camps_as_Lead_Trainer__c || '';
-            document.getElementById("numberOfCampsThisFY").value = trainer.Number_of_Camps_this_FY__c || '';
-            document.getElementById("firstname").value = trainer.FirstName || '';
-            document.getElementById("lastname").value = trainer.LastName || '';
+                if (!response.ok) {
+                    throw new Error('Failed to fetch trainer details');
+                }
 
-            // Make fields read-only initially
-            document.querySelectorAll('#trainerDetails input').forEach(input => input.disabled = true);
-
-            // Make fields non-editable where needed
-            document.getElementById("cadetTrainerId").disabled = true;
-            document.getElementById("cadetOfficialEmail").disabled = true;
-            document.getElementById("isExpamember").disabled = true;
-            document.getElementById("certificationStatus").disabled = true;
-            document.getElementById("currentCity").disabled = true;
-            document.getElementById("state").disabled = true;
-            document.getElementById("employerName").disabled = true;
-            document.getElementById("jobTitle").disabled = true;
-
-            // Show the Save button
-            document.getElementById("saveButton").style.display = 'none';
-            document.getElementById("cancelButton").style.display = 'none'; // Hide cancel button initially
-        } else {
-            alert("No trainer found with the given ID.");
-        }
-    } catch (error) {
-        console.error("Error fetching trainer details:", error);
-        alert("Error fetching trainer details. Check the console for details.");
-    }
-}
-
-function editDetails() {
-    document.querySelectorAll('#trainerDetails input').forEach(input => input.disabled = false);
-    document.getElementById("saveButton").style.display = 'inline';
-    document.getElementById("cancelButton").style.display = 'inline'; // Show cancel button
-}
-
-function cancelEdit() {
-    fetchTrainerDetails(); // Re-fetch the details to revert any changes
-    document.getElementById("saveButton").style.display = 'none';
-    document.getElementById("cancelButton").style.display = 'none'; // Hide cancel button
-}
-
-function validateForm() {
-    const gender = document.getElementById("gender").value;
-    const birthdate = document.getElementById("birthdate").value;
-    const email = document.getElementById("cadetOfficialEmail").value;
-    const phone = document.getElementById("mobilePhone").value;
-
-    // Validate gender
-    if (!['Male', 'Female', 'Other'].includes(gender)) {
-        alert('Invalid gender value.');
-        return false;
-    }
-
-    // Validate birthdate
-    if (!birthdate) {
-        alert('Birthdate is required.');
-        return false;
-    }
-
-    // Validate email
-    const emailRegex = /^[\w.-]+@(gmail\.com|cadetprogram\.org)$/;
-    if (!emailRegex.test(email)) {
-        alert('Email must be @gmail.com or @cadetprogram.org.');
-        return false;
-    }
-
-    // Validate phone number
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phone)) {
-        alert('Mobile phone must be exactly 10 digits.');
-        return false;
-    }
-
-    return true;
-}
-
-async function saveDetails() {
-    if (!validateForm()) {
-        return;
-    }
-
-    const trainerId = document.getElementById("trainerId").value;
-    const updatedData = {
-        Salutation: document.getElementById("salutation").value,
-        MailingStreet: document.getElementById("mailingStreet").value,
-        MailingPostalCode: document.getElementById("mailingPostalCode").value,
-        MailingCountry: document.getElementById("mailingCountry").value,
-        MobilePhone: document.getElementById("mobilePhone").value,
-        OtherPhone: document.getElementById("otherPhone").value,
-        Birthdate: document.getElementById("birthdate").value,
-        NCC_Directorate_Unit_Etc__c: document.getElementById("nccDirectorateUnitEtc").value,
-        NCC_Directorate__c: document.getElementById("nccDirectorate").value,
-        Educational_Quaification__c: document.getElementById("educationalQualification").value,
-        Gender__c: document.getElementById("gender").value,
-        YEP_Year__c: document.getElementById("yepYear").value,
-        YEP_Country__c: document.getElementById("yepCountry").value,
-        Profession__c: document.getElementById("profession").value,
-        NCCAA_Membership_Number__c: document.getElementById("nccaaMembershipNumber").value,
-        NCC_Wing__c: document.getElementById("nccWing").value,
-        CADET_Trainer_ID__c: document.getElementById("cadetTrainerId").value,
-        Is_EXPA_Member__c: document.getElementById("isExpamember").value,
-        Certification_Status__c: document.getElementById("certificationStatus").value,
-        CADET_Official_Email__c: document.getElementById("cadetOfficialEmail").value,
-        Current_City__c: document.getElementById("currentCity").value,
-        State__c: document.getElementById("state").value,
-        Employer_Name__c: document.getElementById("employerName").value,
-        Job_Title__c: document.getElementById("jobTitle").value,
-        Number_of_Camps__c: document.getElementById("numberOfCamps").value,
-        Number_of_Camps_as_Lead_Trainer__c: document.getElementById("numberOfCampsAsLeadTrainer").value,
-        Number_of_Camps_this_FY__c: document.getElementById("numberOfCampsThisFY").value,
-        FirstName: document.getElementById("firstname").value,
-        LastName: document.getElementById("lastname").value,
-    };
-
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
-
-    try {
-        const response = await axios.patch(url, updatedData, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
+                const data = await response.json();
+                populateFields(data);
+            } catch (error) {
+                console.error('Error fetching trainer details:', error);
             }
-        });
-
-        if (response.status === 204) {
-            alert("Details updated successfully.");
-            document.getElementById("saveButton").style.display = 'none';
-            document.getElementById("cancelButton").style.display = 'none'; // Hide cancel button
-        } else {
-            alert("Error updating details.");
         }
-    } catch (error) {
-        console.error("Error updating details:", error);
-        alert("Error updating details. Check the console for details.");
-    }
-}
 
-function populateSelectOptions() {
-    const nccDirectorate = document.getElementById("nccDirectorate");
-    const nccWing = document.getElementById("nccWing");
-    const yepCountry = document.getElementById("yepCountry");
+        function populateFields(data) {
+            document.getElementById('cadetTrainerId').value = data.CADET_Trainer_ID__c || '';
+            document.getElementById('cadetOfficialEmail').value = data.CADET_Official_Email__c || '';
+            document.getElementById('salutation').value = data.Salutation || '';
+            document.getElementById('firstName').value = data.FirstName || '';
+            document.getElementById('lastName').value = data.LastName || '';
+            document.getElementById('birthdate').value = data.Birthdate || '';
+            document.getElementById('gender').value = data.Gender__c || '';
+            document.getElementById('mobilePhone').value = data.MobilePhone || '';
+            document.getElementById('otherPhone').value = data.OtherPhone || '';
+            document.getElementById('email').value = data.Email || '';
+            document.getElementById('educationalQualification').value = data.Educational_Qualification__c || '';
+            document.getElementById('mailingStreet').value = data.MailingStreet || '';
+            document.getElementById('mailingPostalCode').value = data.MailingPostalCode || '';
+            document.getElementById('mailingCountry').value = data.MailingCountry || '';
+            document.getElementById('currentCity').value = data.Current_City__c || '';
+            document.getElementById('state').value = data.State__c || '';
+            document.getElementById('certificationStatus').value = data.Certification_Status__c || '';
+            document.getElementById('numberOfCampsThisFY').value = data.Number_of_Camps_This_FY__c || '';
+            document.getElementById('numberOfCamps').value = data.Number_of_Camps__c || '';
+            document.getElementById('numberOfCampsAsLeadTrainer').value = data.Number_of_Camps_as_Lead_Trainer__c || '';
+            document.getElementById('profession').value = data.Profession__c || '';
+            document.getElementById('employerName').value = data.Employer_Name__c || '';
+            document.getElementById('jobTitle').value = data.Job_Title__c || '';
+            document.getElementById('nccDirectorateUnitEtc').value = data.NCC_Directorate_Unit_Etc__c || '';
+            document.getElementById('nccDirectorate').value = data.NCC_Directorate__c || '';
+            document.getElementById('nccWing').value = data.NCC_Wing__c || '';
+            document.getElementById('yepYear').value = data.YEP_Year__c || '';
+            document.getElementById('yepCountry').value = data.YEP_Country__c || '';
+            document.getElementById('nccaaMembershipNumber').value = data.NCCAA_Membership_Number__c || '';
 
-    if (nccDirectorate) {
-        const directorates = ["Andhra Pradesh", "Bihar & Jharkhand", "Delhi", "Gujarat", "Diu Daman & Dadra & Nagar Haveli", "Jammu & Kashmir", "Karnataka & Goa", "Kerala & Lakshadweep", "Madhya Pradesh & Chattishgarh", "Maharashtra", "North Eastern Region", "Orissa", "Punjab", "Haryana", "Himachal Pradesh & Chandigarh", "Rajasthan", "Tamil Nadu", "Pondicherry and Andaman & Nicobar Islands", "Uttar Pradesh", "Uttarakhand", "West Bengal & Sikkim"];
-        directorates.forEach(directorate => {
-            const option = document.createElement("option");
-            option.value = directorate;
-            option.textContent = directorate;
-            nccDirectorate.appendChild(option);
-        });
-    }
+            // Enable fields for editing
+            document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = false);
+            document.getElementById('editButton').style.display = 'none';
+            document.getElementById('cancelButton').style.display = 'inline';
+            document.getElementById('saveButton').style.display = 'inline';
+        }
 
-    if (nccWing) {
-        const wings = ["Army", "Navy", "Air Force"];
-        wings.forEach(wing => {
-            const option = document.createElement("option");
-            option.value = wing;
-            option.textContent = wing;
-            nccWing.appendChild(option);
-        });
-    }
+        function editMode() {
+            // Enable all fields for editing
+            document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = false);
+            document.getElementById('editButton').style.display = 'none';
+            document.getElementById('cancelButton').style.display = 'inline';
+            document.getElementById('saveButton').style.display = 'inline';
+        }
 
-    if (yepCountry) {
-        const countries = ["USA", "UK", "Canada", "Bangladesh", "Naval Cruise", "Singapore", "Maldives", "Russia", "Vietnam", "Sri Lanka", "Nepal", "Bhutan", "China", "Khazakstan"];
-        countries.forEach(country => {
-            const option = document.createElement("option");
-            option.value = country;
-            option.textContent = country;
-            yepCountry.appendChild(option);
-        });
-    }
-}
+        function cancelEdit() {
+            // Disable all fields and reset values
+            document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = true);
+            document.getElementById('editButton').style.display = 'inline';
+            document.getElementById('cancelButton').style.display = 'none';
+            document.getElementById('saveButton').style.display = 'none';
+        }
+
+        async function saveChanges() {
+            const trainerId = document.getElementById('trainerId').value;
+            const data = {
+                CADET_Trainer_ID__c: document.getElementById('cadetTrainerId').value,
+                CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
+                Salutation: document.getElementById('salutation').value,
+                FirstName: document.getElementById('firstName').value,
+                LastName: document.getElementById('lastName').value,
+                Birthdate: document.getElementById('birthdate').value,
+                Gender__c: document.getElementById('gender').value,
+                MobilePhone: document.getElementById('mobilePhone').value,
+                OtherPhone: document.getElementById('otherPhone').value,
+                Email: document.getElementById('email').value,
+                Educational_Qualification__c: document.getElementById('educationalQualification').value,
+                MailingStreet: document.getElementById('mailingStreet').value,
+                MailingPostalCode: document.getElementById('mailingPostalCode').value,
+                MailingCountry: document.getElementById('mailingCountry').value,
+                Current_City__c: document.getElementById('currentCity').value,
+                State__c: document.getElementById('state').value,
+                Certification_Status__c: document.getElementById('certificationStatus').value,
+                Number_of_Camps_This_FY__c: document.getElementById('numberOfCampsThisFY').value,
+                Number_of_Camps__c: document.getElementById('numberOfCamps').value,
+                Number_of_Camps_as_Lead_Trainer__c: document.getElementById('numberOfCampsAsLeadTrainer').value,
+                Profession__c: document.getElementById('profession').value,
+                Employer_Name__c: document.getElementById('employerName').value,
+                Job_Title__c: document.getElementById('jobTitle').value,
+                NCC_Directorate_Unit_Etc__c: document.getElementById('nccDirectorateUnitEtc').value,
+                NCC_Directorate__c: document.getElementById('nccDirectorate').value,
+                NCC_Wing__c: document.getElementById('nccWing').value,
+                YEP_Year__c: document.getElementById('yepYear').value,
+                YEP_Country__c: document.getElementById('yepCountry').value,
+                NCCAA_Membership_Number__c: document.getElementById('nccaaMembershipNumber').value
+            };
+
+            try {
+                const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQNUUA.dEjoN9ZqW4pvLVB45E.TN_6YEwdJOryaZqQXRowYL.FhnHPKkJmHtCUj9MY173jJD0.wd9YbRCn8bkIOW.G7WA',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save changes');
+                }
+
+                alert('Changes saved successfully!');
+                cancelEdit();
+            } catch (error) {
+                console.error('Error saving changes:', error);
+            }
+        }
