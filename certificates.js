@@ -1,6 +1,6 @@
 async function generateDocument() {
     const trainerId = document.getElementById('trainerId').value;
-    const documentType = document.getElementById('documentType').value;
+    const documentType = document.querySelector('input[name="documentType"]:checked').value;
 
     if (!trainerId) {
         alert('Please enter a valid CADET Trainer ID in the format CT-123');
@@ -20,8 +20,7 @@ async function generateDocument() {
     } catch (error) {
         console.error('Error fetching trainer details:', error);
         alert('Error generating document. Please try again.');
-    }
-}
+ 
 
 function generateCertificate(data) {
     const canvas = document.createElement('canvas');
