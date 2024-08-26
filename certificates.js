@@ -1,84 +1,62 @@
-document.getElementById('generateButton').addEventListener('click', generateDocument);
+document.getElementById('generateButton').addEventListener('click', async () => {
+    const trainerId = document.getElementById('trainerId').value;
+    const documentType = document.querySelector('input[name="documentType"]:checked').value;
 
-async function generateDocument() {
-    try {
-        const trainerId = document.getElementById('trainerId').value;
-
-        const selectedRadio = document.querySelector('input[name="documentType"]:checked');
-
-        if (!selectedRadio) {
-            alert('Please select a document type.');
-            return;
-        }
-
-        const documentType = selectedRadio.value;
-
-        if (!trainerId) {
-            alert('Please enter a valid CADET Trainer ID in the format CT-123');
-            return;
-        }
-
-        // Fetch trainer details using the function from trainer.js
-        const data = await fetchTrainerDetails();
-
-        if (documentType === 'certificate') {
-            generateCertificate(data);
-        } else {
-            // Generate letter content (to be implemented as needed)
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error generating document. Please try again.');
+    if (!trainerId) {
+        alert('Please enter the CADET Trainer ID.');
+        return;
     }
-}
 
-function generateCertificate(data) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    try {
+        const accessToken = '00DC1000000P5Nt!AQEAQFg3rUQiPVTVJMJD1Z3Q2OuiokN_djBDfJpF20rG2bmXmrWXWxCol_66PdmUeaBRgXlXUM8LlSkTg_O6OLr1c301sQL3'; // Replace with your actual Salesforce access token
+        const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; // Replace with your Salesforce instance URL
+        const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
+        const data = await response.json();
+
+        const { name, CADET_Trainer_ID__c, CTOP__c } = data;
+
+        // Generate the document
+        generateDocument(name, CADET_Trainer_ID__c, CTOP__c, documentType);
+    } catch (error) {
+        console.error('Error fetching trainer details:', error);
+    }
+});
+
+async function generateDocument(name, id, ctop, type) {
+    const templateUrl = 'trainer-certificate-template.png';
+    const response = await fetch(templateUrl);
+    const blob = await response.blob();
+
     const img = new Image();
+    img.src = URL.createObjectURL(blob);
 
-    img.onload = function() {
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
 
-        const placeholders = {
-            '{{full name}}': data.FirstName + ' ' + data.LastName,
-            '{{id}}': data.CADET_Trainer_ID__c,
-            '{{date}}': formatDate(new Date())
+        // Define text replacement positions
+        const replaceText = (text, x, y) => {
+            ctx.font = '24px Arial';  // Adjust font size as needed
+            ctx.fillStyle = 'black';
+            ctx.fillText(text, x, y);
         };
 
-        replaceTextOnImage(ctx, placeholders);
+        // Coordinates for text replacement
+        const coordinates = {
+            fullName: { x: 100, y: 200 },  // Adjust these coordinates as needed
+            id: { x: 100, y: 250 }
+        };
 
-        canvas.toBlob(function(blob) {
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `${data.CADET_Trainer_ID__c}-certificate.png`;
-            link.click();
-        });
+        replaceText(name, coordinates.fullName.x, coordinates.fullName.y);
+        replaceText(id, coordinates.id.x, coordinates.id.y);
+
+        // Create downloadable link
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `${type.toLowerCase()}_${id}.png`;
+        link.click();
     };
-
-    img.src = 'trainer-certificate-template.png'; // Path to your certificate template image
-}
-
-function replaceTextOnImage(ctx, placeholders) {
-    ctx.font = '24px Arial';
-    ctx.fillStyle = 'black';
-    ctx.textAlign = 'center';
-
-    const textPositions = {
-        '{{full name}}': { x: 300, y: 200 },
-        '{{id}}': { x: 300, y: 250 },
-        '{{date}}': { x: 300, y: 300 }
-    };
-
-    for (const [placeholder, text] of Object.entries(placeholders)) {
-        const { x, y } = textPositions[placeholder];
-        ctx.fillText(text, x, y);
-    }
-}
-
-function formatDate(date) {
-    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options).toUpperCase();
 }
