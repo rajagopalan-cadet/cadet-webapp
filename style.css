@@ -1,20 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f8ff;
-    margin: 0;
-    padding: 0;
+/* General Container Styling */
+.container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
 h1 {
-    color: #333;
+    text-align: center;
 }
 
-p {
-    font-size: 18px;
-    color: #666;
+/* Form Section Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section Styling */
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Label and Input Styling */
+.section label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.section input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+/* Two Column Layout Styling */
+.two-columns {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.column {
+    flex: 1;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .two-columns {
+        flex-direction: column;
+    }
 }
