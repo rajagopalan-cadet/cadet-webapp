@@ -1,3 +1,4 @@
+// Ensure config.js is included before this script to make instanceUrl and accessToken available
 document.addEventListener("DOMContentLoaded", function() {
     // Add event listeners to buttons
     document.querySelector("button[onclick='fetchTrainerDetails()']").addEventListener("click", fetchTrainerDetails);
@@ -7,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function fetchTrainerDetails() {
     const trainerId = document.getElementById("trainerId").value;
-    const url = `${instanceUrl}/services/data/v52.0/query?q=SELECT Id, FirstName, LastName, Email FROM Contact WHERE CADET_Trainer_ID__c = '${trainerId}'`; // SOQL query
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`; // Use the correct URL
 
     try {
         const response = await axios.get(url, {
@@ -17,10 +18,9 @@ async function fetchTrainerDetails() {
             }
         });
 
-        const records = response.data.records;
+        const trainer = response.data;
 
-        if (records.length > 0) {
-            const trainer = records[0];
+        if (trainer) {
             document.getElementById("firstname").value = trainer.FirstName;
             document.getElementById("lastname").value = trainer.LastName;
             document.getElementById("Email").value = trainer.Email;
@@ -54,39 +54,22 @@ async function saveDetails() {
         Email: document.getElementById("Email").value
     };
 
-    // Use a query to get the ID of the Contact with the external ID
-    const query = `SELECT Id FROM Contact WHERE CADET_Trainer_ID__c = '${trainerId}'`;
-    const queryUrl = `${instanceUrl}/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
+    // Use the correct URL for updating the record
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`; 
 
     try {
-        const queryResponse = await axios.get(queryUrl, {
+        await axios.patch(url, updatedData, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
 
-        const records = queryResponse.data.records;
-
-        if (records.length > 0) {
-            const recordId = records[0].Id;
-            const updateUrl = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${recordId}`;
-
-            await axios.patch(updateUrl, updatedData, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            alert("Trainer details updated successfully!");
-            document.getElementById("saveButton").style.display = 'none';
-            document.getElementById("firstname").disabled = true;
-            document.getElementById("lastname").disabled = true;
-            document.getElementById("Email").disabled = true;
-        } else {
-            alert("No trainer found with the given ID.");
-        }
+        alert("Trainer details updated successfully!");
+        document.getElementById("saveButton").style.display = 'none';
+        document.getElementById("firstname").disabled = true;
+        document.getElementById("lastname").disabled = true;
+        document.getElementById("Email").disabled = true;
     } catch (error) {
         console.error("Error saving trainer details:", error);
         alert("Error saving trainer details. Check the console for details.");
