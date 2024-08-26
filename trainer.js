@@ -106,7 +106,6 @@ async function saveChanges() {
         return;
     }
     const data = {
-        CADET_Trainer_ID__c: document.getElementById('cadetTrainerId').value,
         CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
         Salutation: document.getElementById('salutation').value,
         FirstName: document.getElementById('firstName').value,
@@ -122,10 +121,6 @@ async function saveChanges() {
         MailingCountry: document.getElementById('mailingCountry').value,
         Current_City__c: document.getElementById('currentCity').value,
         State__c: document.getElementById('state').value,
-        Certification_Status__c: document.getElementById('certificationStatus').value,
-        Number_of_Camps_This_FY__c: document.getElementById('numberOfCampsThisFY').value,
-        Number_of_Camps__c: document.getElementById('numberOfCamps').value,
-        Number_of_Camps_as_Lead_Trainer__c: document.getElementById('numberOfCampsAsLeadTrainer').value,
         Profession__c: document.getElementById('profession').value,
         Employer_Name__c: document.getElementById('employerName').value,
         Job_Title__c: document.getElementById('jobTitle').value,
