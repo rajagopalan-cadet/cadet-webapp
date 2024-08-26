@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const fetchButton = document.getElementById("fetchButton");
-    const editButton = document.getElementById("editButton");
+    const fetchButton = document.querySelector("button[onclick='fetchTrainerDetails()']");
+    const editButton = document.querySelector("button[onclick='editDetails()']");
     const saveButton = document.getElementById("saveButton");
     const cancelButton = document.getElementById("cancelButton");
 
@@ -33,12 +33,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function fetchTrainerDetails() {
     const trainerId = document.getElementById("trainerId").value;
-    const url = ${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}; // Correct URL
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
 
     try {
         const response = await axios.get(url, {
             headers: {
-                Authorization: Bearer ${accessToken},
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -187,12 +187,12 @@ async function saveDetails() {
         LastName: document.getElementById("lastname").value,
     };
 
-    const url = ${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}; // Correct URL
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
 
     try {
         const response = await axios.patch(url, updatedData, {
             headers: {
-                Authorization: Bearer ${accessToken},
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             }
         });
