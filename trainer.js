@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', (event) => {
 async function fetchTrainerDetails() {
     document.getElementById('trainerDetails').style.display = 'block';
     document.getElementById('editButton').style.display = 'inline-block';
@@ -40,7 +41,7 @@ async function fetchTrainerDetails() {
     }
     
 }
-
+});
 function populateFields(data) {
     document.getElementById('salesforceId').value = data.Id || '';
     document.getElementById('cadetTrainerId').value = data.CADET_Trainer_ID__c || '';
