@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const fetchButton = document.querySelector("button[onclick='fetchTrainerDetails()']");
-    const editButton = document.querySelector("button[onclick='editDetails()']");
+    const fetchButton = document.getElementById("fetchButton");
+    const editButton = document..getElementById("editButton"));
     const saveButton = document.getElementById("saveButton");
     const cancelButton = document.getElementById("cancelButton");
 
