@@ -3,7 +3,7 @@ function showMessage() {
     alert("Hello! You clicked the button!");
 }
 // Listen for the form submission
-document.getElementById("userForm").addEventListener("submit", function(event) {
+document.getElementById("userForm").addEventListener("submit", async function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
 
     // Get the input values
@@ -25,8 +25,8 @@ const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; 
 async function createRecord() {
     const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // API endpoint for Contact
     const recordData = {
-        First Name: document.getElementById("firstname").value,
-        Last Name: document.getElementById("lastame").value,
+        FirstName: document.getElementById("firstname").value,
+        LastName: document.getElementById("lastame").value,
         Email: document.getElementById("email").value
     };
 
