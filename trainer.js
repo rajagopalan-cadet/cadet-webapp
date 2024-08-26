@@ -1,4 +1,9 @@
 async function fetchTrainerDetails() {
+    document.getElementById('trainerDetails').style.display = 'block';
+    document.getElementById('editButton').style.display = 'inline-block';
+    document.getElementById('saveButton').style.display = 'none';
+    document.getElementById('cancelButton').style.display = 'none';
+    
     const trainerId = document.getElementById('trainerId').value;
     const pattern = /^CT-\d{3}$/;
 
