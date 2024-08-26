@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <form id="trainerForm">
+    <form id="trainerForm" action="#" method="post">
         <label for="trainerId">CADET Trainer ID:</label>
         <input type="text" id="trainerId" name="trainerId" pattern="CT-\d{3}" required>
         <button type="button" onclick="fetchTrainerDetails()">Fetch Details</button>
@@ -240,5 +240,6 @@
             </div>
         </div>
     </form>
-    </body>
+    <script src="trainer.js"></script> <!-- Make sure this path is correct -->
+</body>
 </html>
