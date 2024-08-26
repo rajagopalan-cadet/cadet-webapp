@@ -21,6 +21,7 @@ async function fetchTrainerDetails() {
         }
 
         const data = await response.json();
+        const data = result.records[0];
         salesforceId = data.Id;
         populateFields(data);
     } catch (error) {
@@ -98,7 +99,12 @@ function cancelEdit() {
 }
 
 async function saveChanges() {
-    
+    console.log('Salesforce ID:', salesforceId); // Debug log
+
+    if (!salesforceId) {
+        alert('No Salesforce ID found. Please fetch trainer details first.');
+        return;
+    }
     const data = {
         CADET_Trainer_ID__c: document.getElementById('cadetTrainerId').value,
         CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
@@ -132,7 +138,7 @@ async function saveChanges() {
     };
 
     try {
-        const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${salesforceId}`, {
+        const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${salesforceId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQNUUA.dEjoN9ZqW4pvLVB45E.TN_6YEwdJOryaZqQXRowYL.FhnHPKkJmHtCUj9MY173jJD0.wd9YbRCn8bkIOW.G7WA', // Replace with a secure method to handle tokens
