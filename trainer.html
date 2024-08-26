@@ -6,6 +6,13 @@
     <title>Trainer Details</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
         .section {
             margin-bottom: 20px;
         }
@@ -23,139 +30,155 @@
             padding: 5px;
             margin-bottom: 10px;
         }
+        .two-columns {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
-    <h1>Trainer Details</h1>
-    <form id="trainerForm">
-        <label for="trainerId">Trainer ID:</label>
-        <input type="text" id="trainerId" name="trainerId" required>
-        <button type="button" onclick="fetchTrainerDetails()">Fetch Trainer Details</button>
-        <br><br>
+    <div class="container">
+        <h1>Trainer Details</h1>
+        <form id="trainerForm">
+            <label for="trainerId">Trainer ID:</label>
+            <input type="text" id="trainerId" name="trainerId" required>
+            <button type="button" onclick="fetchTrainerDetails()">Fetch Trainer Details</button>
+            <br><br>
 
-        <div id="trainerDetails">
-            <!-- CADET Trainer ID and CADET Official Email -->
-            <div class="section">
-                <h2>Basic Information</h2>
-                <label for="cadetTrainerId">CADET Trainer ID:</label>
-                <input type="text" id="cadetTrainerId" name="cadetTrainerId" disabled><br><br>
+            <div id="trainerDetails">
+                <!-- Trainer ID and CADET Official Email -->
+                <div class="section">
+                    <h2>Basic Information</h2>
+                    <label for="cadetTrainerId">CADET Trainer ID:</label>
+                    <input type="text" id="cadetTrainerId" name="cadetTrainerId" disabled><br><br>
 
-                <label for="cadetOfficialEmail">CADET Official Email:</label>
-                <input type="email" id="cadetOfficialEmail" name="cadetOfficialEmail" disabled><br><br>
+                    <label for="cadetOfficialEmail">CADET Official Email:</label>
+                    <input type="email" id="cadetOfficialEmail" name="cadetOfficialEmail" disabled><br><br>
+                </div>
+
+                <!-- Two Column Layout for Details -->
+                <div class="two-columns">
+                    <div class="column">
+                        <!-- Name Fields -->
+                        <div class="section">
+                            <h2>Name</h2>
+                            <label for="salutation">Salutation:</label>
+                            <input type="text" id="salutation" name="salutation" disabled><br><br>
+
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" disabled><br><br>
+
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" disabled><br><br>
+                        </div>
+
+                        <!-- Contact Fields -->
+                        <div class="section">
+                            <h2>Contact Information</h2>
+                            <label for="mobilePhone">Mobile Phone:</label>
+                            <input type="text" id="mobilePhone" name="mobilePhone" disabled><br><br>
+
+                            <label for="otherPhone">Other Phone:</label>
+                            <input type="text" id="otherPhone" name="otherPhone" disabled><br><br>
+
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" disabled><br><br>
+                        </div>
+
+                        <!-- Address Fields -->
+                        <div class="section">
+                            <h2>Address</h2>
+                            <label for="mailingStreet">Mailing Street:</label>
+                            <input type="text" id="mailingStreet" name="mailingStreet" disabled><br><br>
+
+                            <label for="mailingPostalCode">Mailing Postal Code:</label>
+                            <input type="text" id="mailingPostalCode" name="mailingPostalCode" disabled><br><br>
+
+                            <label for="mailingCountry">Mailing Country:</label>
+                            <input type="text" id="mailingCountry" name="mailingCountry" disabled><br><br>
+
+                            <label for="currentCity">Current City:</label>
+                            <input type="text" id="currentCity" name="currentCity" disabled><br><br>
+
+                            <label for="state">State:</label>
+                            <input type="text" id="state" name="state" disabled><br><br>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <!-- Profession Related Fields -->
+                        <div class="section">
+                            <h2>Profession</h2>
+                            <label for="employerName">Employer Name:</label>
+                            <input type="text" id="employerName" name="employerName" disabled><br><br>
+
+                            <label for="jobTitle">Job Title:</label>
+                            <input type="text" id="jobTitle" name="jobTitle" disabled><br><br>
+
+                            <label for="numberOfCamps">Number of Camps:</label>
+                            <input type="number" id="numberOfCamps" name="numberOfCamps" disabled><br><br>
+
+                            <label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
+                            <input type="number" id="numberOfCampsAsLeadTrainer" name="numberOfCampsAsLeadTrainer" disabled><br><br>
+
+                            <label for="numberOfCampsThisFY">Number of Camps This FY:</label>
+                            <input type="number" id="numberOfCampsThisFY" name="numberOfCampsThisFY" disabled><br><br>
+                        </div>
+
+                        <!-- NCC Related Fields -->
+                        <div class="section">
+                            <h2>NCC Information</h2>
+                            <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
+                            <input type="text" id="nccDirectorateUnitEtc" name="nccDirectorateUnitEtc" disabled><br><br>
+
+                            <label for="nccDirectorate">NCC Directorate:</label>
+                            <input type="text" id="nccDirectorate" name="nccDirectorate" disabled><br><br>
+
+                            <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
+                            <input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" disabled><br><br>
+
+                            <label for="nccWing">NCC Wing:</label>
+                            <input type="text" id="nccWing" name="nccWing" disabled><br><br>
+                        </div>
+
+                        <!-- Other Fields -->
+                        <div class="section">
+                            <h2>Other Information</h2>
+                            <label for="birthdate">Birthdate:</label>
+                            <input type="date" id="birthdate" name="birthdate" disabled><br><br>
+
+                            <label for="educationalQualification">Educational Qualification:</label>
+                            <input type="text" id="educationalQualification" name="educationalQualification" disabled><br><br>
+
+                            <label for="gender">Gender:</label>
+                            <input type="text" id="gender" name="gender" disabled><br><br>
+
+                            <label for="yepYear">YEP Year:</label>
+                            <input type="text" id="yepYear" name="yepYear" disabled><br><br>
+
+                            <label for="yepCountry">YEP Country:</label>
+                            <input type="text" id="yepCountry" name="yepCountry" disabled><br><br>
+
+                            <label for="profession">Profession:</label>
+                            <input type="text" id="profession" name="profession" disabled><br><br>
+
+                            <label for="isExpamember">Is EXPA Member:</label>
+                            <input type="text" id="isExpamember" name="isExpamember" disabled><br><br>
+
+                            <label for="certificationStatus">Certification Status:</label>
+                            <input type="text" id="certificationStatus" name="certificationStatus" disabled><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="editDetails()">Edit</button>
+                <button type="button" onclick="saveDetails()" style="display:none;" id="saveButton">Save</button>
             </div>
-
-            <!-- Name Fields -->
-            <div class="section">
-                <h2>Name</h2>
-                <label for="salutation">Salutation:</label>
-                <input type="text" id="salutation" name="salutation" disabled><br><br>
-
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" disabled><br><br>
-
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" disabled><br><br>
-            </div>
-
-            <!-- Contact Fields -->
-            <div class="section">
-                <h2>Contact Information</h2>
-                <label for="mobilePhone">Mobile Phone:</label>
-                <input type="text" id="mobilePhone" name="mobilePhone" disabled><br><br>
-
-                <label for="otherPhone">Other Phone:</label>
-                <input type="text" id="otherPhone" name="otherPhone" disabled><br><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" disabled><br><br>
-            </div>
-
-            <!-- Address Fields -->
-            <div class="section">
-                <h2>Address</h2>
-                <label for="mailingStreet">Mailing Street:</label>
-                <input type="text" id="mailingStreet" name="mailingStreet" disabled><br><br>
-
-                <label for="mailingPostalCode">Mailing Postal Code:</label>
-                <input type="text" id="mailingPostalCode" name="mailingPostalCode" disabled><br><br>
-
-                <label for="mailingCountry">Mailing Country:</label>
-                <input type="text" id="mailingCountry" name="mailingCountry" disabled><br><br>
-
-                <label for="currentCity">Current City:</label>
-                <input type="text" id="currentCity" name="currentCity" disabled><br><br>
-
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state" disabled><br><br>
-            </div>
-
-            <!-- Profession Related Fields -->
-            <div class="section">
-                <h2>Profession</h2>
-                <label for="employerName">Employer Name:</label>
-                <input type="text" id="employerName" name="employerName" disabled><br><br>
-
-                <label for="jobTitle">Job Title:</label>
-                <input type="text" id="jobTitle" name="jobTitle" disabled><br><br>
-
-                <label for="numberOfCamps">Number of Camps:</label>
-                <input type="number" id="numberOfCamps" name="numberOfCamps" disabled><br><br>
-
-                <label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
-                <input type="number" id="numberOfCampsAsLeadTrainer" name="numberOfCampsAsLeadTrainer" disabled><br><br>
-
-                <label for="numberOfCampsThisFY">Number of Camps This FY:</label>
-                <input type="number" id="numberOfCampsThisFY" name="numberOfCampsThisFY" disabled><br><br>
-            </div>
-
-            <!-- NCC Related Fields -->
-            <div class="section">
-                <h2>NCC Information</h2>
-                <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
-                <input type="text" id="nccDirectorateUnitEtc" name="nccDirectorateUnitEtc" disabled><br><br>
-
-                <label for="nccDirectorate">NCC Directorate:</label>
-                <input type="text" id="nccDirectorate" name="nccDirectorate" disabled><br><br>
-
-                <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
-                <input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" disabled><br><br>
-
-                <label for="nccWing">NCC Wing:</label>
-                <input type="text" id="nccWing" name="nccWing" disabled><br><br>
-            </div>
-
-            <!-- Other Fields -->
-            <div class="section">
-                <h2>Other Information</h2>
-                <label for="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" disabled><br><br>
-
-                <label for="educationalQualification">Educational Qualification:</label>
-                <input type="text" id="educationalQualification" name="educationalQualification" disabled><br><br>
-
-                <label for="gender">Gender:</label>
-                <input type="text" id="gender" name="gender" disabled><br><br>
-
-                <label for="yepYear">YEP Year:</label>
-                <input type="text" id="yepYear" name="yepYear" disabled><br><br>
-
-                <label for="yepCountry">YEP Country:</label>
-                <input type="text" id="yepCountry" name="yepCountry" disabled><br><br>
-
-                <label for="profession">Profession:</label>
-                <input type="text" id="profession" name="profession" disabled><br><br>
-
-                <label for="isExpamember">Is EXPA Member:</label>
-                <input type="text" id="isExpamember" name="isExpamember" disabled><br><br>
-
-                <label for="certificationStatus">Certification Status:</label>
-                <input type="text" id="certificationStatus" name="certificationStatus" disabled><br><br>
-            </div>
-
-            <button type="button" onclick="editDetails()">Edit</button>
-            <button type="button" onclick="saveDetails()" style="display:none;" id="saveButton">Save</button>
-        </div>
-    </form>
+        </form>
+    </div>
     <script src="config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="trainer.js"></script>
