@@ -12,8 +12,7 @@ document.getElementById("userForm").addEventListener("submit", function(event) {
     const email = document.getElementById("email").value;
 
     // Display the user's details
-    const userDetails = `First Name: ${firstname}<br>Email: ${email}`;
-    const userDetails = `Last Name: ${lastname}<br>Email: ${email}`;
+    const userDetails = `First Name: ${firstname}<br> Last Name: ${lastname}<br>Email: ${email}`;
     document.getElementById("userDetails").innerHTML = userDetails;
 
     // Clear the form inputs
