@@ -1,130 +1,114 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const fetchTrainerBtn = document.getElementById('fetchTrainerBtn');
+document.addEventListener('DOMContentLoaded', () => {
+    const fetchBtn = document.getElementById('fetchBtn');
+    const trainerForm = document.getElementById('trainerForm');
     const editBtn = document.getElementById('editBtn');
-    const saveBtn = document.getElementById('saveBtn');
     const cancelBtn = document.getElementById('cancelBtn');
-    const trainerDetails = document.getElementById('trainerDetails');
-
+    const saveBtn = document.getElementById('saveBtn');
+    const trainerIdInput = document.getElementById('trainerId');
     let initialValues = {};
 
-    // Fetch Trainer Details
-    fetchTrainerBtn.addEventListener('click', function() {
-        const trainerId = document.getElementById('trainerId').value;
-        if (!trainerId) {
-            alert('Please enter a Trainer ID');
-            return;
+    fetchBtn.addEventListener('click', () => {
+        const trainerId = trainerIdInput.value;
+
+        if (trainerId) {
+            // Fetch trainer details from Salesforce API
+            fetchTrainerDetails(trainerId).then(details => {
+                populateForm(details);
+                trainerForm.classList.remove('hidden');
+                fetchBtn.classList.add('hidden');
+                editBtn.classList.remove('hidden');
+            });
         }
-
-        fetch(`/api/trainer/${trainerId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    // Store initial values
-                    initialValues = {
-                        firstname: data.firstname,
-                        lastname: data.lastname,
-                        email: data.email,
-                        profession: data.profession,
-                        nccDirectorate: data.nccDirectorate,
-                        nccWing: data.nccWing
-                    };
-
-                    // Populate form fields
-                    document.getElementById('firstname').value = data.firstname;
-                    document.getElementById('lastname').value = data.lastname;
-                    document.getElementById('email').value = data.email;
-                    document.getElementById('profession').value = data.profession;
-                    document.getElementById('nccDirectorate').value = data.nccDirectorate;
-                    document.getElementById('nccWing').value = data.nccWing;
-
-                    // Enable fields
-                    trainerDetails.disabled = false;
-
-                    // Show edit button and hide other buttons
-                    editBtn.style.display = 'inline';
-                    saveBtn.style.display = 'none';
-                    cancelBtn.style.display = 'none';
-                } else {
-                    alert('Trainer not found');
-                }
-            })
-            .catch(error => console.error('Error fetching trainer details:', error));
     });
 
-    // Enter Edit Mode
-    editBtn.addEventListener('click', function() {
-        // Enable editing
-        document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(element => {
-            element.disabled = false;
+    editBtn.addEventListener('click', () => {
+        toggleEditable(true);
+        storeInitialValues();
+        editBtn.classList.add('hidden');
+        cancelBtn.classList.remove('hidden');
+        saveBtn.classList.remove('hidden');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        revertToInitialValues();
+        toggleEditable(false);
+        cancelBtn.classList.add('hidden');
+        saveBtn.classList.add('hidden');
+        editBtn.classList.remove('hidden');
+    });
+
+    saveBtn.addEventListener('click', () => {
+        const updatedDetails = gatherFormData();
+        // Save updated details to Salesforce API
+        saveTrainerDetails(updatedDetails).then(() => {
+            toggleEditable(false);
+            cancelBtn.classList.add('hidden');
+            saveBtn.classList.add('hidden');
+            editBtn.classList.remove('hidden');
         });
-
-        // Show save and cancel buttons
-        saveBtn.style.display = 'inline';
-        cancelBtn.style.display = 'inline';
-        editBtn.style.display = 'none';
     });
 
-    // Save Changes
-    saveBtn.addEventListener('click', function() {
-        const trainerId = document.getElementById('trainerId').value;
-        const updatedData = {
+    function fetchTrainerDetails(trainerId) {
+        // Replace with actual API call
+        return fetch(`/api/trainers/${trainerId}`)
+            .then(response => response.json());
+    }
+
+    function saveTrainerDetails(details) {
+        // Replace with actual API call
+        return fetch(`/api/trainers/${details.trainerId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(details),
+        });
+    }
+
+    function populateForm(details) {
+        document.getElementById('cadetTrainerId').value = details.cadetTrainerId || '';
+        document.getElementById('cadetOfficialEmail').value = details.cadetOfficialEmail || '';
+        document.getElementById('firstname').value = details.firstname || '';
+        document.getElementById('lastname').value = details.lastname || '';
+        document.getElementById('contactNumber').value = details.contactNumber || '';
+        document.getElementById('email').value = details.email || '';
+        document.getElementById('address').value = details.address || '';
+        document.getElementById('profession').value = details.profession || '';
+        document.getElementById('nccDirectorateUnit').value = details.nccDirectorateUnit || '';
+        document.getElementById('nccDirectorate').value = details.nccDirectorate || '';
+        document.getElementById('nccWing').value = details.nccWing || '';
+        document.getElementById('yepYear').value = details.yepYear || '';
+        document.getElementById('yepCountry').value = details.yepCountry || '';
+        document.getElementById('nccaaMembershipNumber').value = details.nccaaMembershipNumber || '';
+    }
+
+    function gatherFormData() {
+        return {
+            trainerId: trainerIdInput.value,
+            cadetTrainerId: document.getElementById('cadetTrainerId').value,
+            cadetOfficialEmail: document.getElementById('cadetOfficialEmail').value,
             firstname: document.getElementById('firstname').value,
             lastname: document.getElementById('lastname').value,
+            contactNumber: document.getElementById('contactNumber').value,
             email: document.getElementById('email').value,
+            address: document.getElementById('address').value,
             profession: document.getElementById('profession').value,
+            nccDirectorateUnit: document.getElementById('nccDirectorateUnit').value,
             nccDirectorate: document.getElementById('nccDirectorate').value,
-            nccWing: document.getElementById('nccWing').value
+            nccWing: document.getElementById('nccWing').value,
+            yepYear: document.getElementById('yepYear').value,
+            yepCountry: document.getElementById('yepCountry').value,
+            nccaaMembershipNumber: document.getElementById('nccaaMembershipNumber').value,
         };
+    }
 
-        fetch(`/api/trainer/${trainerId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Trainer details updated successfully');
-
-                    // Disable fields and hide buttons
-                    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(element => {
-                        element.disabled = true;
-                    });
-
-                    saveBtn.style.display = 'none';
-                    cancelBtn.style.display = 'none';
-                    editBtn.style.display = 'inline';
-                } else {
-                    alert('Error updating trainer details');
-                }
-            })
-            .catch(error => console.error('Error saving trainer details:', error));
-    });
-
-    // Cancel Edits
-    cancelBtn.addEventListener('click', function() {
-        // Revert to initial values
-        document.getElementById('firstname').value = initialValues.firstname;
-        document.getElementById('lastname').value = initialValues.lastname;
-        document.getElementById('email').value = initialValues.email;
-        document.getElementById('profession').value = initialValues.profession;
-        document.getElementById('nccDirectorate').value = initialValues.nccDirectorate;
-        document.getElementById('nccWing').value = initialValues.nccWing;
-
-        // Disable fields and hide buttons
-        document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(element => {
-            element.disabled = true;
+    function toggleEditable(isEditable) {
+        const inputs = document.querySelectorAll('#trainerForm input, #trainerForm select');
+        inputs.forEach(input => {
+            if (isEditable) {
+                input.classList.add('editable');
+                input.removeAttribute('readonly');
+            } else {
+                input.classList.remove('editable');
+                input.setAttribute('readonly', true);
+            }
         });
-
-        saveBtn.style.display = 'none';
-        cancelBtn.style.display = 'none';
-        editBtn.style.display = 'inline';
-    });
-
-    // Initially disable fields
-    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(element => {
-        element.disabled = true;
-    });
-});
+   
