@@ -21,11 +21,13 @@ async function fetchTrainerDetails() {
         }
 
         const data = await response.json();
+        const salesforceId = data.Id;
         populateFields(data);
     } catch (error) {
         console.error('Error fetching trainer details:', error);
         alert('There was an error fetching the trainer details. Please try again.');
     }
+    
 }
 
 function populateFields(data) {
@@ -60,15 +62,26 @@ function populateFields(data) {
     document.getElementById('nccaaMembershipNumber').value = data.NCCAA_Membership_Number__c || '';
 
     // Enable fields for editing
-    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = false);
-    document.getElementById('editButton').style.display = 'none';
-    document.getElementById('cancelButton').style.display = 'inline';
-    document.getElementById('saveButton').style.display = 'inline';
+    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = true);
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('cancelButton').style.display = 'none';
+    document.getElementById('saveButton').style.display = 'none';
 }
 
 function editMode() {
-    // Enable all fields for editing
-    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = false);
+    // Enable some fields for editing
+// Enable only specified fields for editing
+    const fieldsToEnable = [
+        'cadetOfficialEmail', 'salutation', 'firstName', 'lastName', 'birthdate', 
+        'gender', 'mobilePhone', 'otherPhone', 'email', 'educationalQualification', 
+        'mailingStreet', 'mailingPostalCode', 'mailingCountry', 'currentCity', 
+        'state', 'profession', 'employerName', 'jobTitle', 
+        'nccDirectorateUnitEtc', 'nccDirectorate', 'nccWing', 'yepYear', 'yepCountry', 
+        'nccaaMembershipNumber'
+    
+    document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => {
+        el.disabled = !fieldsToEnable.includes(el.id);
+    }); 
     document.getElementById('editButton').style.display = 'none';
     document.getElementById('cancelButton').style.display = 'inline';
     document.getElementById('saveButton').style.display = 'inline';
@@ -85,7 +98,7 @@ function cancelEdit() {
 }
 
 async function saveChanges() {
-    const trainerId = document.getElementById('trainerId').value;
+    
     const data = {
         CADET_Trainer_ID__c: document.getElementById('cadetTrainerId').value,
         CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
@@ -119,7 +132,7 @@ async function saveChanges() {
     };
 
     try {
-        const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`, {
+        const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${salesforceId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQNUUA.dEjoN9ZqW4pvLVB45E.TN_6YEwdJOryaZqQXRowYL.FhnHPKkJmHtCUj9MY173jJD0.wd9YbRCn8bkIOW.G7WA', // Replace with a secure method to handle tokens
