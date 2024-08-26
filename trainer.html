@@ -6,7 +6,6 @@
     <title>Trainer Details</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="config.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,7 +13,7 @@
         <form id="trainerForm">
             <label for="trainerId">Trainer ID:</label>
             <input type="text" id="trainerId" name="trainerId" required>
-            <button id="fetchButton">Fetch Trainer Details</button>
+            <button type="button" onclick="fetchTrainerDetails()">Fetch Details</button>
             <br><br>
 
             <div id="trainerDetails">
@@ -43,14 +42,14 @@
                             </select>
                         </div>
                         <div class="column">
-                            <label for="firstname">First Name:</label>
-                            <input type="text" id="firstname" name="firstname" disabled>
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" disabled>
                         </div>
                     </div>
                     <div class="two-columns">
                         <div class="column">
-                            <label for="lastname">Last Name:</label>
-                            <input type="text" id="lastname" name="lastname" disabled>
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" disabled>
                         </div>
                     </div>
                 </div>
@@ -217,7 +216,7 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button id="editButton">Edit</button>
+                    <button type="button" onclick="editMode()">Edit</button>
                     <button type="button" id="cancelButton" onclick="cancelEdit()" style="display:none;">Cancel</button>
                     <button type="button" id="saveButton" onclick="saveChanges()" style="display:none;">Save Changes</button>
                 </div>
