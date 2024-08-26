@@ -21,7 +21,7 @@ async function fetchTrainerDetails() {
         }
 
         const data = await response.json();
-        const salesforceId = data.Id;
+        salesforceId = data.Id;
         populateFields(data);
     } catch (error) {
         console.error('Error fetching trainer details:', error);
