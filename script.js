@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const userForm = document.getElementById("userForm");
+    const trainerForm = document.getElementById("trainerForm"); // Changed from userForm to trainerForm
     const userDetailsContainer = document.getElementById("userDetails");
 
-    if (userForm) {
-        userForm.addEventListener("submit", async function(event) {
+    if (trainerForm) {
+        trainerForm.addEventListener("submit", async function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
 
             // Get the input values
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // Clear the form inputs
-            userForm.reset();
+            trainerForm.reset();
 
             // Create the Salesforce record
             const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // API endpoint for Contact
@@ -43,6 +43,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     } else {
-        console.error("Form element with ID 'userForm' not found.");
+        console.error("Form element with ID 'trainerForm' not found."); // Updated message
     }
 });
