@@ -78,7 +78,7 @@ function editMode() {
         'state', 'profession', 'employerName', 'jobTitle', 
         'nccDirectorateUnitEtc', 'nccDirectorate', 'nccWing', 'yepYear', 'yepCountry', 
         'nccaaMembershipNumber'
-    
+    ];
     document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => {
         el.disabled = !fieldsToEnable.includes(el.id);
     }); 
