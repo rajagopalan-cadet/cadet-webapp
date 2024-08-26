@@ -1,13 +1,24 @@
 async function generateDocument() {
-    const trainerId = document.getElementById('trainerId').value;
-    const documentType = document.querySelector('input[name="documentType"]:checked').value;
-
-    if (!trainerId) {
-        alert('Please enter a valid CADET Trainer ID in the format CT-123');
-        return;
-    }
-
     try {
+        const trainerId = document.getElementById('trainerId').value;
+        console.log('Trainer ID:', trainerId);
+
+        const selectedRadio = document.querySelector('input[name="documentType"]:checked');
+        console.log('Selected Radio:', selectedRadio);
+
+        if (!selectedRadio) {
+            alert('Please select a document type.');
+            return;
+        }
+
+        const documentType = selectedRadio.value;
+        console.log('Document Type:', documentType);
+
+        if (!trainerId) {
+            alert('Please enter a valid CADET Trainer ID in the format CT-123');
+            return;
+        }
+
         // Fetch trainer details using the function from trainer.js
         const data = await fetchTrainerDetails(trainerId);
 
@@ -18,9 +29,11 @@ async function generateDocument() {
             // Generate letter content (to be implemented as needed)
         }
     } catch (error) {
-        console.error('Error fetching trainer details:', error);
+        console.error('Error:', error);
         alert('Error generating document. Please try again.');
- 
+    }
+}
+
 
 function generateCertificate(data) {
     const canvas = document.createElement('canvas');
