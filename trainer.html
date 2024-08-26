@@ -4,105 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trainer Details</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        form {
-            max-width: 600px;
-            margin: auto;
-        }
-        fieldset {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input, select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            margin-right: 10px;
-        }
+        /* Add your styles here */
+        .hidden { display: none; }
+        .editable { background-color: #f9f9f9; }
     </style>
 </head>
 <body>
     <h1>Trainer Details</h1>
-    <form id="trainerForm">
-        <!-- Trainer ID section -->
-        <label for="trainerId">CADET Trainer ID:</label>
+    
+    <div>
+        <label for="trainerId">Trainer ID:</label>
         <input type="text" id="trainerId" name="trainerId">
-        <button type="button" id="fetchTrainerBtn">Fetch Trainer Details</button>
-        
-        <!-- Trainer details section -->
-        <fieldset id="trainerDetails" disabled>
-            <!-- Name fields -->
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname">
+        <button id="fetchBtn">Fetch</button>
+    </div>
 
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname">
+    <div id="trainerForm" class="hidden">
+        <form id="trainerDetailsForm">
+            <fieldset>
+                <legend>CADET Trainer ID and CADET Official Email</legend>
+                <label for="cadetTrainerId">CADET Trainer ID:</label>
+                <input type="text" id="cadetTrainerId" name="cadetTrainerId" readonly><br>
 
-            <!-- Contact fields -->
-            <label for="email">CADET Official Email:</label>
-            <input type="email" id="email" name="email">
+                <label for="cadetOfficialEmail">CADET Official Email:</label>
+                <input type="email" id="cadetOfficialEmail" name="cadetOfficialEmail" readonly>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Name</legend>
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" class="editable"><br>
+                
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" class="editable">
+            </fieldset>
 
-            <!-- Profession-related fields -->
-            <label for="profession">Profession:</label>
-            <input type="text" id="profession" name="profession">
+            <fieldset>
+                <legend>Contact</legend>
+                <label for="contactNumber">Contact Number:</label>
+                <input type="text" id="contactNumber" name="contactNumber" class="editable"><br>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="editable">
+            </fieldset>
 
-            <!-- NCC-related fields -->
-            <label for="nccDirectorate">NCC Directorate:</label>
-            <select id="nccDirectorate" name="nccDirectorate">
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Bihar & Jharkhand">Bihar & Jharkhand</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Diu Daman & Dadra & Nagar Haveli">Diu Daman & Dadra & Nagar Haveli</option>
-                <option value="Jammu & Kashmir">Jammu & Kashmir</option>
-                <option value="Karnataka & Goa">Karnataka & Goa</option>
-                <option value="Kerala & Lakshadweep">Kerala & Lakshadweep</option>
-                <option value="Madhya Pradesh & Chattishgarh">Madhya Pradesh & Chattishgarh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="North Eastern Region">North Eastern Region</option>
-                <option value="Orissa">Orissa</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh & Chandigarh">Himachal Pradesh & Chandigarh</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Pondicherry and Andaman & Nicobar Islands">Pondicherry and Andaman & Nicobar Islands</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="West Bengal & Sikkim">West Bengal & Sikkim</option>
-            </select>
+            <fieldset>
+                <legend>Address</legend>
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" class="editable">
+            </fieldset>
 
-            <label for="nccWing">NCC Wing:</label>
-            <select id="nccWing" name="nccWing">
-                <option value="Army">Army</option>
-                <option value="Navy">Navy</option>
-                <option value="Air Force">Air Force</option>
-            </select>
+            <fieldset>
+                <legend>Profession</legend>
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" name="profession" class="editable">
+            </fieldset>
 
-            <!-- Buttons -->
+            <fieldset>
+                <legend>NCC Details</legend>
+                <label for="nccDirectorateUnit">NCC Directorate Unit:</label>
+                <input type="text" id="nccDirectorateUnit" name="nccDirectorateUnit" class="editable"><br>
+                
+                <label for="nccDirectorate">NCC Directorate:</label>
+                <select id="nccDirectorate" name="nccDirectorate" class="editable"></select><br>
+
+                <label for="nccWing">NCC Wing:</label>
+                <select id="nccWing" name="nccWing" class="editable"></select>
+            </fieldset>
+
+            <fieldset>
+                <legend>YEP Details</legend>
+                <label for="yepYear">YEP Year:</label>
+                <input type="number" id="yepYear" name="yepYear" class="editable"><br>
+                
+                <label for="yepCountry">YEP Country:</label>
+                <select id="yepCountry" name="yepCountry" class="editable"></select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Other Details</legend>
+                <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
+                <input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" class="editable">
+            </fieldset>
+
             <button type="button" id="editBtn">Edit</button>
-            <button type="button" id="saveBtn" style="display:none;">Save</button>
-            <button type="button" id="cancelBtn" style="display:none;">Cancel</button>
-        </fieldset>
-    </form>
+            <button type="button" id="cancelBtn" class="hidden">Cancel</button>
+            <button type="button" id="saveBtn" class="hidden">Save</button>
+        </form>
+    </div>
 
-    <script src="script.js"></script>
+    <script src="trainer.js"></script>
 </body>
 </html>
