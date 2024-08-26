@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters and Certificate Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <style>
+        /* Existing styling from your template */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+        }
+        header img {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center-align the title and button */
+        }
+
+        .form-container h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left; /* Align form elements to the left */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: calc(100% - 20px); /* Adjust width to fit within container */
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            background-color: #004aad;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #003799;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            justify-content: left;
+            padding: 10px 0; /* Padding around radio buttons */
+        }
+
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        footer {
+            background-color: #004aad;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: sticky;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="favicon.png" alt="CADET Logo">
+            <h1>My CADET App</h1>
+        </a>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Letters and Certificate Generator</h2>
+            <div class="form-group">
+                <label for="trainerId" style="display: inline-block; width: 200px;">CADET Trainer ID:</label>
+                <input type="text" id="trainerId" name="trainerId" placeholder="Enter Trainer ID" style="display: inline-block; width: calc(100% - 220px);">
+            </div>
+            <div class="form-group">
+                <label style="display: inline-block; width: 200px;">Select Document Type:</label>
+                <div class="radio-group" style="display: inline-block; vertical-align: middle;">
+                    <label style="margin-right: 20px; padding: 10px;">
+                        <input type="radio" id="letter" name="documentType" value="letter" style="margin-right: 5px;">
+                        Letter
+                    </label>
+                    <label style="padding: 10px;">
+                        <input type="radio" id="certificate" name="documentType" value="certificate" style="margin-right: 5px;">
+                        Certificate
+                    </label>
+                </div>
+            </div>
+            
+            
+            <div class="form-group" style="text-align: center;">
+                <button onclick="generateDocument()">Generate Document</button>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2024 CADET Program. All rights reserved.
+    </footer>
+
+    <script src="trainer.js"></script>
+    <script src="certificates.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
