@@ -1,14 +1,39 @@
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector("button[onclick='fetchTrainerDetails()']").addEventListener("click", fetchTrainerDetails);
-    document.querySelector("button[onclick='editDetails()']").addEventListener("click", editDetails);
-    document.getElementById("saveButton").addEventListener("click", saveDetails);
-    document.getElementById("cancelButton").addEventListener("click", cancelEdit); // Add event listener for cancel button
+    const fetchButton = document.querySelector("button[onclick='fetchTrainerDetails()']");
+    const editButton = document.querySelector("button[onclick='editDetails()']");
+    const saveButton = document.getElementById("saveButton");
+    const cancelButton = document.getElementById("cancelButton");
+
+    if (fetchButton) {
+        fetchButton.addEventListener("click", fetchTrainerDetails);
+    } else {
+        console.error("Fetch button not found.");
+    }
+
+    if (editButton) {
+        editButton.addEventListener("click", editDetails);
+    } else {
+        console.error("Edit button not found.");
+    }
+
+    if (saveButton) {
+        saveButton.addEventListener("click", saveDetails);
+    } else {
+        console.error("Save button not found.");
+    }
+
+    if (cancelButton) {
+        cancelButton.addEventListener("click", cancelEdit);
+    } else {
+        console.error("Cancel button not found.");
+    }
+
     populateSelectOptions(); // Populate select options on load
 });
 
 async function fetchTrainerDetails() {
     const trainerId = document.getElementById("trainerId").value;
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`; // Correct URL
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
 
     try {
         const response = await axios.get(url, {
@@ -159,10 +184,10 @@ async function saveDetails() {
         Number_of_Camps_as_Lead_Trainer__c: document.getElementById("numberOfCampsAsLeadTrainer").value,
         Number_of_Camps_this_FY__c: document.getElementById("numberOfCampsThisFY").value,
         FirstName: document.getElementById("firstname").value,
-        LastName: document.getElementById("lastname").value
+        LastName: document.getElementById("lastname").value,
     };
 
-    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Use Salesforce ID
+    const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/${trainerId}`; // Correct URL
 
     try {
         const response = await axios.patch(url, updatedData, {
@@ -172,44 +197,51 @@ async function saveDetails() {
             }
         });
 
-        alert("Trainer details updated successfully!");
-        document.getElementById("saveButton").style.display = 'none';
-        document.getElementById("cancelButton").style.display = 'none'; // Hide cancel button
-        document.querySelectorAll('#trainerDetails input').forEach(input => input.disabled = true);
+        if (response.status === 204) {
+            alert("Details updated successfully.");
+            document.getElementById("saveButton").style.display = 'none';
+            document.getElementById("cancelButton").style.display = 'none'; // Hide cancel button
+        } else {
+            alert("Error updating details.");
+        }
     } catch (error) {
-        console.error("Error updating trainer details:", error);
-        alert("Error updating trainer details. Check the console for details.");
+        console.error("Error updating details:", error);
+        alert("Error updating details. Check the console for details.");
     }
 }
 
 function populateSelectOptions() {
-    // Populate select options for fields like Gender, NCC Directorate, etc.
-    const nccDirectorateSelect = document.getElementById("nccDirectorate");
-    const nccDirectorateValues = ["Andhra Pradesh", "Bihar & Jharkhand", "Delhi", "Gujarat", "Diu Daman & Dadra & Nagar Haveli", "Jammu & Kashmir", "Karnataka & Goa", "Kerala & Lakshadweep", "Madhya Pradesh & Chattishgarh", "Maharashtra", "North Eastern Region", "Orissa", "Punjab", "Haryana", "Himachal Pradesh & Chandigarh", "Rajasthan", "Tamil Nadu", "Pondicherry and Andaman & Nicobar Islands", "Uttar Pradesh", "Uttarakhand", "West Bengal & Sikkim"];
-    nccDirectorateValues.forEach(value => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-        nccDirectorateSelect.appendChild(option);
-    });
+    const nccDirectorate = document.getElementById("nccDirectorate");
+    const nccWing = document.getElementById("nccWing");
+    const yepCountry = document.getElementById("yepCountry");
 
-    const nccWingSelect = document.getElementById("nccWing");
-    const nccWingValues = ["Army", "Navy", "Air Force"];
-    nccWingValues.forEach(value => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-        nccWingSelect.appendChild(option);
-    });
+    if (nccDirectorate) {
+        const directorates = ["Andhra Pradesh", "Bihar & Jharkhand", "Delhi", "Gujarat", "Diu Daman & Dadra & Nagar Haveli", "Jammu & Kashmir", "Karnataka & Goa", "Kerala & Lakshadweep", "Madhya Pradesh & Chattishgarh", "Maharashtra", "North Eastern Region", "Orissa", "Punjab", "Haryana", "Himachal Pradesh & Chandigarh", "Rajasthan", "Tamil Nadu", "Pondicherry and Andaman & Nicobar Islands", "Uttar Pradesh", "Uttarakhand", "West Bengal & Sikkim"];
+        directorates.forEach(directorate => {
+            const option = document.createElement("option");
+            option.value = directorate;
+            option.textContent = directorate;
+            nccDirectorate.appendChild(option);
+        });
+    }
 
-    const yepCountrySelect = document.getElementById("yepCountry");
-    const yepCountryValues = ["USA", "UK", "Canada", "Bangladesh", "Naval Cruise", "Singapore", "Maldives", "Russia", "Vietnam", "Sri Lanka", "Nepal", "Bhutan", "China", "Khazakstan"];
-    yepCountryValues.forEach(value => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-        yepCountrySelect.appendChild(option);
-    });
+    if (nccWing) {
+        const wings = ["Army", "Navy", "Air Force"];
+        wings.forEach(wing => {
+            const option = document.createElement("option");
+            option.value = wing;
+            option.textContent = wing;
+            nccWing.appendChild(option);
+        });
+    }
 
-    // Add more options for other fields if needed
+    if (yepCountry) {
+        const countries = ["USA", "UK", "Canada", "Bangladesh", "Naval Cruise", "Singapore", "Maldives", "Russia", "Vietnam", "Sri Lanka", "Nepal", "Bhutan", "China", "Khazakstan"];
+        countries.forEach(country => {
+            const option = document.createElement("option");
+            option.value = country;
+            option.textContent = country;
+            yepCountry.appendChild(option);
+        });
+    }
 }
