@@ -7,11 +7,13 @@ document.getElementById("userForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
 
     // Get the input values
-    const name = document.getElementById("name").value;
+    const firstname = document.getElementById("firstname").value;
+    const lastname = document.getElementById("lastname").value;
     const email = document.getElementById("email").value;
 
     // Display the user's details
-    const userDetails = `Name: ${name}<br>Email: ${email}`;
+    const userDetails = `First Name: ${firstname}<br>Email: ${email}`;
+    const userDetails = `Last Name: ${lastname}<br>Email: ${email}`;
     document.getElementById("userDetails").innerHTML = userDetails;
 
     // Clear the form inputs
@@ -24,7 +26,8 @@ const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; 
 async function createRecord() {
     const url = `${instanceUrl}/services/data/v52.0/sobjects/Contact/`; // API endpoint for Contact
     const recordData = {
-        FirstName: document.getElementById("name").value,
+        First Name: document.getElementById("firstname").value,
+        Last Name: document.getElementById("lastame").value,
         Email: document.getElementById("email").value
     };
 
