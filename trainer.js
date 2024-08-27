@@ -17,7 +17,7 @@ async function fetchTrainerDetails() {
         const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`, {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQFg3rUQiPVTVJMJD1Z3Q2OuiokN_djBDfJpF20rG2bmXmrWXWxCol_66PdmUeaBRgXlXUM8LlSkTg_O6OLr1c301sQL3', // Replace with a secure method to handle tokens
+                'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQN.rK.Zdu7BHHme8Aqkyu0adVn8alEp1oJdp_kt8OSPX7KWbNIXbY_YR.K.w8b8goOnsPjphctZDnxWHhhOCq6VFBsXU', // Replace with a secure method to handle tokens
                 'Content-Type': 'application/json'
             }
         });
@@ -148,7 +148,7 @@ async function saveChanges() {
         const response = await fetch(`https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${salesforceId}`, {
             method: 'PATCH',
             headers: {
-                'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQFg3rUQiPVTVJMJD1Z3Q2OuiokN_djBDfJpF20rG2bmXmrWXWxCol_66PdmUeaBRgXlXUM8LlSkTg_O6OLr1c301sQL3', // Replace with a secure method to handle tokens
+                'Authorization': 'Bearer 00DC1000000P5Nt!AQEAQN.rK.Zdu7BHHme8Aqkyu0adVn8alEp1oJdp_kt8OSPX7KWbNIXbY_YR.K.w8b8goOnsPjphctZDnxWHhhOCq6VFBsXU', // Replace with a secure method to handle tokens
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
