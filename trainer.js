@@ -43,38 +43,49 @@ async function fetchTrainerDetails() {
 }
 
 function populateFields(data) {
-    document.getElementById('salesforceId').value = data.Id || '';
-    document.getElementById('cadetTrainerId').value = data.CADET_Trainer_ID__c || '';
-    document.getElementById('cadetOfficialEmail').value = data.CADET_Official_Email__c || '';
-    document.getElementById('salutation').value = data.Salutation || '';
-    document.getElementById('firstName').value = data.FirstName || '';
-    document.getElementById('lastName').value = data.LastName || '';
-    document.getElementById('birthdate').value = data.Birthdate || '';
-    document.getElementById('gender').value = data.Gender__c || '';
-    document.getElementById('mobilePhone').value = data.MobilePhone || '';
-    document.getElementById('otherPhone').value = data.OtherPhone || '';
-    document.getElementById('email').value = data.Email || '';
-    document.getElementById('educationalQualification').value = data.Educational_Qualification__c || '';
-    document.getElementById('mailingStreet').value = data.MailingStreet || '';
-    document.getElementById('mailingPostalCode').value = data.MailingPostalCode || '';
-    document.getElementById('mailingCountry').value = data.MailingCountry || '';
-    document.getElementById('currentCity').value = data.Current_City__c || '';
-    document.getElementById('state').value = data.State__c || '';
-    document.getElementById('certificationStatus').value = data.Certification_Status__c || '';
-    document.getElementById('numberOfCampsThisFY').value = data.Number_of_Camps_This_FY__c || '';
-    document.getElementById('numberOfCamps').value = data.Number_of_Camps__c || '';
-    document.getElementById('numberOfCampsAsLeadTrainer').value = data.Number_of_Camps_as_Lead_Trainer__c || '';
-    document.getElementById('profession').value = data.Profession__c || '';
-    document.getElementById('employerName').value = data.Employer_Name__c || '';
-    document.getElementById('jobTitle').value = data.Job_Title__c || '';
-    document.getElementById('nccDirectorateUnitEtc').value = data.NCC_Directorate_Unit_Etc__c || '';
-    document.getElementById('nccDirectorate').value = data.NCC_Directorate__c || '';
-    document.getElementById('nccWing').value = data.NCC_Wing__c || '';
-    document.getElementById('yepYear').value = data.YEP_Year__c || '';
-    document.getElementById('yepCountry').value = data.YEP_Country__c || '';
-    document.getElementById('nccaaMembershipNumber').value = data.NCCAA_Membership_Number__c || '';
+    const fields = {
+        salesforceId: data.Id,
+        cadetTrainerId: data.CADET_Trainer_ID__c,
+        cadetOfficialEmail: data.CADET_Official_Email__c,
+        salutation: data.Salutation,
+        firstName: data.FirstName,
+        lastName: data.LastName,
+        birthdate: data.Birthdate,
+        gender: data.Gender__c,
+        mobilePhone: data.MobilePhone,
+        otherPhone: data.OtherPhone,
+        email: data.Email,
+        educationalQualification: data.Educational_Qualification__c,
+        mailingStreet: data.MailingStreet,
+        mailingPostalCode: data.MailingPostalCode,
+        mailingCountry: data.MailingCountry,
+        currentCity: data.Current_City__c,
+        state: data.State__c,
+        certificationStatus: data.Certification_Status__c,
+        numberOfCampsThisFY: data.Number_of_Camps_This_FY__c,
+        numberOfCamps: data.Number_of_Camps__c,
+        numberOfCampsAsLeadTrainer: data.Number_of_Camps_as_Lead_Trainer__c,
+        profession: data.Profession__c,
+        employerName: data.Employer_Name__c,
+        jobTitle: data.Job_Title__c,
+        nccDirectorateUnitEtc: data.NCC_Directorate_Unit_Etc__c,
+        nccDirectorate: data.NCC_Directorate__c,
+        nccWing: data.NCC_Wing__c,
+        yepYear: data.YEP_Year__c,
+        yepCountry: data.YEP_Country__c,
+        nccaaMembershipNumber: data.NCCAA_Membership_Number__c
+    };
 
-    // Enable fields for editing
+    for (const [fieldId, fieldValue] of Object.entries(fields)) {
+        const fieldElement = document.getElementById(fieldId);
+        if (fieldElement) {
+            fieldElement.value = fieldValue || '';
+        } else {
+            console.warn(`Element with ID ${fieldId} not found in the DOM.`);
+        }
+    }
+
+    // Enable fields for editing (read-only mode initially)
     document.querySelectorAll('#trainerDetails input, #trainerDetails select').forEach(el => el.disabled = true);
     document.getElementById('editButton').style.display = 'inline';
     document.getElementById('cancelButton').style.display = 'none';
