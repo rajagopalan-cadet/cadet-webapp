@@ -11,20 +11,20 @@ document.getElementById('fetchButton').addEventListener('click', async function(
     // Show loader
     document.getElementById('loader').style.display = 'flex';
 
-    try {
-        const token = await getAccessToken();
-        await fetchDetails(trainerId, token);
-    } catch (error) {
-        console.error('Error fetching access token:', error);
-    } finally {
-        // Hide loader
-        document.getElementById('loader').style.display = 'none';
-    }
+    // try {
+    //     const token = await getAccessToken();
+    //     await fetchDetails(trainerId, token);
+    // } catch (error) {
+    //     console.error('Error fetching access token:', error);
+    // } finally {
+    //     // Hide loader
+    //     document.getElementById('loader').style.display = 'none';
+    // }
 });
 
 async function fetchDetails(trainerId, token) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    
+    const token = '00DC1000000P5Nt!AQEAQN.rK.Zdu7BHHme8Aqkyu0adVn8alEp1oJdp_kt8OSPX7KWbNIXbY_YR.K.w8b8goOnsPjphctZDnxWHhhOCq6VFBsXU'
     try {
         const response = await fetch(url, {
             method: 'GET',
