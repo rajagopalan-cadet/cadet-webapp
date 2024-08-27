@@ -158,7 +158,48 @@ document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination
         checkbox.checked = nccCertificateValues.includes(checkbox.value);
     });
 };
+function enableFields() {
+        // Get all input and select elements inside the form containers
+        const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry','state','educationalQualification', 'nccDirectorate','yepCountry', 'nccWing', 'jdJwSdSw','nccCertificate','tShirtSize','foodPreference', 'covidVaccinationStatus'];
+            
+            fieldIds.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.removeAttribute('disabled');
+                    field.removeAttribute('readonly');
+                }
+            });
+    }
+function disableFields() {
+             const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry','state','educationalQualification', 'nccDirectorate','yepCountry', 'nccWing', 'jdJwSdSw','nccCertificate','tShirtSize','foodPreference', 'covidVaccinationStatus'];
+        
+            fieldIds.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.setAttribute('readonly', true);
+                    field.setAttribute('disabled', true);
+                }
+            });
+        }
 
+
+
+function toggleEditMode(editMode) {
+     if (editMode) {
+        enableFields();
+    } else {
+        disableFields();
+        displayDetails(data); // Revert to original data
+    }
+    const readOnlyFields = document.querySelectorAll('.tabcontent input');
+    readOnlyFields.forEach(field => {
+        field.readOnly = !editMode; // Make fields editable or read-only
+    });
+
+    document.getElementById('editButton').style.display = editMode ? 'none' : 'inline';
+    document.getElementById('saveButton').style.display = editMode ? 'inline' : 'none';
+    document.getElementById('cancelButton').style.display = editMode ? 'inline' : 'none';
+}
     document.getElementById('editButton').addEventListener('click', function() {
         toggleEditMode(true);
     });
@@ -172,17 +213,6 @@ document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination
         updateDetails(data.Id);
     });
 
-
-function toggleEditMode(editMode) {
-    const readOnlyFields = document.querySelectorAll('.tabcontent input');
-    readOnlyFields.forEach(field => {
-        field.readOnly = !editMode; // Make fields editable or read-only
-    });
-
-    document.getElementById('editButton').style.display = editMode ? 'none' : 'inline';
-    document.getElementById('saveButton').style.display = editMode ? 'inline' : 'none';
-    document.getElementById('cancelButton').style.display = editMode ? 'inline' : 'none';
-}
 
 function updateDetails(Id) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
@@ -297,6 +327,7 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     }
 })
 .catch(error => console.error('Error updating details:', error));
+    disableFields();
 }
 
 function openTab(evt, tabName) {
