@@ -256,23 +256,23 @@
                 <button class="tablink" onclick="openTab(event, 'OtherDetails')">Other Details</button>
             </div>
 
-<div id="BasicDetails" class="tabcontent" style="display: block;">
+<div id="BasicDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
             <label for="id">ID:</label>
-            <input type="text" id="id" readonly>
+            <input type="text" id="id" readonly disabled>
         </div>
         <div class="form-group">
             <label for="cadetTrainerId">CADET Trainer ID:</label>
-            <input type="text" id="cadetTrainerId" readonly>
+            <input type="text" id="cadetTrainerId" readonly disabled>
         </div>
         <div class="form-group">
             <label for="cadetOfficialEmail">CADET Official Email:</label>
-            <input type="email" id="cadetOfficialEmail" pattern=".*@(gmail\.com|cadetprogram\.org)$" title="Email must be @gmail.com or @cadetprogram.org" required>
+            <input type="email" id="cadetOfficialEmail" pattern=".*@(gmail\.com|cadetprogram\.org)$" title="Email must be @gmail.com or @cadetprogram.org" required disabled>
         </div>
         <div class="form-group">
             <label for="salutation">Salutation:</label>
-            <select id="salutation">
+            <select id="salutation" disabled>
                 <option value="">Select Salutation</option>
                 <option value="Mr.">Mr.</option>
                 <option value="Ms.">Ms.</option>
@@ -299,7 +299,7 @@
         </div>
         <div class="form-group">
             <label for="gender">Gender:</label>
-            <select id="gender">
+            <select id="gender" disabled>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -312,7 +312,7 @@
         </div>
         <div class="form-group">
             <label for="emergencyContactRelationship">Emergency Contact Relationship:</label>
-            <select id="emergencyContactRelationship">
+            <select id="emergencyContactRelationship" disabled>
                 <option value="">Select Relationship</option>
                 <option value="Friend">Friend</option>
                 <option value="Spouse">Spouse</option>
@@ -342,7 +342,7 @@
         </div>
         <div class="form-group">
             <label for="mailingState">Mailing State:</label>
-            <select id="mailingState">
+            <select id="mailingState" disabled>
                 <option value="">Select State</option>
                 <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -388,7 +388,7 @@
         </div>
         <div class="form-group">
             <label for="mailingCountry">Mailing Country:</label>
-            <select id="mailingCountry">
+            <select id="mailingCountry" disabled>
                 <option value="">Select Country</option>
                 <option value="India">India</option>
                 <option value="Oman">Oman</option>
@@ -412,7 +412,7 @@
         </div>
         <div class="form-group">
             <label for="state">State:</label>
-            <select id="state">
+            <select id="state" disabled>
                 <option value="">Select State</option>
                 <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -501,7 +501,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="educationalQualification">Educational Qualification:</label>
-            <select id="educationalQualification">
+            <select id="educationalQualification" disabled>
                 <option value="">Select Qualification</option>
                 <option value="BA">BA</option>
                 <option value="BBA / BBM">BBA / BBM</option>
@@ -561,7 +561,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="nccDirectorate">NCC Directorate:</label>
-            <select id="nccDirectorate">
+            <select id="nccDirectorate" disabled>
                 <option value="">Select Directorate</option>
                 <option value="Andhra Pradesh & Telangana">Andhra Pradesh & Telangana</option>
                 <option value="Bihar & Jharkhand">Bihar & Jharkhand</option>
@@ -596,7 +596,7 @@
         </div>
         <div class="form-group">
             <label for="yepCountry">YEP Country:</label>
-            <select id="yepCountry">
+            <select id="yepCountry" disabled>
                 <option value="">Select Country</option>
                 <option value="USA">USA</option>
                 <option value="UK">UK</option>
@@ -619,7 +619,7 @@
         </div>
         <div class="form-group">
             <label for="nccWing">NCC Wing:</label>
-            <select id="nccWing">
+            <select id="nccWing" disabled>
                 <option value="">Select Wing</option>
                 <option value="Army">Army</option>
                 <option value="Navy">Navy</option>
@@ -628,7 +628,7 @@
         </div>
         <div class="form-group">
             <label for="jdJwSdSw">JD/JW/SD/SW:</label>
-            <select id="jdJwSdSw" multiple>
+            <select id="jdJwSdSw" multiple  disabled>
                 <option value="JD">JD (Junior Division - Boys)</option>
                 <option value="JW">JW (Junior Wing - Girls)</option>
                 <option value="SD">SD (Senior Division - Boys)</option>
@@ -641,7 +641,7 @@
         </div>
         <div class="form-group">
             <label for="nccCertificate">NCC Certificate:</label>
-            <select id="nccCertificate" multiple>
+            <select id="nccCertificate" multiple disabled>
                 <option value="A Certificate">A Certificate</option>
                 <option value="B Certificate">B Certificate</option>
                 <option value="C Certificate">C Certificate</option>
@@ -706,7 +706,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="tShirtSize">T-Shirt Size:</label>
-            <select id="tShirtSize" readonly>
+            <select id="tShirtSize" readonly disabled>
                 <option value="">Select Size</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -729,7 +729,7 @@
         </div>
         <div class="form-group">
             <label for="foodPreference">Food Preference:</label>
-            <select id="foodPreference" readonly>
+            <select id="foodPreference" readonly disabled>
                 <option value="">Select Preference</option>
                 <option value="Vegetarian">Vegetarian</option>
                 <option value="Eggetarian">Eggetarian</option>
@@ -739,7 +739,7 @@
         </div>
         <div class="form-group">
             <label for="covidVaccinationStatus">COVID Vaccination Status:</label>
-            <select id="covidVaccinationStatus" readonly>
+            <select id="covidVaccinationStatus" readonly disabled>
                 <option value="">Select Status</option>
                 <option value="1 Dose Completed">1 Dose Complete</option>
                 <option value="2 Doses Completed">2 Doses Complete</option>
