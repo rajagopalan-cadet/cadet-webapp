@@ -85,29 +85,29 @@ function displayDetails(data) {
     document.getElementById('emergencyContactPhone').value = data.Emergency_Contact_Phone__c || '';
 
         // Contact Details
-    document.getElementById('mailingStreet').value = data.Mailing_Street || '';
-    document.getElementById('mailingCity').value = data.Mailing_City || '';
-    document.getElementById('mailingState').value = data.Mailing_State || '';
-    document.getElementById('mailingPostalCode').value = data.Mailing_Postal_Code || '';
-    document.getElementById('mailingCountry').value = data.Mailing_Country || '';
-    document.getElementById('mobilePhone').value = data.Mobile_Phone || '';
-    document.getElementById('otherPhone').value = data.Other_Phone || '';
+    document.getElementById('mailingStreet').value = data.MailingStreet || '';
+    document.getElementById('mailingCity').value = data.MailingCity || '';
+    document.getElementById('mailingState').value = data.MailingState || '';
+    document.getElementById('mailingPostalCode').value = data.MailingPostalCode || '';
+    document.getElementById('mailingCountry').value = data.MailingCountry || '';
+    document.getElementById('mobilePhone').value = data.MobilePhone || '';
+    document.getElementById('otherPhone').value = data.OtherPhone || '';
     document.getElementById('email').value = data.Email || '';
-    document.getElementById('currentCity').value = data.Current_City || '';
-    document.getElementById('state').value = data.State || '';
-    document.getElementById('pinCode').value = data.Pin_Code || '';
+    document.getElementById('currentCity').value = data.Current_City__C || '';
+    document.getElementById('state').value = data.State__c || '';
+    document.getElementById('pinCode').value = data.Pin_Code__c || '';
 
       // CADET Details
-    document.getElementById('isEXPAMember').value = data.Is_EXPAMember__c || '';
+    document.getElementById('isEXPAMember').value = data.Is_EXPA_Member__c || '';
     document.getElementById('certificationStatus').value = data.Certification_Status__c || '';
     document.getElementById('ctop').value = data.CTOP__c || '';
     document.getElementById('numberOfCamps').value = data.Number_of_Camps__c || '';
     document.getElementById('numberOfCampsAsLeadTrainer').value = data.Number_of_Camps_as_Lead_Trainer__c || '';
-    document.getElementById('numberOfCampsThisFY').value = data.Number_of_Camps_This_FY__c || '';
+    document.getElementById('numberOfCampsThisFY').value = data.Number_of_Camps_this_FY__c || '';
 
  // Professional Details
     document.getElementById('educationalQualification').value = data.Educational_Qualification__c || '';
-    document.getElementById('collegeOtherInstitution').value = data.College_Or_Other_Institution__c || '';
+    document.getElementById('collegeOtherInstitution').value = data.College_Other_Institution__c || '';
     document.getElementById('yearOfDegreeCompletion').value = data.Year_of_Degree_Completion__c || '';
     document.getElementById('profession').value = data.Profession__c || '';
     document.getElementById('employerName').value = data.Employer_Name__c || '';
@@ -115,15 +115,15 @@ function displayDetails(data) {
 
     // Update NCC Details
 document.getElementById('nccDirectorate').value = data.NCC_Directorate__c || '';
-document.getElementById('nccDirectorateUnitEtc').value = data.NCC_Directorate_Unit__c || '';
+document.getElementById('nccDirectorateUnitEtc').value = data.NCC_Directorate_Unit_Etc__c || '';
 document.getElementById('rdOtherCampDetails').value = data.RD_Other_Camp_Details__c || '';
 document.getElementById('yepYear').value = data.YEP_Year__c || '';
 document.getElementById('yepCountry').value = data.YEP_Country__c || '';
 document.getElementById('nccaaMembershipNumber').value = data.NCCAA_Membership_Number__c || '';
 document.getElementById('nccWing').value = data.NCC_Wing__c || '';
-document.getElementById('jdJwSdSw').value = data.JD_JW_SD_SW__c ? data.JD_JW_SD_SW__c.split(',') : [];
+document.getElementById('jdJwSdSw').value = data.JD_JW_SD_SW__c ? data.JD_JW_SD_SW__c.split(';') : [];
 document.getElementById('nccGroup').value = data.NCC_Group__c || '';
-document.getElementById('nccCertificate').value = data.NCC_Certificate__c ? data.NCC_Certificate__c.split(',') : [];
+document.getElementById('nccCertificate').value = data.NCC_Certificate__c ? data.NCC_Certificate__c.split(';') : [];
 document.getElementById('yearOfCompletionOfNCC').value = data.Year_of_Completion_of_NCC__c || '';
 document.getElementById('yearsInNCC').value = data.Years_in_NCC__c || '';
 document.getElementById('importantNccCamps').value = data.Important_NCC_Camps__c || '';
@@ -141,7 +141,7 @@ document.getElementById('longBio').value = data.Long_Bio__c || '';
 // Update Other Details
 document.getElementById('tShirtSize').value = data.T_Shirt_Size__c || '';
 document.getElementById('languagesKnown').value = data.Languages_Known__c || '';
-document.getElementById('hobbiesAchievements').value = data.Hobbies_Achievements__c || '';
+document.getElementById('hobbiesAchievements').value = data.Hobbies_and_Achievements__c || '';
 document.getElementById('foodPreference').value = data.Food_Preference__c || '';
 document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination_Status__c || '';
 
