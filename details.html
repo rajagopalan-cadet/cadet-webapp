@@ -623,14 +623,13 @@
                 <option value="Air Force">Air Force</option>
             </select>
         </div>
+       
         <div class="form-group">
             <label for="jdJwSdSw">JD/JW/SD/SW:</label>
-            <select id="jdJwSdSw" multiple   readonly>
-                <option value="JD">JD (Junior Division - Boys)</option>
-                <option value="JW">JW (Junior Wing - Girls)</option>
-                <option value="SD">SD (Senior Division - Boys)</option>
-                <option value="SW">SW (Senior Wing - Girls)</option>
-            </select>
+            <label><input type="checkbox" name="jdJwSdSw" value="JD" disabled/> JD</label>
+            <label><input type="checkbox" name="jdJwSdSw" value="JW" disabled/> JW</label>
+            <label><input type="checkbox" name="jdJwSdSw" value="SD" disabled/> SD</label>
+            <label><input type="checkbox" name="jdJwSdSw" value="SW" disabled/> SW</label>
         </div>
         <div class="form-group">
             <label for="nccGroup">NCC Group:</label>
@@ -638,11 +637,9 @@
         </div>
         <div class="form-group">
             <label for="nccCertificate">NCC Certificate:</label>
-            <select id="nccCertificate" multiple  readonly>
-                <option value="A Certificate">A Certificate</option>
-                <option value="B Certificate">B Certificate</option>
-                <option value="C Certificate">C Certificate</option>
-            </select>
+            <label><input type="checkbox" name="nccCertificate" value="A Certificate" disabled /> A Certificate</label>
+            <label><input type="checkbox" name="nccCertificate" value="B Certificate" disabled /> B Certificate</label>
+            <label><input type="checkbox" name="nccCertificate" value="C Certificate" disabled /> C Certificate</label>
         </div>
         <div class="form-group">
             <label for="yearOfCompletionOfNCC">Year of Completion of NCC:</label>
