@@ -62,18 +62,7 @@ function showErrorModal(message) {
         }
     }
 }
-function formatDate(dateString) {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
-    
-    // Extract day, month, and year
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = date.getFullYear();
-    
-    return `${day}-${month}-${year}`;
-}
+
 
 function displayDetails(data) {
     console.log('Display Data:', data);
@@ -89,7 +78,7 @@ function displayDetails(data) {
     document.getElementById('salutation').value = data.Salutation || '';
     document.getElementById('firstName').value = data.FirstName || '';
     document.getElementById('lastName').value = data.LastName || '';
-    document.getElementById('birthdate').value = formatDate(data.Birthdate) || '';
+    document.getElementById('birthdate').value = data.Birthdate || '';
     document.getElementById('gender').value = data.Gender__c || '';
     document.getElementById('emergencyContactName').value = data.Emergency_Contact_Name__c || '';
     document.getElementById('emergencyContactRelationship').value = data.Emergency_Contact_Relationship__c || '';
