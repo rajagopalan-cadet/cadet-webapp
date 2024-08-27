@@ -250,92 +250,197 @@
         </div>
         <div class="form-group">
             <label for="cadetOfficialEmail">CADET Official Email:</label>
-            <input type="email" id="cadetOfficialEmail" readonly>
+            <input type="email" id="cadetOfficialEmail" pattern=".*@(gmail\.com|cadetprogram\.org)$" title="Email must be @gmail.com or @cadetprogram.org" required>
         </div>
         <div class="form-group">
             <label for="salutation">Salutation:</label>
-            <input type="text" id="salutation" readonly>
+            <select id="salutation">
+                <option value="">Select Salutation</option>
+                <option value="Mr.">Mr.</option>
+                <option value="Ms.">Ms.</option>
+                <option value="Mrs.">Mrs.</option>
+                <option value="Mx.">Mx.</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Prof.">Prof.</option>
+                <option value="Capt.">Capt.</option>
+                <option value="Col.">Col.</option>
+                <option value="Lt. Col.">Lt. Col.</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" readonly>
+            <input type="text" id="firstName" maxlength="255">
         </div>
         <div class="form-group">
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" readonly>
+            <input type="text" id="lastName" maxlength="255">
         </div>
         <div class="form-group">
             <label for="birthdate">Birthdate:</label>
-            <input type="date" id="birthdate" readonly>
+            <input type="date" id="birthdate" pattern="\d{2}-\d{2}-\d{4}" title="Date format should be DD-MM-YYYY">
         </div>
         <div class="form-group">
             <label for="gender">Gender:</label>
-            <input type="text" id="gender" readonly>
+            <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="emergencyContactName">Emergency Contact Name:</label>
-            <input type="text" id="emergencyContactName" readonly>
+            <input type="text" id="emergencyContactName" maxlength="255">
         </div>
         <div class="form-group">
             <label for="emergencyContactRelationship">Emergency Contact Relationship:</label>
-            <input type="text" id="emergencyContactRelationship" readonly>
+            <select id="emergencyContactRelationship">
+                <option value="">Select Relationship</option>
+                <option value="Friend">Friend</option>
+                <option value="Spouse">Spouse</option>
+                <option value="Parent">Parent</option>
+                <option value="Child">Child</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="emergencyContactPhone">Emergency Contact Phone:</label>
-            <input type="tel" id="emergencyContactPhone" readonly>
+            <input type="tel" id="emergencyContactPhone" pattern="[0-9]{10}" title="Phone number should be 10 digits">
         </div>
     </div>
 </div>
 
 
-            <div id="ContactDetails" class="tabcontent">
+
+<div id="ContactDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
             <label for="mailingStreet">Mailing Street:</label>
-            <input type="text" id="mailingStreet" readonly>
+            <input type="text" id="mailingStreet" maxlength="255">
         </div>
         <div class="form-group">
             <label for="mailingCity">Mailing City:</label>
-            <input type="text" id="mailingCity" readonly>
+            <input type="text" id="mailingCity">
         </div>
         <div class="form-group">
             <label for="mailingState">Mailing State:</label>
-            <input type="text" id="mailingState" readonly>
+            <select id="mailingState">
+                <option value="">Select State</option>
+                <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh (UT)">Chandigarh (UT)</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadra & Nagar Haveli and Daman & Diu (UT)">Dadra & Nagar Haveli and Daman & Diu (UT)</option>
+                <option value="Delhi [National Capital Territory (NCT)]">Delhi [National Capital Territory (NCT)]</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu & Kashmir (UT)">Jammu & Kashmir (UT)</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Ladakh (UT)">Ladakh (UT)</option>
+                <option value="Lakshadweep (UT)">Lakshadweep (UT)</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Puducherry (UT)">Puducherry (UT)</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="West Bengal">West Bengal</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="mailingPostalCode">Mailing Postal Code:</label>
-            <input type="text" id="mailingPostalCode" readonly>
+            <input type="text" id="mailingPostalCode" pattern="\d{6}" title="Postal code must be exactly 6 digits">
         </div>
         <div class="form-group">
             <label for="mailingCountry">Mailing Country:</label>
-            <input type="text" id="mailingCountry" readonly>
+            <select id="mailingCountry">
+                <option value="">Select Country</option>
+                <option value="India">India</option>
+                <option value="Oman">Oman</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="mobilePhone">Mobile Phone:</label>
-            <input type="tel" id="mobilePhone" readonly>
+            <input type="tel" id="mobilePhone">
         </div>
         <div class="form-group">
             <label for="otherPhone">Other Phone:</label>
-            <input type="tel" id="otherPhone" readonly>
+            <input type="tel" id="otherPhone">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" readonly>
+            <input type="email" id="email">
         </div>
         <div class="form-group">
             <label for="currentCity">Current City:</label>
-            <input type="text" id="currentCity" readonly>
+            <input type="text" id="currentCity" maxlength="255">
         </div>
         <div class="form-group">
             <label for="state">State:</label>
-            <input type="text" id="state" readonly>
+            <select id="state">
+                <option value="">Select State</option>
+                <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh (UT)">Chandigarh (UT)</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadra & Nagar Haveli and Daman & Diu (UT)">Dadra & Nagar Haveli and Daman & Diu (UT)</option>
+                <option value="Delhi [National Capital Territory (NCT)]">Delhi [National Capital Territory (NCT)]</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu & Kashmir (UT)">Jammu & Kashmir (UT)</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Ladakh (UT)">Ladakh (UT)</option>
+                <option value="Lakshadweep (UT)">Lakshadweep (UT)</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Puducherry (UT)">Puducherry (UT)</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="West Bengal">West Bengal</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="pinCode">Pin Code:</label>
-            <input type="text" id="pinCode" readonly>
+            <input type="text" id="pinCode" pattern="\d{6}" title="Pin code must be exactly 6 digits">
         </div>
     </div>
 </div>
+
 
 
 
@@ -369,100 +474,179 @@
 </div>
 
 
-            <div id="ProfessionalDetails" class="tabcontent">
+<div id="ProfessionalDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
             <label for="educationalQualification">Educational Qualification:</label>
-            <input type="text" id="educationalQualification" readonly>
+            <select id="educationalQualification">
+                <option value="">Select Qualification</option>
+                <option value="BA">BA</option>
+                <option value="BBA / BBM">BBA / BBM</option>
+                <option value="BCA">BCA</option>
+                <option value="BCom">BCom</option>
+                <option value="BDS">BDS</option>
+                <option value="BE/BTech">BE/BTech</option>
+                <option value="BEd">BEd</option>
+                <option value="BL">BL</option>
+                <option value="BSc">BSc</option>
+                <option value="CA">CA</option>
+                <option value="DM">DM</option>
+                <option value="Diploma">Diploma</option>
+                <option value="LLB">LLB</option>
+                <option value="MA/Mcom/MSc">MA/Mcom/MSc</option>
+                <option value="MBA">MBA</option>
+                <option value="MBBS">MBBS</option>
+                <option value="MD">MD</option>
+                <option value="MDS">MDS</option>
+                <option value="ME/MTech">ME/MTech</option>
+                <option value="MPhil">MPhil</option>
+                <option value="MSW">MSW</option>
+                <option value="Other Degree">Other Degree</option>
+                <option value="Other Non-Degree">Other Non-Degree</option>
+                <option value="PG Diploma">PG Diploma</option>
+                <option value="PUC">PUC</option>
+                <option value="PhD">PhD</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="collegeOtherInstitution">College/Other Institution:</label>
-            <input type="text" id="collegeOtherInstitution" readonly>
+            <input type="text" id="collegeOtherInstitution" maxlength="255">
         </div>
         <div class="form-group">
             <label for="yearOfDegreeCompletion">Year of Degree Completion:</label>
-            <input type="number" id="yearOfDegreeCompletion" readonly>
+            <input type="number" id="yearOfDegreeCompletion" min="1900" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1900 and 2099">
         </div>
         <div class="form-group">
             <label for="profession">Profession:</label>
-            <input type="text" id="profession" readonly>
+            <input type="text" id="profession" maxlength="255">
         </div>
         <div class="form-group">
             <label for="employerName">Employer Name:</label>
-            <input type="text" id="employerName" readonly>
+            <input type="text" id="employerName" maxlength="255">
         </div>
         <div class="form-group">
             <label for="jobTitle">Job Title:</label>
-            <input type="text" id="jobTitle" readonly>
+            <input type="text" id="jobTitle" maxlength="255">
         </div>
     </div>
 </div>
 
 
-            <div id="NCCDetails" class="tabcontent">
+
+<div id="NCCDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
             <label for="nccDirectorate">NCC Directorate:</label>
-            <input type="text" id="nccDirectorate" readonly>
+            <select id="nccDirectorate">
+                <option value="">Select Directorate</option>
+                <option value="Andhra Pradesh & Telangana">Andhra Pradesh & Telangana</option>
+                <option value="Bihar & Jharkhand">Bihar & Jharkhand</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Gujarat Dadra & Nagar Haveli">Gujarat Dadra & Nagar Haveli</option>
+                <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                <option value="Karnataka & Goa">Karnataka & Goa</option>
+                <option value="Kerala & Lakshdweep">Kerala & Lakshdweep</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Madhya Pradesh & Chhattisgarh">Madhya Pradesh & Chhattisgarh</option>
+                <option value="Odisha">Odisha</option>
+                <option value="North East Region (Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland & Tripura)">North East Region (Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland & Tripura)</option>
+                <option value="Punjab, Haryana, Himachal Pradesh and Chandigarh">Punjab, Haryana, Himachal Pradesh and Chandigarh</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Tamil Nadu, Puducherry, Andaman & Nicobar">Tamil Nadu, Puducherry, Andaman & Nicobar</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal & Sikkim">West Bengal & Sikkim</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
-            <input type="text" id="nccDirectorateUnitEtc" readonly>
+            <input type="text" id="nccDirectorateUnitEtc" maxlength="255">
         </div>
         <div class="form-group">
             <label for="rdOtherCampDetails">RD Other Camp Details:</label>
-            <input type="text" id="rdOtherCampDetails" readonly>
+            <textarea id="rdOtherCampDetails" maxlength="1000"></textarea>
         </div>
         <div class="form-group">
             <label for="yepYear">YEP Year:</label>
-            <input type="number" id="yepYear" readonly>
+            <input type="number" id="yepYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
         </div>
         <div class="form-group">
             <label for="yepCountry">YEP Country:</label>
-            <input type="text" id="yepCountry" readonly>
+            <select id="yepCountry">
+                <option value="">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Russia">Russia</option>
+                <option value="China">China</option>
+                <option value="Maldives">Maldives</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Nepal">Nepal</option>
+                <option value="Bhutan">Bhutan</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Vietnam">Vietnam</option>
+                <option value="Naval Cruise">Naval Cruise</option>
+                <option value="Khazakstan">Khazakstan</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
-            <input type="text" id="nccaaMembershipNumber" readonly>
+            <input type="text" id="nccaaMembershipNumber" pattern="NCCAA/4[0-9]/[text]/6[0-9]" title="NCCAA Membership Number format must be NCCAA/4[0-9]/[text]/6[0-9]">
         </div>
         <div class="form-group">
             <label for="nccWing">NCC Wing:</label>
-            <input type="text" id="nccWing" readonly>
+            <select id="nccWing">
+                <option value="">Select Wing</option>
+                <option value="Army">Army</option>
+                <option value="Navy">Navy</option>
+                <option value="Air Force">Air Force</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="jdJwSdSw">JD/JW/SD/SW:</label>
-            <input type="text" id="jdJwSdSw" readonly>
+            <select id="jdJwSdSw" multiple>
+                <option value="JD">JD (Junior Division - Boys)</option>
+                <option value="JW">JW (Junior Wing - Girls)</option>
+                <option value="SD">SD (Senior Division - Boys)</option>
+                <option value="SW">SW (Senior Wing - Girls)</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="nccGroup">NCC Group:</label>
-            <input type="text" id="nccGroup" readonly>
+            <input type="text" id="nccGroup" maxlength="255">
         </div>
         <div class="form-group">
             <label for="nccCertificate">NCC Certificate:</label>
-            <input type="text" id="nccCertificate" readonly>
+            <select id="nccCertificate" multiple>
+                <option value="A Certificate">A Certificate</option>
+                <option value="B Certificate">B Certificate</option>
+                <option value="C Certificate">C Certificate</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="yearOfCompletionOfNCC">Year of Completion of NCC:</label>
-            <input type="number" id="yearOfCompletionOfNCC" readonly>
+            <input type="number" id="yearOfCompletionOfNCC" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
         </div>
         <div class="form-group">
             <label for="yearsInNCC">Years in NCC:</label>
-            <input type="number" id="yearsInNCC" readonly>
+            <input type="text" id="yearsInNCC" pattern="\d{4}-\d{4}" title="Years in NCC format must be yyyy-yyyy">
         </div>
         <div class="form-group">
             <label for="importantNccCamps">Important NCC Camps:</label>
-            <input type="text" id="importantNccCamps" readonly>
+            <textarea id="importantNccCamps" maxlength="1000"></textarea>
         </div>
         <div class="form-group">
             <label for="achievementsInNcc">Achievements in NCC:</label>
-            <input type="text" id="achievementsInNcc" readonly>
+            <textarea id="achievementsInNcc" maxlength="1000"></textarea>
         </div>
         <div class="form-group">
             <label for="rdCampYear">RD Camp Year:</label>
-            <input type="number" id="rdCampYear" readonly>
+            <input type="number" id="rdCampYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
         </div>
     </div>
 </div>
+
 
             
             <div id="SocialDetails" class="tabcontent">
@@ -495,30 +679,54 @@
 </div>
 
             
-           <div id="OtherDetails" class="tabcontent">
+<div id="OtherDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
             <label for="tShirtSize">T-Shirt Size:</label>
-            <input type="text" id="tShirtSize" readonly>
+            <select id="tShirtSize" readonly>
+                <option value="">Select Size</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="2XL">2XL</option>
+                <option value="3XL">3XL</option>
+                <option value="4XL">4XL</option>
+                <option value="5XL">5XL</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="languagesKnown">Languages Known:</label>
-            <input type="text" id="languagesKnown" readonly>
+            <input type="text" id="languagesKnown" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="hobbiesAchievements">Hobbies and Achievements:</label>
-            <textarea id="hobbiesAchievements" readonly></textarea>
+            <textarea id="hobbiesAchievements" maxlength="1000" readonly></textarea>
         </div>
         <div class="form-group">
             <label for="foodPreference">Food Preference:</label>
-            <input type="text" id="foodPreference" readonly>
+            <select id="foodPreference" readonly>
+                <option value="">Select Preference</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Eggetarian">Eggetarian</option>
+                <option value="Non-Vegetarian">Non-Vegetarian</option>
+                <option value="Jain">Jain</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="covidVaccinationStatus">COVID Vaccination Status:</label>
-            <input type="text" id="covidVaccinationStatus" readonly>
+            <select id="covidVaccinationStatus" readonly>
+                <option value="">Select Status</option>
+                <option value="1 Dose Completed">1 Dose Completed</option>
+                <option value="2 Doses Completed">2 Doses Completed</option>
+                <option value="3+ Doses Completed">3+ Doses Completed</option>
+                <option value="Not Vaccinated">Not Vaccinated</option>
+            </select>
         </div>
     </div>
 </div>
+
 
 
             <div id="actionButtons" style="display: none;">
