@@ -7,18 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.png" type="image/x-icon">
     <style>
-        #trainerForm {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 80vh; /* Adjust as needed */
-        margin: 0 auto;
-    }
-
-    #trainerForm input[type="text"] {
-        text-align: center;
-    }
+        /* General Styles */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -26,7 +15,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        
         header {
             background-color: #004aad;
             color: white;
@@ -46,20 +34,18 @@
         header img {
             width: 80px;
             height: 80px;
-            margin-right: 20px; /* Add padding between the logo and the text */
+            margin-right: 20px;
         }
-
         header h1 {
             font-size: 24px;
             margin: 0;
         }
-
         main {
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 100px); /* Adjust based on header and footer heights */
+            height: calc(100vh - 100px);
         }
         .icon-container {
             display: flex;
@@ -77,9 +63,7 @@
             transition: background-color 0.3s, border-color 0.3s;
             padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        
         }
-
         .icon img {
             width: 75px;
             height: 75px;
@@ -92,14 +76,13 @@
             align-items: center;
         }
         .icon:hover {
-            background-color: #e0f0ff; /* Light blue background on hover */
-            border-color: #004aad; /* Border color on hover */
+            background-color: #e0f0ff;
+            border-color: #004aad;
         }
         .icon:active {
-            background-color: #b0d4ff; /* Darker blue background on click */
-            border-color: #003799; /* Darker border color on click */
+            background-color: #b0d4ff;
+            border-color: #003799;
         }
-
         footer {
             background-color: #004aad;
             color: white;
@@ -108,7 +91,18 @@
             position: sticky;
             bottom: 0;
         }
-
+        /* Form Styles */
+        #trainerForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            margin: 0 auto;
+        }
+        #trainerForm input[type="text"] {
+            text-align: center;
+        }
         .section {
             margin-bottom: 20px;
         }
@@ -124,17 +118,17 @@
             margin-right: 0;
         }
         .buttons {
-        position: sticky;
-        bottom: 0;
-        background-color: white;
-        padding: 10px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
+            position: sticky;
+            bottom: 0;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
         }
         .buttons button {
-        display: none;
+            display: none;
         }
         input[disabled], select[disabled] {
             background-color: #f0f0f0;
@@ -185,16 +179,13 @@
         }
     </style>
 </head>
-</style>
-</head>
 <body>
     <header>
-        <a href="index.html" style="display: flex; align-items: left; text-decoration: none; color: white;">
-            <img src="favicon.png" alt="CADET Logo" style="width: 80px; height: 80px; margin-right: 20px;">
-            <h1 style="margin: 0; font-size: 24px;">My CADET App</h1>
+        <a href="index.html">
+            <img src="favicon.png" alt="CADET Logo">
+            <h1>My CADET App</h1>
         </a>
     </header>
-
     <main>
         <div id="trainerForm">
             <label for="trainerId">Enter CADET Trainer ID:</label>
@@ -202,7 +193,6 @@
             <br>
             <button type="button" onclick="fetchTrainerDetails()">Fetch Details</button>
             <br><br>
-
             <div id="trainerDetails" style="display: none;">
                 <!-- Tabs -->
                 <div class="tab-container">
@@ -214,7 +204,6 @@
                     <div class="tab-button" onclick="showTab('ncc')">NCC Details</div>
                     <div class="tab-button" onclick="showTab('other')">Other Details</div>
                 </div>
-
                 <!-- Tab Contents -->
                 <div class="tab-contents">
                     <div id="basic-info" class="tab-content active">
@@ -250,169 +239,44 @@
                         </div>
                         <div class="two-columns">
                             <div class="column">
+                                <label for="middleName">Middle Name:</label>
+                                <input type="text" id="middleName" name="middleName" disabled>
+                            </div>
+                            <div class="column">
                                 <label for="lastName">Last Name:</label>
                                 <input type="text" id="lastName" name="lastName" disabled>
                             </div>
                         </div>
                     </div>
+                    <!-- Other Tab Contents go here -->
                     <div id="contact" class="tab-content">
-                        <!-- Contact Information Content -->
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="birthdate">Birthdate:</label>
-                                <input type="date" id="birthdate" name="birthdate" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="gender">Gender:</label>
-                                <select id="gender" name="gender" disabled>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="mobilePhone">Mobile Number:</label>
-                                <input type="text" id="mobilePhone" name="mobilePhone" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="otherPhone">Alternate Number:</label>
-                                <input type="text" id="otherPhone" name="otherPhone" disabled>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="educationalQualification">Educational Qualification:</label>
-                                <input type="text" id="educationalQualification" name="educationalQualification" disabled>
-                            </div>
-                        </div>
+                        <!-- Contact Fields -->
                     </div>
                     <div id="address" class="tab-content">
-                        <!-- Address Fields Content -->
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="mailingStreet">Mailing Street:</label>
-                                <input type="text" id="mailingStreet" name="mailingStreet" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="mailingPostalCode">Mailing Postal Code:</label>
-                                <input type="text" id="mailingPostalCode" name="mailingPostalCode" disabled>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="mailingCountry">Mailing Country:</label>
-                                <input type="text" id="mailingCountry" name="mailingCountry" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="currentCity">Current City:</label>
-                                <input type="text" id="currentCity" name="currentCity" disabled>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="state">State:</label>
-                                <input type="text" id="state" name="state" disabled>
-                            </div>
-                        </div>
+                        <!-- Address Fields -->
                     </div>
                     <div id="training" class="tab-content">
-                        <!-- Training History Content -->
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="certificationStatus">Certification Status:</label>
-                                <input type="text" id="certificationStatus" name="certificationStatus" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="numberOfCampsThisYear">Number of Camps This Year:</label>
-                                <input type="number" id="numberOfCampsThisYear" name="numberOfCampsThisYear" disabled>
-                            </div>
-                        </div>
+                        <!-- Training History Fields -->
                     </div>
                     <div id="ncc" class="tab-content">
-                        <!-- NCC Details Content -->
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="nccDirectorate">NCC Directorate:</label>
-                                <select id="nccDirectorate" name="nccDirectorate" disabled>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                            <div class="column">
-                                <label for="nccWing">NCC Wing:</label>
-                                <select id="nccWing" name="nccWing" disabled>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
-                                <input type="text" id="nccaaMembershipNumber" name="nccaaMembershipNumber" disabled>
-                            </div>
-                        </div>
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="yepYear">YEP Year:</label>
-                                <input type="text" id="yepYear" name="yepYear" disabled>
-                            </div>
-                            <div class="column">
-                                <label for="yepCountry">YEP Country:</label>
-                                <select id="yepCountry" name="yepCountry" disabled>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                        </div>
+                        <!-- NCC Details -->
                     </div>
                     <div id="other" class="tab-content">
-                        <!-- Other Details Content -->
-                        <div class="two-columns">
-                            <div class="column">
-                                <label for="otherDetails">Other Details:</label>
-                                <textarea id="otherDetails" name="otherDetails" rows="4" cols="50" disabled></textarea>
-                            </div>
-                        </div>
+                        <!-- Other Details -->
                     </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" id="editButton" onclick="editDetails()">Edit</button>
+                    <button type="button" id="saveButton" onclick="saveDetails()">Save</button>
+                    <button type="button" id="cancelButton" onclick="cancelEdit()">Cancel</button>
                 </div>
             </div>
         </div>
     </main>
-    
     <footer>
-        <!-- Footer content here -->
+        <p>© 2024 CADET Program</p>
     </footer>
-    
-    <button id="editButton" type="button" onclick="editDetails()" style="display: none;">Edit</button>
-    
+    <script src="index.js"></script>
     <script src="trainer.js"></script>
-    <script>
-        // JavaScript for Tabs
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-button');
-            
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            buttons.forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            document.getElementById(tabId).classList.add('active');
-            document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
-        }
-        
-        // Initialize with Basic Information tab
-        showTab('basic-info');
-    </script>
-    <script src="script.js"></script>
-    <script src="trainer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
+    </body>
 </html>
