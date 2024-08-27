@@ -44,11 +44,14 @@
             margin: 0;
         }
 
-        main {
-            flex-grow: 1;
-            padding: 20px;
-            text-align: left;
-        }
+       main {
+    flex-grow: 1;
+    padding: 20px;
+    text-align: left;
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto; /* Center align */
+}
+
 
         .form-container {
             max-width: 400px;
@@ -93,12 +96,13 @@
             text-align: center
         }
 
-        .tabs {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-around;
-            border-bottom: 1px solid #ddd;
-        }
+.tabs {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+}
 
         .tablink {
             padding: 10px;
@@ -116,8 +120,10 @@
         }
 
         .tabcontent {
-            display: none;
-        }
+    display: none;
+    max-width: 100%; /* Ensure content does not overflow */
+    overflow: hidden;
+}
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -199,6 +205,17 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+        @media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tablink {
+        width: 100%; /* Make tabs stack vertically on small screens */
+        text-align: center;
+    }
 }
     </style>
 </head>
