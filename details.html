@@ -295,7 +295,7 @@
         </div>
         <div class="form-group">
             <label for="birthdate">Birthdate:</label>
-            <input type="date" id="birthdate" pattern="\d{2}-\d{2}-\d{4}" title="Date format should be DD-MM-YYYY">
+            <input type="date" id="birthdate">
         </div>
         <div class="form-group">
             <label for="gender">Gender:</label>
@@ -465,9 +465,14 @@
            <div id="CADETDetails" class="tabcontent">
     <div class="two-column">
         <div class="form-group">
-            <label for="isEXPAMember">Is EXPA Member:</label>
-            <input type="text" id="isEXPAMember" readonly>
-        </div>
+    <label for="isEXPAMember">Is EXPA Member:</label>
+    <select id="isEXPAMember" disabled>
+        <option value="Life Member">Life Member</option>
+        <option value="Annual Member">Annual Member</option>
+        <option value="No">No</option>
+        <option value="N/A">N/A</option>
+    </select>
+</div>
         <div class="form-group">
             <label for="certificationStatus">Certification Status:</label>
             <input type="text" id="certificationStatus" readonly>
@@ -736,9 +741,9 @@
             <label for="covidVaccinationStatus">COVID Vaccination Status:</label>
             <select id="covidVaccinationStatus" readonly>
                 <option value="">Select Status</option>
-                <option value="1 Dose Completed">1 Dose Completed</option>
-                <option value="2 Doses Completed">2 Doses Completed</option>
-                <option value="3+ Doses Completed">3+ Doses Completed</option>
+                <option value="1 Dose Completed">1 Dose Complete</option>
+                <option value="2 Doses Completed">2 Doses Complete</option>
+                <option value="3+ Doses Completed">3+ Doses Complete</option>
                 <option value="Not Vaccinated">Not Vaccinated</option>
             </select>
         </div>
