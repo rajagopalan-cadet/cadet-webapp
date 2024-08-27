@@ -144,9 +144,7 @@ document.getElementById('languagesKnown').value = data.Languages_Known__c || '';
 document.getElementById('hobbiesAchievements').value = data.Hobbies_and_Achievements__c || '';
 document.getElementById('foodPreference').value = data.Food_Preference__c || '';
 document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination_Status__c || '';
-    
-};
- // Update JD/JW/SD/SW checkboxes
+     // Update JD/JW/SD/SW checkboxes
 if (data.JD_JW_SD_SW__c) {
     const jdJwSdSwValues = data.JD_JW_SD_SW__c.split(';');
     jdJwSdSwValues.forEach(value => {
@@ -162,6 +160,8 @@ if (data.NCC_Certificate__c) {
         if (checkbox) checkbox.checked = true;
     });
 }
+};
+
 
 
     document.getElementById('editButton').addEventListener('click', function() {
@@ -191,10 +191,19 @@ function toggleEditMode(editMode) {
 
 function updateDetails(salesforceId) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
-    
+        // Gathering selected JD/JW/SD/SW values for update
+const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
+    .map(checkbox => checkbox.value)
+    .join(';');
+
+// Gathering selected NCC Certificate values for update
+const selectedNccCertificate = Array.from(document.querySelectorAll('input[name="nccCertificate"]:checked'))
+    .map(checkbox => checkbox.value)
+    .join(';');
     const updatedData = {
         // Gather updated fields from the form
          // Basic Details
+
     CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
     Salutation: document.getElementById('salutation').value,
     FirstName: document.getElementById('firstName').value,
@@ -227,6 +236,8 @@ function updateDetails(salesforceId) {
     Job_Title__c: document.getElementById('jobTitle').value,
 
             // NCC Details
+            JD_JW_SD_SW__c: selectedJdJwSdSw,
+    NCC_Certificate__c: selectedNccCertificate,
     NCC_Directorate__c: document.getElementById('nccDirectorate').value,
     NCC_Directorate_Unit_Etc__c: document.getElementById('nccDirectorateUnitEtc').value,
     RD_Other_Camp_Details__c: document.getElementById('rdOtherCampDetails').value,
@@ -259,22 +270,8 @@ function updateDetails(salesforceId) {
     Food_Preference__c: document.getElementById('foodPreference').value,
     COVID_Vaccination_Status__c: document.getElementById('covidVaccinationStatus').value
     };
-    // Gathering selected JD/JW/SD/SW values for update
-const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
-    .map(checkbox => checkbox.value)
-    .join(';');
 
-// Gathering selected NCC Certificate values for update
-const selectedNccCertificate = Array.from(document.querySelectorAll('input[name="nccCertificate"]:checked'))
-    .map(checkbox => checkbox.value)
-    .join(';');
 
-// Create the data object for updating
-const updatedData = {
-    JD_JW_SD_SW__c: selectedJdJwSdSw,
-    NCC_Certificate__c: selectedNccCertificate,
-    // Add other fields as needed
-};
 
 
     fetch(url, {
