@@ -169,7 +169,7 @@ document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination
     document.getElementById('saveButton').addEventListener('click', function() {
         updateDetails(data.Id);
     });
-}
+
 
 function toggleEditMode(editMode) {
     const readOnlyFields = document.querySelectorAll('.tabcontent input');
