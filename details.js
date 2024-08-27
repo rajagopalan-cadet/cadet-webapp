@@ -144,9 +144,7 @@ document.getElementById('languagesKnown').value = data.Languages_Known__c || '';
 document.getElementById('hobbiesAchievements').value = data.Hobbies_and_Achievements__c || '';
 document.getElementById('foodPreference').value = data.Food_Preference__c || '';
 document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination_Status__c || '';
-
-window.onload = function() {
-    document.getElementById('basicDetails').click(); // Replace 'basicDetailsTab' with the ID of your Basic Details tab
+    
 };
 
 
@@ -176,11 +174,74 @@ function toggleEditMode(editMode) {
 }
 
 function updateDetails(salesforceId) {
-    const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${salesforceId}`;
+    const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
     
     const updatedData = {
         // Gather updated fields from the form
-        // Example: FieldName: document.getElementById('basicField').value
+         // Basic Details
+    CADET_Official_Email__c: document.getElementById('cadetOfficialEmail').value,
+    Salutation: document.getElementById('salutation').value,
+    FirstName: document.getElementById('firstName').value,
+    LastName: document.getElementById('lastName').value,
+    Birthdate: document.getElementById('birthdate').value,
+    Gender__c: document.getElementById('gender').value,
+    Emergency_Contact_Name__c: document.getElementById('emergencyContactName').value,
+    Emergency_Contact_Relationship__c: document.getElementById('emergencyContactRelationship').value,
+    Emergency_Contact_Phone__c: document.getElementById('emergencyContactPhone').value,
+
+        // Contact Details
+    MailingStreet: document.getElementById('mailingStreet').value,
+    MailingCity: document.getElementById('mailingCity').value,
+    MailingState: document.getElementById('mailingState').value,
+    MailingPostalCode: document.getElementById('mailingPostalCode').value,
+    MailingCountry: document.getElementById('mailingCountry').value,
+    MobilePhone: document.getElementById('mobilePhone').value,
+    OtherPhone: document.getElementById('otherPhone').value,
+    Email: document.getElementById('email').value,
+    Current_City__c: document.getElementById('currentCity').value,
+    State__c: document.getElementById('state').value,
+    Pin_Code__c: document.getElementById('pinCode').value,
+
+        // Professional Details
+    Educational_Qualification__c: document.getElementById('educationalQualification').value,
+    College_Other_Institution__c: document.getElementById('collegeOtherInstitution').value,
+    Year_of_Degree_Completion__c: document.getElementById('yearOfDegreeCompletion').value,
+    Profession__c: document.getElementById('profession').value,
+    Employer_Name__c: document.getElementById('employerName').value,
+    Job_Title__c: document.getElementById('jobTitle').value,
+
+            // NCC Details
+    NCC_Directorate__c: document.getElementById('nccDirectorate').value,
+    NCC_Directorate_Unit_Etc__c: document.getElementById('nccDirectorateUnitEtc').value,
+    RD_Other_Camp_Details__c: document.getElementById('rdOtherCampDetails').value,
+    YEP_Year__c: document.getElementById('yepYear').value,
+    YEP_Country__c: document.getElementById('yepCountry').value,
+    NCCAA_Membership_Number__c: document.getElementById('nccaaMembershipNumber').value,
+    NCC_Wing__c: document.getElementById('nccWing').value,
+    JD_JW_SD_SW__c: document.getElementById('jdJwSdSw').value.join(';'),
+    NCC_Group__c: document.getElementById('nccGroup').value,
+    NCC_Certificate__c: document.getElementById('nccCertificate').value.join(';'),
+    Year_of_Completion_of_NCC__c: document.getElementById('yearOfCompletionOfNCC').value,
+    Years_in_NCC__c: document.getElementById('yearsInNCC').value,
+    Important_NCC_Camps__c: document.getElementById('importantNccCamps').value,
+    Achievements_in_NCC__c: document.getElementById('achievementsInNcc').value,
+    RD_Camp_Year__c: document.getElementById('rdCampYear').value,
+
+    // Social Details
+    Instagram_ID__c: document.getElementById('instagramID').value,
+    Facebook_ID__c: document.getElementById('facebookID').value,
+    Twitter_ID__c: document.getElementById('twitterID').value,
+    LinkedIn_URL__c: document.getElementById('linkedInURL').value,
+    Short_Bio__c: document.getElementById('shortBio').value,
+    Long_Bio__c: document.getElementById('longBio').value,
+
+
+    // Other Details
+    T_Shirt_Size__c: document.getElementById('tShirtSize').value,
+    Languages_Known__c: document.getElementById('languagesKnown').value,
+    Hobbies_and_Achievements__c: document.getElementById('hobbiesAchievements').value,
+    Food_Preference__c: document.getElementById('foodPreference').value,
+    COVID_Vaccination_Status__c: document.getElementById('covidVaccinationStatus').value
     };
 
     fetch(url, {
