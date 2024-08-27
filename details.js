@@ -144,25 +144,18 @@ document.getElementById('languagesKnown').value = data.Languages_Known__c || '';
 document.getElementById('hobbiesAchievements').value = data.Hobbies_and_Achievements__c || '';
 document.getElementById('foodPreference').value = data.Food_Preference__c || '';
 document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination_Status__c || '';
-     // Update JD/JW/SD/SW checkboxes
-if (data.JD_JW_SD_SW__c) {
-    const jdJwSdSwValues = data.JD_JW_SD_SW__c.split(';');
-    jdJwSdSwValues.forEach(value => {
-        const checkbox = document.querySelector(`input[name="jdJwSdSw"][value="${value}"]`);
-        if (checkbox) checkbox.checked = true;
+        // Handle JD/JW/SD/SW Checkboxes
+    const jdJwSdSwValues = data.JD_JW_SD_SW__c ? data.JD_JW_SD_SW__c.split(';') : [];
+    document.querySelectorAll('input[name="jdJwSdSw"]').forEach(checkbox => {
+        checkbox.checked = jdJwSdSwValues.includes(checkbox.value);
     });
-}
-    // Update NCC Certificate checkboxes
-if (data.NCC_Certificate__c) {
-    const nccCertificateValues = data.NCC_Certificate__c.split(';');
-    nccCertificateValues.forEach(value => {
-        const checkbox = document.querySelector(`input[name="nccCertificate"][value="${value}"]`);
-        if (checkbox) checkbox.checked = true;
+
+    // Handle NCC Certificate Checkboxes
+    const nccCertificateValues = data.NCC_Certificate__c ? data.NCC_Certificate__c.split(';') : [];
+    document.querySelectorAll('input[name="nccCertificate"]').forEach(checkbox => {
+        checkbox.checked = nccCertificateValues.includes(checkbox.value);
     });
-}
 };
-
-
 
     document.getElementById('editButton').addEventListener('click', function() {
         toggleEditMode(true);
