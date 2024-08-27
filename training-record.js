@@ -143,7 +143,7 @@ function populateDetailsTable(data, type) {
     data.records.forEach((record, index) => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = index + 1; // Sl No
-        row.insertCell(1).textContent = record.Id || ''; // SF Event ID
+        row.insertCell(1).textContent = record.Name || ''; // SF Event ID
         row.insertCell(2).textContent = record.Event_Name__c || ''; // Event Name
         row.insertCell(3).textContent = record.Camp_Start_Date_F__c || ''; // Start Date
     });
@@ -170,6 +170,54 @@ function openTab(evt, tabName) {
 document.addEventListener("DOMContentLoaded", function() {
     // Open the 'allTimeTab' by default
     document.querySelector(".tablink").click();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Define the number of records per page
+    const recordsPerPage = 10;
+    
+    const table = document.getElementById('currentYearDetailsTable');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.getElementsByTagName('tr'));
+    const numPages = Math.ceil(rows.length / recordsPerPage);
+
+    function showPage(pageNum) {
+        // Hide all rows
+        rows.forEach(row => row.style.display = 'none');
+        
+        // Show the rows for the current page
+        const start = (pageNum - 1) * recordsPerPage;
+        const end = start + recordsPerPage;
+        rows.slice(start, end).forEach(row => row.style.display = '');
+        
+        // Update pagination controls
+        const paginationLinks = document.querySelectorAll('.pagination a');
+        paginationLinks.forEach(link => link.classList.remove('active'));
+        document.querySelector(`.pagination a[data-page="${pageNum}"]`).classList.add('active');
+    }
+
+    function createPaginationControls() {
+        const paginationContainer = document.createElement('div');
+        paginationContainer.className = 'pagination';
+
+        for (let i = 1; i <= numPages; i++) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+            pageLink.dataset.page = i;
+            pageLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                showPage(parseInt(pageLink.dataset.page, 10));
+            });
+            paginationContainer.appendChild(pageLink);
+        }
+        
+        // Append pagination controls to the DOM
+        table.parentNode.insertBefore(paginationContainer, table.nextSibling);
+    }
+
+    // Initialize pagination
+    createPaginationControls();
+    showPage(1); // Show the first page by default
 });
 
 function showErrorModal(message) {
