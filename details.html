@@ -54,7 +54,8 @@
 
 
         .form-container {
-            max-width: 400px;
+            width: 80%;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ddd;
@@ -101,7 +102,7 @@
     display: flex;
     justify-content: space-around;
     border-bottom: 1px solid #ddd;
-    flex-wrap: wrap; /* Allow wrapping if needed */
+    
 }
 
         .tablink {
@@ -229,7 +230,7 @@
 
     <main>
         <div class="form-container" id="inputSection">
-            <div class="form-group" style="display: flex; align-items: center;">
+             <div class="form-group" style="display: flex; align-items: center;">
                 <label for="trainerId" style="margin-right: 15px; line-height: 1.5;">Enter CADET Trainer ID:</label>
                 <input type="text" id="trainerIdPrefix" value="CT-" readonly style="width: 40px; height: 30px; text-align: center; border: 0px solid #ddd; border-radius: 5px; margin-right: 1px;">
                 <input type="text" id="trainerIdNumbers" pattern="\d{3}" placeholder="123" required style="width: 80px; height: 30px; border: 1px solid #ddd; border-radius: 5px;">
@@ -242,11 +243,11 @@
             <div class="form-group" style="text-align: center;">
                 <button id="fetchButton">Fetch Details</button>
             </div>
-        </div>
+        </div> 
 
-        <div class="form-container" id="detailsSection" style="display: none;">
+        <div class="form-container" id="detailsSection" style="display: true;">
             <div class="tabs">
-                <button class="tablink" onclick="openTab(event, 'BasicDetails')">Basic Details</button>
+                <button class="tablink active" onclick="openTab(event, 'BasicDetails')">Basic Details</button>
                 <button class="tablink" onclick="openTab(event, 'ContactDetails')">Contact Details</button>
                 <button class="tablink" onclick="openTab(event, 'CADETDetails')">CADET Details</button>
                 <button class="tablink" onclick="openTab(event, 'ProfessionalDetails')">Professional Details</button>
@@ -255,7 +256,7 @@
                 <button class="tablink" onclick="openTab(event, 'OtherDetails')">Other Details</button>
             </div>
 
-<div id="BasicDetails" class="tabcontent">
+<div id="BasicDetails" class="tabcontent" style="display: block;">
     <div class="two-column">
         <div class="form-group">
             <label for="id">ID:</label>
