@@ -95,6 +95,58 @@ async function getRecords(data) {
         throw error;
     }
 }
+function processAPIResponse(allTimeData, currentFyData) {
+    // Populate the tab counts
+    populateTabCounts(allTimeData.totalSize, currentFyData.totalSize);
+
+    // Populate summary views and details tables
+    populateSummaryView(allTimeData, 'allTime');
+    populateSummaryView(currentFyData, 'currentYear');
+
+    populateDetailsTable(allTimeData, 'allTime');
+    populateDetailsTable(currentFyData, 'currentYear');
+}
+function populateTabCounts(allTimeTotalSize, currentFyTotalSize) {
+    // Update the tab headers with total counts
+    document.getElementById('allTimeTabCount').textContent = allTimeTotalSize || 0;
+    document.getElementById('currentYearTabCount').textContent = currentFyTotalSize || 0;
+}
+
+function populateSummaryView(data, type) {
+    let totalCamps = 0;
+    let totalTeamLead = 0;
+    let totalTrainer = 0;
+    let totalObserver = 0;
+
+    data.records.forEach(record => {
+        totalCamps++;
+        if (record.Attendee_Type__c === 'Team Lead') {
+            totalTeamLead++;
+        } else if (record.Attendee_Type__c === 'Trainer') {
+            totalTrainer++;
+        } else if (record.Attendee_Type__c === 'Observer') {
+            totalObserver++;
+        }
+    });
+
+    document.getElementById(`${type}TotalCamps`).textContent = `Total Camps: ${totalCamps}`;
+    document.getElementById(`${type}TotalTeamLead`).textContent = `Total Camps as Team Lead: ${totalTeamLead}`;
+    document.getElementById(`${type}TotalTrainer`).textContent = `Total Camps as Trainer: ${totalTrainer}`;
+    document.getElementById(`${type}TotalObserver`).textContent = `Total Camps as Observer: ${totalObserver}`;
+}
+
+function populateDetailsTable(data, type) {
+    const tableBody = document.getElementById(`${type}DetailsTable`).getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = ''; // Clear the table
+
+    data.records.forEach((record, index) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = index + 1; // Sl No
+        row.insertCell(1).textContent = record.Id || ''; // SF Event ID
+        row.insertCell(2).textContent = record.Event_Name__c || ''; // Event Name
+        row.insertCell(3).textContent = record.Camp_Start_Date_F__c || ''; // Start Date
+    });
+}
 
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
