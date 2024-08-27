@@ -260,19 +260,19 @@
     <div class="two-column">
         <div class="form-group">
             <label for="id">ID:</label>
-            <input type="text" id="id" readonly disabled>
+            <input type="text" id="id" disabled>
         </div>
         <div class="form-group">
             <label for="cadetTrainerId">CADET Trainer ID:</label>
-            <input type="text" id="cadetTrainerId" readonly disabled>
+            <input type="text" id="cadetTrainerId" disabled>
         </div>
         <div class="form-group">
             <label for="cadetOfficialEmail">CADET Official Email:</label>
-            <input type="email" id="cadetOfficialEmail" pattern=".*@(gmail\.com|cadetprogram\.org)$" title="Email must be @gmail.com or @cadetprogram.org" required disabled>
+            <input type="email" id="cadetOfficialEmail" pattern=".*@(gmail\.com|cadetprogram\.org)$" title="Email must be @gmail.com or @cadetprogram.org" required readonly>
         </div>
         <div class="form-group">
             <label for="salutation">Salutation:</label>
-            <select id="salutation" disabled>
+            <select id="salutation" readonly>
                 <option value="">Select Salutation</option>
                 <option value="Mr.">Mr.</option>
                 <option value="Ms.">Ms.</option>
@@ -287,19 +287,19 @@
         </div>
         <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" maxlength="255">
+            <input type="text" id="firstName" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" maxlength="255">
+            <input type="text" id="lastName" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="birthdate">Birthdate:</label>
-            <input type="date" id="birthdate">
+            <input type="date" id="birthdate" readonly>
         </div>
         <div class="form-group">
             <label for="gender">Gender:</label>
-            <select id="gender" disabled>
+            <select id="gender" readonly>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -308,11 +308,11 @@
         </div>
         <div class="form-group">
             <label for="emergencyContactName">Emergency Contact Name:</label>
-            <input type="text" id="emergencyContactName" maxlength="255">
+            <input type="text" id="emergencyContactName" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="emergencyContactRelationship">Emergency Contact Relationship:</label>
-            <select id="emergencyContactRelationship" disabled>
+            <select id="emergencyContactRelationship" readonly>
                 <option value="">Select Relationship</option>
                 <option value="Friend">Friend</option>
                 <option value="Spouse">Spouse</option>
@@ -323,7 +323,7 @@
         </div>
         <div class="form-group">
             <label for="emergencyContactPhone">Emergency Contact Phone:</label>
-            <input type="tel" id="emergencyContactPhone" pattern="[0-9]{10}" title="Phone number should be 10 digits">
+            <input type="tel" id="emergencyContactPhone" pattern="[0-9]{10}" title="Phone number should be 10 digits" readonly>
         </div>
     </div>
 </div>
@@ -334,15 +334,15 @@
     <div class="two-column">
         <div class="form-group">
             <label for="mailingStreet">Mailing Street:</label>
-            <input type="text" id="mailingStreet" maxlength="255">
+            <input type="text" id="mailingStreet" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="mailingCity">Mailing City:</label>
-            <input type="text" id="mailingCity">
+            <input type="text" id="mailingCity" readonly>
         </div>
         <div class="form-group">
             <label for="mailingState">Mailing State:</label>
-            <select id="mailingState" disabled>
+            <select id="mailingState" readonly>
                 <option value="">Select State</option>
                 <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -384,11 +384,11 @@
         </div>
         <div class="form-group">
             <label for="mailingPostalCode">Mailing Postal Code:</label>
-            <input type="text" id="mailingPostalCode" pattern="\d{6}" title="Postal code must be exactly 6 digits">
+            <input type="text" id="mailingPostalCode" pattern="\d{6}" title="Postal code must be exactly 6 digits" readonly>
         </div>
         <div class="form-group">
             <label for="mailingCountry">Mailing Country:</label>
-            <select id="mailingCountry" disabled>
+            <select id="mailingCountry"  readonly>
                 <option value="">Select Country</option>
                 <option value="India">India</option>
                 <option value="Oman">Oman</option>
@@ -396,23 +396,23 @@
         </div>
         <div class="form-group">
             <label for="mobilePhone">Mobile Phone:</label>
-            <input type="tel" id="mobilePhone">
+            <input type="tel" id="mobilePhone" readonly>
         </div>
         <div class="form-group">
             <label for="otherPhone">Other Phone:</label>
-            <input type="tel" id="otherPhone">
+            <input type="tel" id="otherPhone" readonly>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email">
+            <input type="email" id="email" readonly>
         </div>
         <div class="form-group">
             <label for="currentCity">Current City:</label>
-            <input type="text" id="currentCity" maxlength="255">
+            <input type="text" id="currentCity" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="state">State:</label>
-            <select id="state" disabled>
+            <select id="state"  readonly>
                 <option value="">Select State</option>
                 <option value="Andaman & Nicobar (UT)">Andaman & Nicobar (UT)</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -454,13 +454,10 @@
         </div>
         <div class="form-group">
             <label for="pinCode">Pin Code:</label>
-            <input type="text" id="pinCode" pattern="\d{6}" title="Pin code must be exactly 6 digits">
+            <input type="text" id="pinCode" pattern="\d{6}" title="Pin code must be exactly 6 digits" readonly>
         </div>
     </div>
 </div>
-
-
-
 
            <div id="CADETDetails" class="tabcontent">
     <div class="two-column">
@@ -475,23 +472,23 @@
 </div>
         <div class="form-group">
             <label for="certificationStatus">Certification Status:</label>
-            <input type="text" id="certificationStatus" readonly>
+            <input type="text" id="certificationStatus" disabled>
         </div>
         <div class="form-group">
             <label for="ctop">CTOP:</label>
-            <input type="text" id="ctop" readonly>
+            <input type="text" id="ctop" disabled>
         </div>
         <div class="form-group">
             <label for="numberOfCamps">Number of Camps:</label>
-            <input type="number" id="numberOfCamps" readonly>
+            <input type="number" id="numberOfCamps" disabled>
         </div>
         <div class="form-group">
             <label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
-            <input type="number" id="numberOfCampsAsLeadTrainer" readonly>
+            <input type="number" id="numberOfCampsAsLeadTrainer" disabled>
         </div>
         <div class="form-group">
             <label for="numberOfCampsThisFY">Number of Camps this FY:</label>
-            <input type="number" id="numberOfCampsThisFY" readonly>
+            <input type="number" id="numberOfCampsThisFY" disabled>
         </div>
     </div>
 </div>
@@ -501,7 +498,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="educationalQualification">Educational Qualification:</label>
-            <select id="educationalQualification" disabled>
+            <select id="educationalQualification"  readonly>
                 <option value="">Select Qualification</option>
                 <option value="BA">BA</option>
                 <option value="BBA / BBM">BBA / BBM</option>
@@ -534,23 +531,23 @@
         </div>
         <div class="form-group">
             <label for="collegeOtherInstitution">College/Other Institution:</label>
-            <input type="text" id="collegeOtherInstitution" maxlength="255">
+            <input type="text" id="collegeOtherInstitution" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="yearOfDegreeCompletion">Year of Degree Completion:</label>
-            <input type="number" id="yearOfDegreeCompletion" min="1900" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1900 and 2099">
+            <input type="number" id="yearOfDegreeCompletion" min="1900" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1900 and 2099" readonly>
         </div>
         <div class="form-group">
             <label for="profession">Profession:</label>
-            <input type="text" id="profession" maxlength="255">
+            <input type="text" id="profession" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="employerName">Employer Name:</label>
-            <input type="text" id="employerName" maxlength="255">
+            <input type="text" id="employerName" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="jobTitle">Job Title:</label>
-            <input type="text" id="jobTitle" maxlength="255">
+            <input type="text" id="jobTitle" maxlength="255" readonly>
         </div>
     </div>
 </div>
@@ -561,7 +558,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="nccDirectorate">NCC Directorate:</label>
-            <select id="nccDirectorate" disabled>
+            <select id="nccDirectorate"  readonly>
                 <option value="">Select Directorate</option>
                 <option value="Andhra Pradesh & Telangana">Andhra Pradesh & Telangana</option>
                 <option value="Bihar & Jharkhand">Bihar & Jharkhand</option>
@@ -584,19 +581,19 @@
         </div>
         <div class="form-group">
             <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
-            <input type="text" id="nccDirectorateUnitEtc" maxlength="255">
+            <input type="text" id="nccDirectorateUnitEtc" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="rdOtherCampDetails">RD Other Camp Details:</label>
-            <textarea id="rdOtherCampDetails" maxlength="1000"></textarea>
+            <textarea id="rdOtherCampDetails" maxlength="1000" readonly></textarea>
         </div>
         <div class="form-group">
             <label for="yepYear">YEP Year:</label>
-            <input type="number" id="yepYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
+            <input type="number" id="yepYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099" readonly>
         </div>
         <div class="form-group">
             <label for="yepCountry">YEP Country:</label>
-            <select id="yepCountry" disabled>
+            <select id="yepCountry"  readonly>
                 <option value="">Select Country</option>
                 <option value="USA">USA</option>
                 <option value="UK">UK</option>
@@ -615,11 +612,11 @@
         </div>
         <div class="form-group">
             <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
-            <input type="text" id="nccaaMembershipNumber" pattern="NCCAA/4[0-9]/[text]/6[0-9]" title="NCCAA Membership Number format must be NCCAA/4[0-9]/[text]/6[0-9]">
+            <input type="text" id="nccaaMembershipNumber" pattern="NCCAA/4[0-9]/[text]/6[0-9]" title="NCCAA Membership Number format must be NCCAA/4[0-9]/[text]/6[0-9]" readonly>
         </div>
         <div class="form-group">
             <label for="nccWing">NCC Wing:</label>
-            <select id="nccWing" disabled>
+            <select id="nccWing"  readonly>
                 <option value="">Select Wing</option>
                 <option value="Army">Army</option>
                 <option value="Navy">Navy</option>
@@ -628,7 +625,7 @@
         </div>
         <div class="form-group">
             <label for="jdJwSdSw">JD/JW/SD/SW:</label>
-            <select id="jdJwSdSw" multiple  disabled>
+            <select id="jdJwSdSw" multiple   readonly>
                 <option value="JD">JD (Junior Division - Boys)</option>
                 <option value="JW">JW (Junior Wing - Girls)</option>
                 <option value="SD">SD (Senior Division - Boys)</option>
@@ -637,11 +634,11 @@
         </div>
         <div class="form-group">
             <label for="nccGroup">NCC Group:</label>
-            <input type="text" id="nccGroup" maxlength="255">
+            <input type="text" id="nccGroup" maxlength="255" readonly>
         </div>
         <div class="form-group">
             <label for="nccCertificate">NCC Certificate:</label>
-            <select id="nccCertificate" multiple disabled>
+            <select id="nccCertificate" multiple  readonly>
                 <option value="A Certificate">A Certificate</option>
                 <option value="B Certificate">B Certificate</option>
                 <option value="C Certificate">C Certificate</option>
@@ -649,23 +646,23 @@
         </div>
         <div class="form-group">
             <label for="yearOfCompletionOfNCC">Year of Completion of NCC:</label>
-            <input type="number" id="yearOfCompletionOfNCC" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
+            <input type="number" id="yearOfCompletionOfNCC" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099" readonly>
         </div>
         <div class="form-group">
             <label for="yearsInNCC">Years in NCC:</label>
-            <input type="text" id="yearsInNCC" pattern="\d{4}-\d{4}" title="Years in NCC format must be yyyy-yyyy">
+            <input type="text" id="yearsInNCC" pattern="\d{4}-\d{4}" title="Years in NCC format must be yyyy-yyyy" readonly>
         </div>
         <div class="form-group">
             <label for="importantNccCamps">Important NCC Camps:</label>
-            <textarea id="importantNccCamps" maxlength="1000"></textarea>
+            <textarea id="importantNccCamps" maxlength="1000" readonly></textarea>
         </div>
         <div class="form-group">
             <label for="achievementsInNcc">Achievements in NCC:</label>
-            <textarea id="achievementsInNcc" maxlength="1000"></textarea>
+            <textarea id="achievementsInNcc" maxlength="1000" readonly></textarea>
         </div>
         <div class="form-group">
             <label for="rdCampYear">RD Camp Year:</label>
-            <input type="number" id="rdCampYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099">
+            <input type="number" id="rdCampYear" min="1948" max="2099" step="1" pattern="\d{4}" title="Year must be a 4-digit number between 1948 and 2099" readonly>
         </div>
     </div>
 </div>
@@ -706,7 +703,7 @@
     <div class="two-column">
         <div class="form-group">
             <label for="tShirtSize">T-Shirt Size:</label>
-            <select id="tShirtSize" readonly disabled>
+            <select id="tShirtSize" readonly>
                 <option value="">Select Size</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -729,7 +726,7 @@
         </div>
         <div class="form-group">
             <label for="foodPreference">Food Preference:</label>
-            <select id="foodPreference" readonly disabled>
+            <select id="foodPreference" readonly>
                 <option value="">Select Preference</option>
                 <option value="Vegetarian">Vegetarian</option>
                 <option value="Eggetarian">Eggetarian</option>
@@ -739,7 +736,7 @@
         </div>
         <div class="form-group">
             <label for="covidVaccinationStatus">COVID Vaccination Status:</label>
-            <select id="covidVaccinationStatus" readonly disabled>
+            <select id="covidVaccinationStatus" readonly>
                 <option value="">Select Status</option>
                 <option value="1 Dose Completed">1 Dose Complete</option>
                 <option value="2 Doses Completed">2 Doses Complete</option>
@@ -749,8 +746,6 @@
         </div>
     </div>
 </div>
-
-
 
             <div id="actionButtons" style="display: none;">
                 <button id="editButton">Edit</button>
