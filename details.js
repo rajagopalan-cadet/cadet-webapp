@@ -277,12 +277,26 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
         },
         body: JSON.stringify(updatedData)
     })
-    .then(response => response.json())
-    .then(data => {
-        alert('Details updated successfully');
-        displayDetails(data);
-    })
-    .catch(error => console.error('Error updating details:', error));
+    .then(response => {
+    if (response.ok) {
+        if (response.status === 204) {
+            // No content to parse, just handle the success case
+            alert('Details updated successfully');
+        } else {
+            // Parse the response JSON if the status is not 204
+            return response.json().then(data => {
+                alert('Details updated successfully');
+                displayDetails(data);
+            });
+        }
+    } else {
+        // Handle non-200 status codes
+        return response.text().then(text => {
+            throw new Error(`Error ${response.status}: ${text}`);
+        });
+    }
+})
+.catch(error => console.error('Error updating details:', error));
 }
 
 function openTab(evt, tabName) {
