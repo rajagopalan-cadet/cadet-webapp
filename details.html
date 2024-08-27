@@ -127,7 +127,7 @@
 }
         .two-column {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
@@ -245,7 +245,7 @@
             </div>
         </div> 
 
-        <div class="form-container" id="detailsSection" style="display: true;">
+        <div class="form-container" id="detailsSection" style="display: none;">
             <div class="tabs">
                 <button class="tablink" onclick="openTab(event, 'BasicDetails')">Basic Details</button>
                 <button class="tablink" onclick="openTab(event, 'ContactDetails')">Contact Details</button>
