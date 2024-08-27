@@ -84,7 +84,11 @@ async function getRecords(data) {
         // Parse JSON responses
         const allTimeData = await allTimeResponse.json();
         const currentFyData = await currentFyResponse.json();
-
+        
+        // Log the data to inspect it
+        console.log("All Time Data:", allTimeData);
+        console.log("Current Fiscal Year Data:", currentFyData);
+        
         // Trigger the processing of API response
         processAPIResponse(allTimeData, currentFyData);
         };
