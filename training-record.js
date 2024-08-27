@@ -57,7 +57,7 @@ async function getRecords(data) {
 
     // URLs for API requests
     const allTimeUrl= '${instanceurl}/services/data/v52.0/query?q=SELECT+Name,+Event_Name__c,+Camp_Start_Date_F__c,+Attendee_Type__c+FROM+CADET_Event_Attendees__c+WHERE+Attendee_Trainer__c+=+'${Id}'+ORDER+BY+Camp_Start_Date_F__c+DESC';
-    const currentFyUrl = `${instanceurl}/services/data/v52.0/query?q=SELECT+Name,+Event_Name__c,+Camp_Start_Date_F__c,+Attendee_Type__c+FROM+CADET_Event_Attendees__c+WHERE+Camp_Start_Date_F__c+>=+${fiscalYearStartDate}+AND+Attendee_Trainer__c+=+'${Id}'+ORDER+BY+Camp_Start_Date_F__c+DESC';
+    const currentFyUrl = '${instanceurl}/services/data/v52.0/query?q=SELECT+Name,+Event_Name__c,+Camp_Start_Date_F__c,+Attendee_Type__c+FROM+CADET_Event_Attendees__c+WHERE+Camp_Start_Date_F__c+>=+${fiscalYearStartDate}+AND+Attendee_Trainer__c+=+'${Id}'+ORDER+BY+Camp_Start_Date_F__c+DESC';
 
     try {
         // Fetch data from both APIs
