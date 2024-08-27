@@ -91,7 +91,7 @@ async function getRecords(data) {
         
         // Trigger the processing of API response
         processAPIResponse(allTimeData, currentFyData);
-        };
+        
     } catch (error) {
         console.error('Error fetching records:', error);
         throw error;
