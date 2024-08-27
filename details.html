@@ -81,7 +81,19 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+/* Additional styles for checkboxes */
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 5px;
+    vertical-align: middle; /* Align checkboxes with text */
+}
 
+/* Adjust the text for checkboxes */
+.form-group label.checkbox-label {
+    font-weight: normal; /* Remove bold styling */
+    display: flex;
+    align-items: center; /* Align text vertically with the checkbox */
+}
         .form-group button {
             background-color: #004aad;
             color: white;
@@ -623,23 +635,23 @@
                 <option value="Air Force">Air Force</option>
             </select>
         </div>
-       
-        <div class="form-group">
-            <label for="jdJwSdSw">JD/JW/SD/SW:</label>
-            <label><input type="checkbox" name="jdJwSdSw" value="JD" disabled/> JD</label>
-            <label><input type="checkbox" name="jdJwSdSw" value="JW" disabled/> JW</label>
-            <label><input type="checkbox" name="jdJwSdSw" value="SD" disabled/> SD</label>
-            <label><input type="checkbox" name="jdJwSdSw" value="SW" disabled/> SW</label>
-        </div>
-        <div class="form-group">
+       <div class="form-group">
             <label for="nccGroup">NCC Group:</label>
             <input type="text" id="nccGroup" maxlength="255" readonly>
         </div>
         <div class="form-group">
+            <label for="jdJwSdSw">JD/JW/SD/SW:</label>
+            <label><input type="checkbox-label" name="jdJwSdSw" value="JD (Junior Division - Boys)" disabled/>JD (Junior Division - Boys)</label>
+            <label><input type="checkbox-label" name="jdJwSdSw" value="JW (Junior Wing - Girls)" disabled/>JW (Junior Wing - Girls)</label>
+            <label><input type="checkbox-label" name="jdJwSdSw" value="SD (Senior Division - Boys)" disabled/>SD (Senior Division - Boys)</label>
+            <label><input type="checkbox-label" name="jdJwSdSw" value="SW (Senior Wing - Girls)" disabled/>SW (Senior Wing - Girls)	</label>
+        </div>
+        
+        <div class="form-group">
             <label for="nccCertificate">NCC Certificate:</label>
-            <label><input type="checkbox" name="nccCertificate" value="A Certificate" disabled /> A Certificate</label>
-            <label><input type="checkbox" name="nccCertificate" value="B Certificate" disabled /> B Certificate</label>
-            <label><input type="checkbox" name="nccCertificate" value="C Certificate" disabled /> C Certificate</label>
+            <label><input type="checkbox-label" name="nccCertificate" value="A Certificate" disabled /> A Certificate</label>
+            <label><input type="checkbox-label" name="nccCertificate" value="B Certificate" disabled /> B Certificate</label>
+            <label><input type="checkbox-label" name="nccCertificate" value="C Certificate" disabled /> C Certificate</label>
         </div>
         <div class="form-group">
             <label for="yearOfCompletionOfNCC">Year of Completion of NCC:</label>
