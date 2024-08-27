@@ -5,7 +5,7 @@ async function getAccessToken() {
         return accessToken; // Return the cached token if it's available
     }
 
-    const tokenUrl = 'https://test.salesforce.com/services/oauth2/token'; // Use 'https://test.salesforce.com/services/oauth2/token' for sandbox
+    const tokenUrl = 'https://cors-anywhere.herokuapp.com/https://test.salesforce.com/services/oauth2/token'; // Use 'https://test.salesforce.com/services/oauth2/token' for sandbox
 
     const params = new URLSearchParams();
     params.append('grant_type', 'password');
