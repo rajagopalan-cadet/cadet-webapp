@@ -118,6 +118,11 @@
         .tabcontent {
             display: none;
         }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
         footer {
             background-color: #004aad;
@@ -225,31 +230,296 @@
         <div class="form-container" id="detailsSection" style="display: none;">
             <div class="tabs">
                 <button class="tablink" onclick="openTab(event, 'BasicDetails')">Basic Details</button>
+                <button class="tablink" onclick="openTab(event, 'ContactDetails')">Contact Details</button>
                 <button class="tablink" onclick="openTab(event, 'CADETDetails')">CADET Details</button>
                 <button class="tablink" onclick="openTab(event, 'ProfessionalDetails')">Professional Details</button>
                 <button class="tablink" onclick="openTab(event, 'NCCDetails')">NCC Details</button>
+                <button class="tablink" onclick="openTab(event, 'SocialDetails')">Social Details</button>
                 <button class="tablink" onclick="openTab(event, 'OtherDetails')">Other Details</button>
             </div>
 
-            <div id="BasicDetails" class="tabcontent">
-                <!-- Fields for Basic Details -->
-            </div>
+<div id="BasicDetails" class="tabcontent">
+    <div class="two-column">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" id="id" readonly>
+        </div>
+        <div class="form-group">
+            <label for="cadetTrainerId">CADET Trainer ID:</label>
+            <input type="text" id="cadetTrainerId" readonly>
+        </div>
+        <div class="form-group">
+            <label for="cadetOfficialEmail">CADET Official Email:</label>
+            <input type="email" id="cadetOfficialEmail" readonly>
+        </div>
+        <div class="form-group">
+            <label for="salutation">Salutation:</label>
+            <input type="text" id="salutation" readonly>
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" readonly>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" readonly>
+        </div>
+        <div class="form-group">
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate" readonly>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" readonly>
+        </div>
+        <div class="form-group">
+            <label for="emergencyContactName">Emergency Contact Name:</label>
+            <input type="text" id="emergencyContactName" readonly>
+        </div>
+        <div class="form-group">
+            <label for="emergencyContactRelationship">Emergency Contact Relationship:</label>
+            <input type="text" id="emergencyContactRelationship" readonly>
+        </div>
+        <div class="form-group">
+            <label for="emergencyContactPhone">Emergency Contact Phone:</label>
+            <input type="tel" id="emergencyContactPhone" readonly>
+        </div>
+    </div>
+</div>
 
-            <div id="CADETDetails" class="tabcontent">
-                <!-- Fields for CADET Details -->
-            </div>
+
+            <div id="ContactDetails" class="tabcontent">
+    <div class="two-column">
+        <div class="form-group">
+            <label for="mailingStreet">Mailing Street:</label>
+            <input type="text" id="mailingStreet" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mailingCity">Mailing City:</label>
+            <input type="text" id="mailingCity" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mailingState">Mailing State:</label>
+            <input type="text" id="mailingState" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mailingPostalCode">Mailing Postal Code:</label>
+            <input type="text" id="mailingPostalCode" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mailingCountry">Mailing Country:</label>
+            <input type="text" id="mailingCountry" readonly>
+        </div>
+        <div class="form-group">
+            <label for="mobilePhone">Mobile Phone:</label>
+            <input type="tel" id="mobilePhone" readonly>
+        </div>
+        <div class="form-group">
+            <label for="otherPhone">Other Phone:</label>
+            <input type="tel" id="otherPhone" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" readonly>
+        </div>
+        <div class="form-group">
+            <label for="currentCity">Current City:</label>
+            <input type="text" id="currentCity" readonly>
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state" readonly>
+        </div>
+        <div class="form-group">
+            <label for="pinCode">Pin Code:</label>
+            <input type="text" id="pinCode" readonly>
+        </div>
+    </div>
+</div>
+
+
+
+           <div id="CADETDetails" class="tabcontent">
+    <div class="two-column">
+        <div class="form-group">
+            <label for="isEXPAMember">Is EXPA Member:</label>
+            <input type="text" id="isEXPAMember" readonly>
+        </div>
+        <div class="form-group">
+            <label for="certificationStatus">Certification Status:</label>
+            <input type="text" id="certificationStatus" readonly>
+        </div>
+        <div class="form-group">
+            <label for="ctop">CTOP:</label>
+            <input type="text" id="ctop" readonly>
+        </div>
+        <div class="form-group">
+            <label for="numberOfCamps">Number of Camps:</label>
+            <input type="number" id="numberOfCamps" readonly>
+        </div>
+        <div class="form-group">
+            <label for="numberOfCampsAsLeadTrainer">Number of Camps as Lead Trainer:</label>
+            <input type="number" id="numberOfCampsAsLeadTrainer" readonly>
+        </div>
+        <div class="form-group">
+            <label for="numberOfCampsThisFY">Number of Camps this FY:</label>
+            <input type="number" id="numberOfCampsThisFY" readonly>
+        </div>
+    </div>
+</div>
+
 
             <div id="ProfessionalDetails" class="tabcontent">
-                <!-- Fields for Professional Details -->
-            </div>
+    <div class="two-column">
+        <div class="form-group">
+            <label for="educationalQualification">Educational Qualification:</label>
+            <input type="text" id="educationalQualification" readonly>
+        </div>
+        <div class="form-group">
+            <label for="collegeOtherInstitution">College/Other Institution:</label>
+            <input type="text" id="collegeOtherInstitution" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yearOfDegreeCompletion">Year of Degree Completion:</label>
+            <input type="number" id="yearOfDegreeCompletion" readonly>
+        </div>
+        <div class="form-group">
+            <label for="profession">Profession:</label>
+            <input type="text" id="profession" readonly>
+        </div>
+        <div class="form-group">
+            <label for="employerName">Employer Name:</label>
+            <input type="text" id="employerName" readonly>
+        </div>
+        <div class="form-group">
+            <label for="jobTitle">Job Title:</label>
+            <input type="text" id="jobTitle" readonly>
+        </div>
+    </div>
+</div>
+
 
             <div id="NCCDetails" class="tabcontent">
-                <!-- Fields for NCC Details -->
-            </div>
+    <div class="two-column">
+        <div class="form-group">
+            <label for="nccDirectorate">NCC Directorate:</label>
+            <input type="text" id="nccDirectorate" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nccDirectorateUnitEtc">NCC Directorate Unit Etc:</label>
+            <input type="text" id="nccDirectorateUnitEtc" readonly>
+        </div>
+        <div class="form-group">
+            <label for="rdOtherCampDetails">RD Other Camp Details:</label>
+            <input type="text" id="rdOtherCampDetails" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yepYear">YEP Year:</label>
+            <input type="number" id="yepYear" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yepCountry">YEP Country:</label>
+            <input type="text" id="yepCountry" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nccaaMembershipNumber">NCCAA Membership Number:</label>
+            <input type="text" id="nccaaMembershipNumber" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nccWing">NCC Wing:</label>
+            <input type="text" id="nccWing" readonly>
+        </div>
+        <div class="form-group">
+            <label for="jdJwSdSw">JD/JW/SD/SW:</label>
+            <input type="text" id="jdJwSdSw" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nccGroup">NCC Group:</label>
+            <input type="text" id="nccGroup" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nccCertificate">NCC Certificate:</label>
+            <input type="text" id="nccCertificate" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yearOfCompletionOfNCC">Year of Completion of NCC:</label>
+            <input type="number" id="yearOfCompletionOfNCC" readonly>
+        </div>
+        <div class="form-group">
+            <label for="yearsInNCC">Years in NCC:</label>
+            <input type="number" id="yearsInNCC" readonly>
+        </div>
+        <div class="form-group">
+            <label for="importantNccCamps">Important NCC Camps:</label>
+            <input type="text" id="importantNccCamps" readonly>
+        </div>
+        <div class="form-group">
+            <label for="achievementsInNcc">Achievements in NCC:</label>
+            <input type="text" id="achievementsInNcc" readonly>
+        </div>
+        <div class="form-group">
+            <label for="rdCampYear">RD Camp Year:</label>
+            <input type="number" id="rdCampYear" readonly>
+        </div>
+    </div>
+</div>
 
-            <div id="OtherDetails" class="tabcontent">
-                <!-- Fields for Other Details -->
-            </div>
+            
+            <div id="SocialDetails" class="tabcontent">
+    <div class="two-column">
+        <div class="form-group">
+            <label for="instagramID">Instagram ID:</label>
+            <input type="text" id="instagramID" readonly>
+        </div>
+        <div class="form-group">
+            <label for="facebookID">Facebook ID:</label>
+            <input type="text" id="facebookID" readonly>
+        </div>
+        <div class="form-group">
+            <label for="twitterID">Twitter ID:</label>
+            <input type="text" id="twitterID" readonly>
+        </div>
+        <div class="form-group">
+            <label for="linkedInURL">LinkedIn URL:</label>
+            <input type="text" id="linkedInURL" readonly>
+        </div>
+        <div class="form-group">
+            <label for="shortBio">Short Bio:</label>
+            <textarea id="shortBio" readonly></textarea>
+        </div>
+        <div class="form-group">
+            <label for="longBio">Long Bio:</label>
+            <textarea id="longBio" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+            
+           <div id="OtherDetails" class="tabcontent">
+    <div class="two-column">
+        <div class="form-group">
+            <label for="tShirtSize">T-Shirt Size:</label>
+            <input type="text" id="tShirtSize" readonly>
+        </div>
+        <div class="form-group">
+            <label for="languagesKnown">Languages Known:</label>
+            <input type="text" id="languagesKnown" readonly>
+        </div>
+        <div class="form-group">
+            <label for="hobbiesAchievements">Hobbies and Achievements:</label>
+            <textarea id="hobbiesAchievements" readonly></textarea>
+        </div>
+        <div class="form-group">
+            <label for="foodPreference">Food Preference:</label>
+            <input type="text" id="foodPreference" readonly>
+        </div>
+        <div class="form-group">
+            <label for="covidVaccinationStatus">COVID Vaccination Status:</label>
+            <input type="text" id="covidVaccinationStatus" readonly>
+        </div>
+    </div>
+</div>
+
 
             <div id="actionButtons" style="display: none;">
                 <button id="editButton">Edit</button>
@@ -274,6 +544,6 @@
         <div class="spinner"></div>
     </div>
     <script src="details.js"></script>
-    <script src="auth.js"></script>
+<!--     <script src="auth.js"></script> -->
 </body>
 </html>
