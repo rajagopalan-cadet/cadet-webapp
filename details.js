@@ -1,3 +1,5 @@
+let data = {};
+
 document.getElementById('fetchButton').addEventListener('click', async function() {
     const prefix = document.getElementById('trainerIdPrefix').value;
     const numbers = document.getElementById('trainerIdNumbers').value;
@@ -35,7 +37,7 @@ async function fetchDetails(trainerId, token) {
         });
 
         if (response.ok) {
-            const data = await response.json();
+            data = await response.json(); // Assign fetched data to global variable
             displayDetails(data);
         } else {
             console.error('Error fetching details:', response.statusText);
