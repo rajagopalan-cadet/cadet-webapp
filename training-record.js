@@ -85,10 +85,8 @@ async function getRecords(data) {
         const allTimeData = await allTimeResponse.json();
         const currentFyData = await currentFyResponse.json();
 
-        // Process and return the results as needed
-        return {
-            allTime: allTimeData,
-            currentFy: currentFyData
+        // Trigger the processing of API response
+        processAPIResponse(allTimeData, currentFyData);
         };
     } catch (error) {
         console.error('Error fetching records:', error);
