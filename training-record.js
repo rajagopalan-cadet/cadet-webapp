@@ -148,6 +148,29 @@ function populateDetailsTable(data, type) {
         row.insertCell(3).textContent = record.Camp_Start_Date_F__c || ''; // Start Date
     });
 }
+function openTab(evt, tabName) {
+    // Get all elements with class="tabcontent" and hide them
+    var tabcontents = document.getElementsByClassName("tabcontent");
+    for (var i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablink" and remove the "active" class
+    var tablinks = document.getElementsByClassName("tablink");
+    for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Optionally, you can set a default tab to be opened when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    // Open the 'allTimeTab' by default
+    document.querySelector(".tablink").click();
+});
 
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
