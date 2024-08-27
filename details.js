@@ -93,7 +93,7 @@ function displayDetails(data) {
     document.getElementById('mobilePhone').value = data.MobilePhone || '';
     document.getElementById('otherPhone').value = data.OtherPhone || '';
     document.getElementById('email').value = data.Email || '';
-    document.getElementById('currentCity').value = data.Current_City__C || '';
+    document.getElementById('currentCity').value = data.Current_City__c || '';
     document.getElementById('state').value = data.State__c || '';
     document.getElementById('pinCode').value = data.Pin_Code__c || '';
 
