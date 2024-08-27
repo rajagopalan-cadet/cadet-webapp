@@ -265,59 +265,59 @@ h2 {
                 <a href="https://docs.google.com/spreadsheets/u/0/d/1M4tuKt0y8GeSjeOmSGsVTQskEVXFihZPanpv9CSIp8E" target="_blank" style="font-size: 12px; padding-right: 5px;display: inline-block; vertical-align: top; margin-top:-10px; margin-left:105px " >Don't know ID?</a>
             </div>
         </div> 
-        <h2>Trainer Records</h2>
-        <div class="tabs">
-            <button class="tablink" onclick="openTab(event, 'allTimeTab')">All Time (45)</button>
-            <button class="tablink" onclick="openTab(event, 'currentYearTab')">Current Year (23)</button>
-        </div>
+       <h2>Trainer Records</h2>
+<div class="tabs">
+    <button class="tablink" onclick="openTab(event, 'allTimeTab')">All Time (Total: <span id="allTimeTabCount">0</span>)</button>
+    <button class="tablink" onclick="openTab(event, 'currentYearTab')">Current Year (Total: <span id="currentYearTabCount">0</span>)</button>
+</div>
 
-        <div id="allTimeTab" class="tabcontent">
-            <div class="summary-view">
-                <div class="summary-counter" id="allTimeTotalCamps">Total Camps: 0</div>
-                <div class="summary-counter" id="allTimeTotalTeamLead">Total Camps as Team Lead: 0</div>
-                <div class="summary-counter" id="allTimeTotalTrainer">Total Camps as Trainer: 0</div>
-                <div class="summary-counter" id="allTimeTotalObserver">Total Camps as Observer: 0</div>
-            </div>
-            <div class="details-view">
-                <table id="allTimeDetailsTable">
-                    <thead>
-                        <tr>
-                            <th>Sl No</th>
-                            <th>SF Event ID</th>
-                            <th>Event Name</th>
-                            <th>Start Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Table rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div id="allTimeTab" class="tabcontent">
+    <div class="summary-view">
+        <div class="summary-counter" id="allTimeTotalCamps">Total Camps: 0</div>
+        <div class="summary-counter" id="allTimeTotalTeamLead">Total Camps as Team Lead: 0</div>
+        <div class="summary-counter" id="allTimeTotalTrainer">Total Camps as Trainer: 0</div>
+        <div class="summary-counter" id="allTimeTotalObserver">Total Camps as Observer: 0</div>
+    </div>
+    <div class="details-view">
+        <table id="allTimeDetailsTable">
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>SF Event ID</th>
+                    <th>Event Name</th>
+                    <th>Start Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        <div id="currentYearTab" class="tabcontent">
-            <div class="summary-view">
-                <div class="summary-counter" id="currentYearTotalCamps">Total Camps: 0</div>
-                <div class="summary-counter" id="currentYearTotalTeamLead">Total Camps as Team Lead: 0</div>
-                <div class="summary-counter" id="currentYearTotalTrainer">Total Camps as Trainer: 0</div>
-                <div class="summary-counter" id="currentYearTotalObserver">Total Camps as Observer: 0</div>
-            </div>
-            <div class="details-view">
-                <table id="currentYearDetailsTable">
-                    <thead>
-                        <tr>
-                            <th>Sl No</th>
-                            <th>SF Event ID</th>
-                            <th>Event Name</th>
-                            <th>Start Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Table rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div id="currentYearTab" class="tabcontent">
+    <div class="summary-view">
+        <div class="summary-counter" id="currentYearTotalCamps">Total Camps: 0</div>
+        <div class="summary-counter" id="currentYearTotalTeamLead">Total Camps as Team Lead: 0</div>
+        <div class="summary-counter" id="currentYearTotalTrainer">Total Camps as Trainer: 0</div>
+        <div class="summary-counter" id="currentYearTotalObserver">Total Camps as Observer: 0</div>
+    </div>
+    <div class="details-view">
+        <table id="currentYearDetailsTable">
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>SF Event ID</th>
+                    <th>Event Name</th>
+                    <th>Start Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+</div>
     </main>
 
 
