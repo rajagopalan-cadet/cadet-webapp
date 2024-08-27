@@ -56,8 +56,8 @@ async function getRecords(data) {
     const fiscalYearStartDate = today.getMonth() >= 3 ? `${currentYear}-04-01` : `${currentYear - 1}-04-01`; // Fiscal year starts on April 1st
 
     // URLs for API requests
-    const allTimeUrl = `${instanceUrl}/services/data/v52.0/query?q=SELECT+Attendee_Type__c,+COUNT(Id)+FROM+CADET_Event_Attendees__c+WHERE+Attendee_Trainer__c+='${id}'`;
-    const currentFyUrl = `${instanceUrl}/services/data/v52.0/query?q=SELECT+Attendee_Type__c,+COUNT(Id)+FROM+CADET_Event_Attendees__c+WHERE+Attendee_Trainer__c+='${id}'+AND+Camp_Start_Date_F__c>=${fiscalYearStartDate}T00:00:00.000Z`;
+    const allTimeUrl= '${instanceurl}/services/data/v52.0/query?q=SELECT+Name,+Event_Name__c,+Camp_Start_Date_F__c,+Attendee_Type__c+FROM+CADET_Event_Attendees__c+WHERE+Attendee_Trainer__c+=+'${Id}'+ORDER+BY+Camp_Start_Date_F__c+DESC';
+    const currentFyUrl = `${instanceurl}/services/data/v52.0/query?q=SELECT+Name,+Event_Name__c,+Camp_Start_Date_F__c,+Attendee_Type__c+FROM+CADET_Event_Attendees__c+WHERE+Camp_Start_Date_F__c+>=+${fiscalYearStartDate}+AND+Attendee_Trainer__c+=+'${Id}'+ORDER+BY+Camp_Start_Date_F__c+DESC';
 
     try {
         // Fetch data from both APIs
