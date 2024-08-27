@@ -184,7 +184,7 @@ function toggleEditMode(editMode) {
     document.getElementById('cancelButton').style.display = editMode ? 'inline' : 'none';
 }
 
-function updateDetails(salesforceId) {
+function updateDetails(Id) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
         // Gathering selected JD/JW/SD/SW values for update
 const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
