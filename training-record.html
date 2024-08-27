@@ -55,7 +55,7 @@
 
         .form-container {
             width: 500px;
-            height:80px;
+            height:60px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -131,7 +131,7 @@
         }
 
         .tablink.active {
-            background-color: #004aad;
+            background-color: #e0f0ff;
             color: white;
         }
 
@@ -240,8 +240,60 @@ h2 {
     font-weight: bold; /* Optional: make the text bold */
     text-align:center;
 }
-        .tablink.active {
-    background-color: #ddd; /* Change to your preferred active tab color */
+/* Summary View */
+.summary-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between items, adjust as needed */
+}
+
+.summary-counter {
+    flex: 1 1 45%; /* Adjust the width of the items, 45% ensures two items per row with some space */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Background color for summary counters */
+}
+
+/* Table Center Alignment */
+.details-view table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-view th, .details-view td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.details-view th {
+    background-color: #f4f4f4;
+}
+
+/* Pagination Controls */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    padding: 8px 16px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a.active {
+    background-color: #ddd;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: #f4f4f4;
 }
     </style>
 </head>
