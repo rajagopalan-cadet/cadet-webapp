@@ -242,7 +242,7 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     NCC_Wing__c: document.getElementById('nccWing').value,
     //  JD_JW_SD_SW__c: document.getElementById('jdJwSdSw').value.join(';'),
     NCC_Group__c: document.getElementById('nccGroup').value,
-    NCC_Certificate__c: document.getElementById('nccCertificate').value.join(';'),
+    //  NCC_Certificate__c: document.getElementById('nccCertificate').value.join(';'),
     Year_of_Completion_of_NCC__c: document.getElementById('yearOfCompletionOfNCC').value,
     Years_in_NCC__c: document.getElementById('yearsInNCC').value,
     Important_NCC_Camps__c: document.getElementById('importantNccCamps').value,
