@@ -146,6 +146,22 @@ document.getElementById('foodPreference').value = data.Food_Preference__c || '';
 document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination_Status__c || '';
     
 };
+ // Update JD/JW/SD/SW checkboxes
+if (data.JD_JW_SD_SW__c) {
+    const jdJwSdSwValues = data.JD_JW_SD_SW__c.split(';');
+    jdJwSdSwValues.forEach(value => {
+        const checkbox = document.querySelector(`input[name="jdJwSdSw"][value="${value}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+}
+    // Update NCC Certificate checkboxes
+if (data.NCC_Certificate__c) {
+    const nccCertificateValues = data.NCC_Certificate__c.split(';');
+    nccCertificateValues.forEach(value => {
+        const checkbox = document.querySelector(`input[name="nccCertificate"][value="${value}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+}
 
 
     document.getElementById('editButton').addEventListener('click', function() {
@@ -218,7 +234,7 @@ function updateDetails(salesforceId) {
     YEP_Country__c: document.getElementById('yepCountry').value,
     NCCAA_Membership_Number__c: document.getElementById('nccaaMembershipNumber').value,
     NCC_Wing__c: document.getElementById('nccWing').value,
-    JD_JW_SD_SW__c: document.getElementById('jdJwSdSw').value.join(';'),
+    //  JD_JW_SD_SW__c: document.getElementById('jdJwSdSw').value.join(';'),
     NCC_Group__c: document.getElementById('nccGroup').value,
     NCC_Certificate__c: document.getElementById('nccCertificate').value.join(';'),
     Year_of_Completion_of_NCC__c: document.getElementById('yearOfCompletionOfNCC').value,
@@ -243,6 +259,23 @@ function updateDetails(salesforceId) {
     Food_Preference__c: document.getElementById('foodPreference').value,
     COVID_Vaccination_Status__c: document.getElementById('covidVaccinationStatus').value
     };
+    // Gathering selected JD/JW/SD/SW values for update
+const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
+    .map(checkbox => checkbox.value)
+    .join(';');
+
+// Gathering selected NCC Certificate values for update
+const selectedNccCertificate = Array.from(document.querySelectorAll('input[name="nccCertificate"]:checked'))
+    .map(checkbox => checkbox.value)
+    .join(';');
+
+// Create the data object for updating
+const updatedData = {
+    JD_JW_SD_SW__c: selectedJdJwSdSw,
+    NCC_Certificate__c: selectedNccCertificate,
+    // Add other fields as needed
+};
+
 
     fetch(url, {
         method: 'PATCH',
