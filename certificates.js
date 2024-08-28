@@ -138,7 +138,7 @@ function generateAndDownloadLetter(data) {
         ctx.drawImage(img, 0, 0);
 
         // Set font and style for the letter text
-        ctx.font = '30px Arial';
+        ctx.font = '35px Arial';
         ctx.fillStyle = '#000'; // Text color
 
         // Extract full name, gender, and dates
@@ -171,21 +171,25 @@ function generateAndDownloadLetter(data) {
         // The content of the letter
         const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
+          // Adjust the width for the text to fit within margins
+        const margin = 200;
+        const maxWidth = canvas.width - 2 * margin;
+        
         // Split text into lines and write it on the canvas (adjust positions as per the template)
-        const lines = splitTextToLines(ctx, letterText, canvas.width - 200); // Adjust width as necessary
-        let y = 450; // Starting y position for the text
+        const lines = splitTextToLines(ctx, letterText, maxWidth); // Adjust width as necessary
+        let y = 475; // Starting y position for the text
 
         lines.forEach(line => {
-            ctx.fillText(line, 200, y); // Adjust x and y coordinates based on the template
+            ctx.fillText(line, margin, y); // Adjust x and y coordinates based on the template
             y += 40; // Move to the next line (adjust line height if necessary)
         });
 
         // Add the date of generation at the bottom
         const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        const dateX = 135; // X position for the date
-        const dateY = 1650; // Y position for the date
+        const dateX = 150; // X position for the date
+        const dateY = 1575; // Y position for the date
 
-        ctx.font = '40px Arial'; // Font size for the date
+        ctx.font = '30px Arial'; // Font size for the date
         ctx.fillText(`${currentDate}`, dateX, dateY); // Add date to canvas
 
         // Convert canvas to an image file and trigger download
