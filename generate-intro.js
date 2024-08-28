@@ -113,7 +113,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const startY = 30;
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const headerImageUrl = 'intro.png'; // URL for letterhead
+    const headerImageUrl = 'templates/trainer-intro.png'; // URL for letterhead
     let y = startY;
 
  // Add letterhead image
