@@ -83,23 +83,48 @@ function handleCheckboxChange(id) {
 function renderList() {
     const listElement = document.getElementById('list');
     listElement.innerHTML = '';
-    selectedPeople.forEach(id => {
+
+    // Create table and header row
+    const table = document.createElement('table');
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Sl No.</th>
+                <th>CADET Trainer ID</th>
+                <th>Name</th>
+                <th>Team Lead</th>
+                <th>Action</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+    const tbody = table.querySelector('tbody');
+
+    
+   selectedPeople.forEach((id, index) => {
         const person = people.find(p => p.id === id);
         if (person) {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                ${person.name} - ${person.CADET_Trainer_ID}
-                ${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
-                <button onclick="removeFromList('${id}')">Remove</button>
-                <button onclick="setTeamLead('${id}')" ${teamLead === id ? 'disabled' : ''}>Set as Team Lead</button>
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${person.CADET_Trainer_ID}</td>
+                <td>${person.name}</td>
+                <td>${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}</td>
+                <td>
+                    <button onclick="setTeamLead('${id}')" ${teamLead === id ? 'disabled' : ''}>
+                        ${teamLead === id ? 'Remove as Team Lead' : 'Set as Team Lead'}
+                    </button>
+                </td>
+                <td>
+                    <button onclick="removeFromList('${id}')">Remove</button>
+                </td>
             `;
-            li.setAttribute('data-name', person.name);
-            li.setAttribute('data-trainer-id', person.CADET_Trainer_ID);
-            li.setAttribute('data-short-bio', person.details);
-            li.setAttribute('data-photo-url', person.photoUrl);
-            listElement.appendChild(li);
+            tbody.appendChild(tr);
         }
     });
+
+    listElement.appendChild(table);
 }
 
 function setTeamLead(id) {
@@ -217,12 +242,12 @@ async function addContent() {
     
      // Add Team Lead to the top of the PDF
     if (teamLead) {
-        const teamLead = people.find(p => p.id === teamLead);
-        if (teamLead) {
-            const photoUrl = teamLead.photoUrl;
-            const name = teamLead.name;
-            const trainerId = teamLead.CADET_Trainer_ID;
-            const shortBio = teamLead.details;
+        const leadPerson = people.find(p => p.id === teamLead);
+        if (leadPerson) {
+            const photoUrl = leadPerson.photoUrl;
+            const name = leadPerson.name;
+            const trainerId = leadPerson.CADET_Trainer_ID;
+            const shortBio = leadPerson.details;
             
             // Add Team Lead section
             doc.setFontSize(16);
