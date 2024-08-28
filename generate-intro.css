@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: calc(100% - 20px);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+.dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+#people-list {
+    margin-top: 20px;
+}
+#people-list ul {
+    list-style: none;
+    padding: 0;
+}
+#people-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#people-list button {
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+}
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
