@@ -113,40 +113,42 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const startY = 30;
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const headerImageUrl = 'templates/trainer-intro.png'; // URL for letterhead
+    const fullPageImageUrl  = 'templates/trainer-intro.png'; // URL for letterhead
     let y = startY;
 
  // Add letterhead image
-    async function addHeaderImage(url) {
-        try {
-            const img = await fetch(url).then(res => {
-                if (!res.ok) {
-                    throw new Error(`Image fetch failed: ${res.statusText}`);
-                }
-                return res.blob();
-            });
-            const imgData = URL.createObjectURL(img);
+   async function addFullPageImage(url) {
+    try {
+        const img = await fetch(url).then(res => {
+            if (!res.ok) {
+                throw new Error(`Image fetch failed: ${res.statusText}`);
+            }
+            return res.blob();
+        });
+        const imgData = URL.createObjectURL(img);
 
-            return new Promise((resolve, reject) => {
-                const imgObj = new Image();
-                imgObj.onload = () => {
-                    try {
-                        doc.addImage(imgObj, 'PNG', 0, 0, pageWidth, 40); // Adjust height of the header
-                        URL.revokeObjectURL(imgData); // Clean up the object URL
-                        resolve();
-                    } catch (addImageError) {
-                        reject(new Error(`Error adding letterhead image to PDF: ${addImageError.message}`));
-                    }
-                };
-                imgObj.onerror = () => {
-                    reject(new Error('Error loading letterhead image.'));
-                };
-                imgObj.src = imgData;
-            });
-        } catch (error) {
-            console.error('Error loading letterhead image:', error.message);
-        }
+        return new Promise((resolve, reject) => {
+            const imgObj = new Image();
+            imgObj.onload = () => {
+                try {
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    doc.addImage(imgObj, 'PNG', 0, 0, pageWidth, pageHeight);
+                    URL.revokeObjectURL(imgData); // Clean up the object URL
+                    resolve();
+                } catch (addImageError) {
+                    reject(new Error(`Error adding full-page image to PDF: ${addImageError.message}`));
+                }
+            };
+            imgObj.onerror = () => {
+                reject(new Error('Error loading image.'));
+            };
+            imgObj.src = imgData;
+        });
+    } catch (error) {
+        console.error('Error loading image:', error.message);
     }
+}
 
     async function addImageFromUrl(url, x, y, width, height) {
         try {
@@ -179,49 +181,62 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
         }
     }
 
-    async function addContent() {
-        for (const item of items) {
-            const photoUrl = item.getAttribute('data-photo-url') || 'images/placeholder.jpg';
-            const name = item.getAttribute('data-name');
-            const trainerId = item.getAttribute('data-trainer-id');
-            const shortBio = item.getAttribute('data-short-bio');
+async function addContent() {
+    const cellPadding = 10; // Padding between image and text
+    const imageWidth = 30; // Width of the image
+    const textWidth = pageWidth - imageWidth - 2 * cellPadding; // Width of the text area
+    
+    // Iterate through items and add them to the PDF
+    for (const item of items) {
+        const photoUrl = item.getAttribute('data-photo-url');
+        const name = item.getAttribute('data-name');
+        const trainerId = item.getAttribute('data-trainer-id');
+        const shortBio = item.getAttribute('data-short-bio');
+        
+        // Check if we need to add a new page
+        if (y + 50 > pageHeight - bottomMargin) {
+            doc.addPage();
+            y = startY;
+            await addFullPageImage(fullPageImageUrl); // Add full-page image on new page
+        }
 
-            if (y + 50 > pageHeight - bottomMargin) {
-                doc.addPage();
-                y = startY;
-                await addHeaderImage(headerImageUrl); // Add letterhead on new page
-            }
-
-            if (photoUrl) {
-                try {
-                    await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
-                    doc.setFontSize(12);
-                    const textX = 50;
-                    const textY = y + 15;
-                    if (name) {
-                        doc.text(`Name: ${name}`, textX, textY);
-                    }
-                    if (trainerId) {
-                        doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
-                    }
-                    if (shortBio) {
-                        const bioText = `Short Bio: ${shortBio}`;
-                        const bioWidth = pageWidth - 60; // Allow space for margins
-                        const bioLines = doc.splitTextToSize(bioText, bioWidth);
-                        doc.text(bioLines, textX, textY + 20);
-                    }
-                    y += 35; // Adjust for spacing between items
-                } catch (error) {
-                    console.error('Error adding image to PDF:', error);
-                }
+        // Add table row with image and text details
+        doc.setFontSize(12);
+        
+        if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+            try {
+                await addImageFromUrl(photoUrl, 10, y, imageWidth, imageWidth);
+            } catch (error) {
+                console.error('Error adding image to PDF:', error);
             }
         }
-    }
 
-    await addHeaderImage(headerImageUrl);
-    await addContent();
-    doc.save('people-document.pdf');
-});
+        // Set text X and Y positions
+        const textX = 10 + imageWidth + cellPadding;
+        const textY = y + 5; // Adjust vertical position of the text
+
+        // Add text details
+        if (name) {
+            doc.text(`Name: ${name}`, textX, textY);
+        }
+        if (trainerId) {
+            doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+        }
+        if (shortBio) {
+            const bioText = `Short Bio: ${shortBio}`;
+            const bioWidth = textWidth; // Allow space for margins
+            const bioLines = doc.splitTextToSize(bioText, bioWidth);
+            doc.text(bioLines, textX, textY + 20);
+        }
+
+        y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding; // Adjust for spacing between rows
+    }
+}
+
+await addFullPageImage(fullPageImageUrl);
+await addContent();
+doc.save('people-document.pdf');
+
 
 // Initialize page
 fetchPeople().then(() => {
