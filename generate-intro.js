@@ -22,15 +22,22 @@ async function fetchPeople() {
 
         const data = await response.json();
 // Assign fetched data to the global people array
-       const baseUrl = '';
-        people = data.records.map(record => ({
-            name: record.Name,
-            id: record.Id,
-            CADET_Trainer_ID: record.CADET_Trainer_ID__c,
-            details: record.Short_Bio__c,
-            photoUrl: record.PhotoUrl ? `${baseUrl}${record.Photo_Link__c}` : null // Prefix the PhotoUrl
-        }));
-   console.log(people);  // You can process the 'people' array as needed
+  people = data.records.map(record => {
+            let photoUrl = record.Photo_Link__c;
+            // Convert Google Drive link to direct download link
+            if (photoUrl && photoUrl.includes('drive.google.com')) {
+                const fileId = photoUrl.split('/d/')[1].split('/')[0];
+                photoUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+            }
+            return {
+                name: record.Name,
+                id: record.Id,
+                CADET_Trainer_ID: record.CADET_Trainer_ID__c,
+                details: record.Short_Bio__c,
+                photoUrl: photoUrl // Use the converted PhotoUrl
+            };
+        });
+        console.log(people);  // You can process the 'people' array as needed
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -142,36 +149,36 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
             y = 20; // Reset y to top after adding a new page
         }
 
-        // Add photo
+        // Add photo if URL is present
         if (photoUrl) {
-            await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
-            y += 35; // Space between photo and text
+            try {
+                await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
+                y += 35; // Space between photo and text
+            } catch (error) {
+                console.error('Error adding image to PDF:', error);
+            }
         }
 
-        // Add name
-        doc.setFontSize(12);
-        doc.text(`Name: ${name}`, 50, y);
-        y += 10;
+         // Add name if available
+        if (name) {
+            doc.setFontSize(12);
+            doc.text(`Name: ${name}`, 50, y);
+            y += 10;
+        }
 
-        // Add CADET Trainer ID
-        doc.text(`CADET Trainer ID: ${trainerId}`, 50, y);
-        y += 10;
+        // Add CADET Trainer ID if available
+        if (trainerId) {
+            doc.text(`CADET Trainer ID: ${trainerId}`, 50, y);
+            y += 10;
+        }
 
-        // Add short bio
-        doc.text(`Short Bio: ${shortBio}`, 50, y);
-        y += lineHeight; // Space between records
+        // Add short bio if available
+        if (shortBio) {
+            doc.text(`Short Bio: ${shortBio}`, 50, y);
+            y += lineHeight; // Space between records
+        }
     }
-
     doc.save('people-document.pdf');
-});
-
-document.addEventListener('click', (event) => {
-    const dropdown = document.getElementById('dropdown');
-    if (event.target.closest('#dropdown') || event.target.closest('#search-name')) {
-        // Click inside the dropdown or the input field
-        return;
-    }
-    dropdown.style.display = 'none'; // Hide dropdown if clicking outside
 });
 
 // Initialize page
