@@ -22,8 +22,8 @@ async function fetchPeople() {
         }
 
         const data = await response.json();
-// Assign fetched data to the global people array
-  people = data.records.map(record => {
+        // Assign fetched data to the global people array
+        people = data.records.map(record => {
             return {
                 name: record.Name,
                 id: record.Id,
@@ -255,6 +255,8 @@ try {
 });
 
 // Initialize page
-fetchPeople().then(() => {
-    renderList();
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPeople().then(() => {
+        renderList();
+    });
 });
