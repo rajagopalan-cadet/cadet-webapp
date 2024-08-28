@@ -128,12 +128,16 @@ function renderList() {
 }
 
 function setTeamLead(id) {
-    if (teamLead) {
+    if (teamLead === id) {
+        // Remove the current team lead if the same person is clicked again
+        teamLead = null;
+    } else if (teamLead) {
         alert('You can only have one team lead. Remove the current team lead first.');
         return;
+    } else {
+        teamLead = id; // Set new team lead
     }
-    teamLead = id;
-    renderList();
+    renderList(); // Re-render the list
     updateDropdown(document.getElementById('search-name').value);
 }
 
@@ -251,9 +255,10 @@ async function addContent() {
             
             // Add Team Lead section
             doc.setFontSize(16);
-            doc.setFontType('bold');
-            doc.text('Team Lead', 10, 10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Team Lead', 2, 2);
             doc.setFontSize(12);
+            doc.setFont(undefined, 'normal');
             if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
                 try {
                     await addImageFromUrl(photoUrl, 10, 20, imageWidth, imageWidth);
