@@ -94,6 +94,7 @@ footer {
     padding: 10px;
     position: sticky;
     bottom: 0;
+     z-index: 10;
 }
 
 button {
