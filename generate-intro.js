@@ -23,18 +23,12 @@ async function fetchPeople() {
         const data = await response.json();
 // Assign fetched data to the global people array
   people = data.records.map(record => {
-            let photoUrl = record.Photo_Link__c;
-            // Convert Google Drive link to direct download link
-            if (photoUrl && photoUrl.includes('drive.google.com')) {
-                const fileId = photoUrl.split('/d/')[1].split('/')[0];
-                photoUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-            }
             return {
                 name: record.Name,
                 id: record.Id,
                 CADET_Trainer_ID: record.CADET_Trainer_ID__c,
                 details: record.Short_Bio__c,
-                photoUrl: photoUrl // Use the converted PhotoUrl
+                photoUrl: record.Photo_Link__c // Directly use Cloudinary URL
             };
         });
         console.log(people);  // You can process the 'people' array as needed
@@ -173,9 +167,12 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
         }
 
         // Add short bio if available
-        if (shortBio) {
-            doc.text(`Short Bio: ${shortBio}`, 50, y);
-            y += lineHeight; // Space between records
+         if (shortBio) {
+            const bioText = `Short Bio: ${shortBio}`;
+            const bioWidth = pageWidth - 60; // Allow space for margins
+            const bioLines = doc.splitTextToSize(bioText, bioWidth);
+            doc.text(bioLines, 50, y);
+            y += bioLines.length * 10 + 10; // Adjust space after bio
         }
     }
     doc.save('people-document.pdf');
