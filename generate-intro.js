@@ -298,13 +298,14 @@ async function addContent() {
     }
 
      // Add the remaining items in the list, excluding the team lead
-        for (const item of items) {
+        for (const id of selectedPeople) {
             const personId = item.getAttribute('data-trainer-id');
-            if (personId !== teamLead) {  // Skip team lead since we've already added them
-                const photoUrl = item.getAttribute('data-photo-url');
-                const name = item.getAttribute('data-name');
-                const trainerId = item.getAttribute('data-trainer-id');
-                const shortBio = item.getAttribute('data-short-bio');
+            if (id !== teamLead) {  // Skip team lead since we've already added them
+                if (person) {
+            const photoUrl = person.photoUrl;
+            const name = person.name;
+            const trainerId = person.CADET_Trainer_ID;
+            const shortBio = person.details || ''; // Ensure shortBio is a string
 
                 // Check if we need to add a new page
                 if (y + 50 > pageHeight - bottomMargin) {
@@ -340,7 +341,7 @@ async function addContent() {
                     doc.text(bioLines, textX, textY + 20);
                 }
 
-                y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
+				y = textY + Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
             }
         }
     }
