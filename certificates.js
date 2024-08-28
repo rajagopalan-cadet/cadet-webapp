@@ -142,141 +142,146 @@ function generateAndDownloadCertificate(data) {
 }
 
 
-function generateAndDownloadLetter(data) {
-    const letterTemplate = 'trainer-letter-template.png'; // Path to the letter template
+async function generateAndDownloadLetter(data) {
+    const templateUrl = 'trainer-letter-template.pdf'; // Path to the template PDF
 
-    const img = new Image();
-    img.src = letterTemplate;
+    // Fetch the template PDF
+    const response = await fetch(templateUrl);
+    const templateBytes = await response.arrayBuffer();
 
-    img.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
+    // Load the template PDF
+    const { PDFDocument } = PDFLib;
+    const pdfDoc = await PDFDocument.load(templateBytes);
 
-        // Draw the template image on the canvas
-        ctx.drawImage(img, 0, 0);
+    // Get the first page of the PDF
+    const page = pdfDoc.getPages()[0];
+    const { width, height } = page.getSize();
 
-        // Set font and style for the letter text
-        ctx.font = '35px Arial';
-        ctx.fillStyle = '#000'; // Text color
+    // Extract full name, gender, and dates
+    const fullName = data.Name || 'John Doe';
+    const gender = data.Gender__c || 'Other'; // Default to 'Other' if gender is not provided
+    const certificationStatus = data.Certification_Status__c;
+    const certificationDate = data.Certification_Date__c || 'Date Not Provided';
+    const decertificationDate = data.Date_of_Decertification__c || 'Present';
 
-        // Extract full name, gender, and dates
-        const fullName = data.Name || 'John Doe';
-        const gender = data.Gender__c || 'Other'; // Default to 'Other' if gender is not provided
-        const certificationStatus = data.Certification_Status__c;
-        const certificationDate = data.Certification_Date__c || 'Date Not Provided';
-        const decertificationDate = data.Date_of_Decertification__c || 'Present';
+    // Determine pronouns based on gender
+    let pronounSubject = 'He';
+    let pronounObject = 'him';
+    let pronounPossessive = 'his';
 
-        // Determine pronouns based on gender
-        let pronounSubject = 'He';
-        let pronounObject = 'him';
-        let pronounPossessive = 'his';
+    if (gender === 'Female') {
+        pronounSubject = 'She';
+        pronounObject = 'her';
+        pronounPossessive = 'her';
+    } else if (gender === 'Other') {
+        pronounSubject = 'They';
+        pronounObject = 'them';
+        pronounPossessive = 'their';
+    }
 
-        if (gender === 'Female') {
-            pronounSubject = 'She';
-            pronounObject = 'her';
-            pronounPossessive = 'her';
-        } else if (gender === 'Other') {
-            pronounSubject = 'He/She';
-            pronounObject = 'him/her';
-            pronounPossessive = 'his/her';
-        }
+    // Determine the date range based on certification status
+    const dateRange = certificationStatus === 'Certified'
+        ? `${certificationDate} till date`
+        : `${certificationDate} to ${decertificationDate}`;
 
-        // Determine the date range based on certification status
-        const dateRange = certificationStatus === 'Certified'
-            ? `${certificationDate} till date`
-            : `${certificationDate} to ${decertificationDate}`;
+    // The content of the letter
+    const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
-        // The content of the letter
-        const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
+    // Define text settings
+    const fontSize = 12;
+    const margin = 20;
+    const textWidth = width - 2 * margin;
 
-          // Adjust the width for the text to fit within margins
-        const margin = 180;
-        const maxWidth = canvas.width - 2 * margin;
-        
-        // Split text into lines and write it on the canvas (adjust positions as per the template)
-        const lines = splitTextToLines(ctx, letterText, maxWidth); // Adjust width as necessary
-        let y = 500; // Starting y position for the text
+    // Embed a font
+    const fontBytes = await fetch('https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/fonts/Helvetica.ttf').then(res => res.arrayBuffer());
+    const font = await pdfDoc.embedFont(fontBytes);
 
-        lines.forEach(line => {
-            drawJustifiedText(ctx, line, margin, y, maxWidth);
-            y += 40; // Move to the next line (adjust line height if necessary)
+    // Add the letter text to the template
+    const page = pdfDoc.getPages()[0];
+    const { width: pageWidth, height: pageHeight } = page.getSize();
+
+    // Function to split text into lines that fit within the specified width
+    function splitTextToLines(text, maxWidth) {
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = '';
+
+        words.forEach(word => {
+            const testLine = currentLine + word + ' ';
+            const metrics = font.widthOfTextAtSize(testLine, fontSize);
+            const testWidth = metrics;
+
+            if (testWidth > maxWidth && currentLine !== '') {
+                lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine = testLine;
+            }
         });
 
-        // Add the date of generation at the bottom
-        const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        const dateX = 170; // X position for the date
-        const dateY = 1575; // Y position for the date
+        lines.push(currentLine.trim());
+        return lines;
+    }
 
-        ctx.font = '30px Arial'; // Font size for the date
-        ctx.fillText(`${currentDate}`, dateX, dateY); // Add date to canvas
+    // Function to draw justified text on the PDF
+    function drawJustifiedText(text, x, y, maxWidth) {
+        const words = text.split(' ');
+        let line = '';
+        let lineWidth = 0;
 
-        // Convert canvas to an image file and trigger download
-        const link = document.createElement('a');
-        link.download = `${fullName}_letter.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    };
-}
+        words.forEach(word => {
+            const testLine = line + word + ' ';
+            const metrics = font.widthOfTextAtSize(testLine, fontSize);
+            const testWidth = metrics;
 
-// Utility function to split text into lines that fit within the specified width
-function splitTextToLines(ctx, text, maxWidth) {
-    const words = text.split(' ');
-    const lines = [];
-    let currentLine = '';
+            if (testWidth > maxWidth && line !== '') {
+                // Draw the line with justified alignment
+                const lineWords = line.split(' ');
+                const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
+                const totalSpaces = lineWords.length - 1;
+                const totalLineWidth = font.widthOfTextAtSize(line, fontSize);
+                const extraSpacing = (maxWidth - totalLineWidth) / totalSpaces;
 
-    words.forEach(word => {
-        const testLine = currentLine + word + ' ';
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
+                let lineX = x;
+                lineWords.forEach((word, index) => {
+                    page.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
+                    lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
+                });
 
-        if (testWidth > maxWidth && currentLine !== '') {
-            lines.push(currentLine.trim());
-            currentLine = word + ' ';
-        } else {
-            currentLine = testLine;
-        }
+                y -= fontSize; // Move to the next line
+                line = word + ' ';
+            } else {
+                line = testLine;
+            }
+        });
+
+        // Draw the last line
+        page.drawText(line.trim(), { x: x, y: y, size: fontSize, font: font });
+    }
+
+    // Adjust the width for the text to fit within margins
+    const maxWidth = width - 2 * margin;
+    const lines = splitTextToLines(letterText, maxWidth);
+
+    // Position for the text
+    let yPosition = height - 50; // Adjust as necessary
+
+    lines.forEach(line => {
+        drawJustifiedText(line, margin, yPosition, maxWidth);
+        yPosition -= fontSize + 2; // Move to the next line
     });
 
-    lines.push(currentLine.trim());
-    return lines;
-}
-// Function to draw justified text on the canvas
-function drawJustifiedText(ctx, text, x, y, maxWidth) {
-    const words = text.split(' ');
-    let line = '';
-    let lineWidth = 0;
+    // Add the date of generation at the bottom
+    const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    page.drawText(`Generated on: ${currentDate}`, { x: margin, y: 30, size: fontSize, font: font });
 
-    words.forEach(word => {
-        const testLine = line + word + ' ';
-        const metrics = ctx.measureText(testLine);
-        const testWidth = metrics.width;
-
-        if (testWidth > maxWidth && line !== '') {
-            // Draw the line with justified alignment
-            const lineWords = line.split(' ');
-            const spaceWidth = ctx.measureText(' ').width;
-            const totalSpaces = lineWords.length - 1;
-            const totalLineWidth = ctx.measureText(line).width;
-            const extraSpacing = (maxWidth - totalLineWidth) / totalSpaces;
-
-            let lineX = x;
-            lineWords.forEach((word, index) => {
-                ctx.fillText(word, lineX, y);
-                lineX += ctx.measureText(word).width + extraSpacing;
-            });
-
-            y += parseInt(ctx.font, 10); // Move to the next line (line height)
-            line = word + ' ';
-            lineWidth = ctx.measureText(line).width;
-        } else {
-            line = testLine;
-        }
-    });
-
-    // Draw the last line
-    ctx.fillText(line.trim(), x, y);
+    // Serialize the PDF and trigger download
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${fullName}_letter.pdf`;
+    link.click();
 }
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
