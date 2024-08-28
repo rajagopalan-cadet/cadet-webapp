@@ -172,20 +172,20 @@ function generateAndDownloadLetter(data) {
         const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
         // Split text into lines and write it on the canvas (adjust positions as per the template)
-        const lines = splitTextToLines(ctx, letterText, canvas.width - 300); // Adjust width as necessary
-        let y = 600; // Starting y position for the text
+        const lines = splitTextToLines(ctx, letterText, canvas.width - 200); // Adjust width as necessary
+        let y = 450; // Starting y position for the text
 
         lines.forEach(line => {
-            ctx.fillText(line, 20, y); // Adjust x and y coordinates based on the template
-            y += 30; // Move to the next line (adjust line height if necessary)
+            ctx.fillText(line, 200, y); // Adjust x and y coordinates based on the template
+            y += 40; // Move to the next line (adjust line height if necessary)
         });
 
         // Add the date of generation at the bottom
         const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        const dateX = 113; // X position for the date
-        const dateY = 862; // Y position for the date
+        const dateX = 135; // X position for the date
+        const dateY = 1650; // Y position for the date
 
-        ctx.font = '25px Arial'; // Font size for the date
+        ctx.font = '40px Arial'; // Font size for the date
         ctx.fillText(`${currentDate}`, dateX, dateY); // Add date to canvas
 
         // Convert canvas to an image file and trigger download
