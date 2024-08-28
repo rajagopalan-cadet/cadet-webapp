@@ -297,17 +297,16 @@ async function addContent() {
         }
     }
 
-    // Add the remaining selected trainers, excluding the team lead
-    const remainingPeople = selectedPeople.filter(id => id !== teamLead);
-    
-    for (const id of remainingPeople) {
-        const person = people.find(p => p.id === id);
-        if (person) {
-            const photoUrl = person.photoUrl;
-            const name = person.name;
-            const trainerId = person.CADET_Trainer_ID;
-            const shortBio = person.details || ''; // Ensure shortBio is a string
-            // Check if we need to add a new page
+     // Add the remaining items in the list, excluding the team lead
+        for (const item of items) {
+            const personId = item.getAttribute('data-trainer-id');
+            if (personId !== teamLead) {  // Skip team lead since we've already added them
+                const photoUrl = item.getAttribute('data-photo-url');
+                const name = item.getAttribute('data-name');
+                const trainerId = item.getAttribute('data-trainer-id');
+                const shortBio = item.getAttribute('data-short-bio');
+
+                // Check if we need to add a new page
                 if (y + 50 > pageHeight - bottomMargin) {
                     doc.addPage();
                     y = startY;
@@ -316,35 +315,33 @@ async function addContent() {
 
                 // Add table row with image and text details
                 doc.setFontSize(12);
-            // Add a space between the team lead and the next section
-            if (teamLead) {
-                y += 10;
-            }
 
-            // Add trainer section
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'bold');
-            doc.text('Trainer', 10, y);
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'normal');
-            if (photoUrl) {
-                try {
-                    await addImageFromUrl(photoUrl, 10, y + 10, imageWidth, imageWidth);
-                } catch (error) {
-                    console.error('Error adding image to PDF:', error);
+                if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+                    try {
+                        await addImageFromUrl(photoUrl, 10, y, imageWidth, imageWidth);
+                    } catch (error) {
+                        console.error('Error adding image to PDF:', error);
+                    }
                 }
+
+                const textX = 10 + imageWidth + cellPadding;
+                const textY = y + 5;
+
+                if (name) {
+                    doc.text(`Name: ${name}`, textX, textY);
+                }
+                if (trainerId) {
+                    doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+                }
+                if (shortBio) {
+                    const bioText = `Short Bio: ${shortBio}`;
+                    const bioWidth = textWidth;
+                    const bioLines = doc.splitTextToSize(bioText, bioWidth);
+                    doc.text(bioLines, textX, textY + 20);
+                }
+
+                y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
             }
-            const textX = 10 + imageWidth + cellPadding;
-            const textY = y + 15;
-            doc.text(`Name: ${name}`, textX, textY);
-            doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
-            if (shortBio) {
-                const bioText = `Short Bio: ${shortBio}`;
-                const bioWidth = textWidth;
-                const bioLines = doc.splitTextToSize(bioText, bioWidth);
-                doc.text(bioLines, textX, textY + 20);
-            }
-            y = textY + Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
         }
     }
 
@@ -357,7 +354,6 @@ async function addContent() {
     } finally {
         document.getElementById('loader').style.display = 'none'; // Hide loader
     }
-}
 });
 
 // Initialize page
