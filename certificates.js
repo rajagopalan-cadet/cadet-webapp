@@ -192,21 +192,21 @@ function generateAndDownloadLetter(data) {
         const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
           // Adjust the width for the text to fit within margins
-        const margin = 200;
+        const margin = 180;
         const maxWidth = canvas.width - 2 * margin;
         
         // Split text into lines and write it on the canvas (adjust positions as per the template)
         const lines = splitTextToLines(ctx, letterText, maxWidth); // Adjust width as necessary
-        let y = 475; // Starting y position for the text
+        let y = 500; // Starting y position for the text
 
         lines.forEach(line => {
-            ctx.fillText(line, margin, y); // Adjust x and y coordinates based on the template
+            drawJustifiedText(ctx, line, margin, y, maxWidth);
             y += 40; // Move to the next line (adjust line height if necessary)
         });
 
         // Add the date of generation at the bottom
         const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        const dateX = 150; // X position for the date
+        const dateX = 170; // X position for the date
         const dateY = 1575; // Y position for the date
 
         ctx.font = '30px Arial'; // Font size for the date
@@ -242,7 +242,42 @@ function splitTextToLines(ctx, text, maxWidth) {
     lines.push(currentLine.trim());
     return lines;
 }
+// Function to draw justified text on the canvas
+function drawJustifiedText(ctx, text, x, y, maxWidth) {
+    const words = text.split(' ');
+    let line = '';
+    let lineWidth = 0;
 
+    words.forEach(word => {
+        const testLine = line + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+
+        if (testWidth > maxWidth && line !== '') {
+            // Draw the line with justified alignment
+            const lineWords = line.split(' ');
+            const spaceWidth = ctx.measureText(' ').width;
+            const totalSpaces = lineWords.length - 1;
+            const totalLineWidth = ctx.measureText(line).width;
+            const extraSpacing = (maxWidth - totalLineWidth) / totalSpaces;
+
+            let lineX = x;
+            lineWords.forEach((word, index) => {
+                ctx.fillText(word, lineX, y);
+                lineX += ctx.measureText(word).width + extraSpacing;
+            });
+
+            y += parseInt(ctx.font, 10); // Move to the next line (line height)
+            line = word + ' ';
+            lineWidth = ctx.measureText(line).width;
+        } else {
+            line = testLine;
+        }
+    });
+
+    // Draw the last line
+    ctx.fillText(line.trim(), x, y);
+}
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
     const errorMessage = document.getElementById('errorMessage');
