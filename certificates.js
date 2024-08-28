@@ -89,19 +89,19 @@ function generateAndDownloadCertificate(data) {
         // Set styles and draw text on the canvas
 
         // Name
-        ctx.font = 'bold 35px Poppins';
+        ctx.font = 'bold 35px Arial';
         ctx.fillStyle = '#093A7B';  // Color for name
-        ctx.fillText(fullName, 105, 270);  // Adjust x and y coordinates based on template
+        ctx.fillText(fullName, 120, 300);  // Adjust x and y coordinates based on template
 
         // CADET Trainer ID
-        ctx.font = 'bold 22px Poppins';
+        ctx.font = 'bold 22px Arial';
         ctx.fillStyle = '#093A7B';  // Color for ID
-        ctx.fillText(cadetId, 315, 348);   // Adjust x and y coordinates based on template
+        ctx.fillText(cadetId, 315, 355);   // Adjust x and y coordinates based on template
 
         // Date
-        ctx.font = 'bold 20px Poppins';
+        ctx.font = 'bold 20px Arial';
         ctx.fillStyle = '#000000';  // Color for date
-        ctx.fillText(currentDate, 350, 700);  // Adjust x and y coordinates based on template
+        ctx.fillText(currentDate, 370, 725);  // Adjust x and y coordinates based on template
 
         // Convert canvas to an image file and trigger download
         const link = document.createElement('a');
