@@ -355,7 +355,7 @@ async function addContent() {
         document.getElementById('loader').style.display = 'none'; // Hide loader
     }
 }
-
+});
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
