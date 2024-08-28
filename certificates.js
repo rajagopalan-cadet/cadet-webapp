@@ -194,13 +194,13 @@ async function generateAndDownloadLetter(data) {
         : `${certificationDate} to ${decertificationDate}`;
 
     // The content of the letter
-    const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
+    const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounPossessive} skills in coaching young people in areas of Communication, Critical Thinking, Ethics, and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
     // Define text settings
     const fontSize = 14;
     const margin = 60;
     const textWidth = width - 2 * margin;
-    const lineSpacing = fontSize * 1.5; // Line spacing set to 1.5 times the font size
+    const lineSpacing = fontSize * .75; // Line spacing set to 1.5 times the font size
     
    // Use built-in Helvetica font
     const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
@@ -249,7 +249,7 @@ async function generateAndDownloadLetter(data) {
 
     // Adjust the width for the text to fit within margins
    // const maxWidth = width - 2 * margin;
-    const yPosition = height - 195; // Starting vertical position
+    const yPosition = height - 200; // Starting vertical position
 
     // Draw the text on the page
     drawJustifiedText(letterText, margin, yPosition, textWidth);
