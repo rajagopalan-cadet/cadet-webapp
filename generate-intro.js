@@ -108,14 +108,15 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
     const items = listElement.querySelectorAll('li');
-    const topMargin = 60;  // Top margin in px
-    const bottomMargin = 30; // Bottom margin in px   
-    const startY = 40;
+    const topMargin = 20;  // Top margin in mm
+    const bottomMargin = 20; // Bottom margin in mm   
+    const startY = 30;
     const pageWidth = doc.internal.pageSize.getWidth();
-    const headerImageUrl = 'generate-intro.png'; // Path to your PNG letterhead image
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const headerImageUrl = 'intro.png'; // URL for letterhead
     let y = startY;
 
-    // Add letterhead image
+ // Add letterhead image
     async function addHeaderImage(url) {
         try {
             const img = await fetch(url).then(res => {
@@ -130,7 +131,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
                 const imgObj = new Image();
                 imgObj.onload = () => {
                     try {
-                        doc.addImage(imgObj, 'PNG', 0, 0, pageWidth, pageHeight);
+                        doc.addImage(imgObj, 'PNG', 0, 0, pageWidth, 40); // Adjust height of the header
                         URL.revokeObjectURL(imgData); // Clean up the object URL
                         resolve();
                     } catch (addImageError) {
@@ -147,6 +148,37 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
         }
     }
 
+    async function addImageFromUrl(url, x, y, width, height) {
+        try {
+            const img = await fetch(url).then(res => {
+                if (!res.ok) {
+                    throw new Error(`Image fetch failed: ${res.statusText}`);
+                }
+                return res.blob();
+            });
+            const imgData = URL.createObjectURL(img);
+
+            return new Promise((resolve, reject) => {
+                const imgObj = new Image();
+                imgObj.onload = () => {
+                    try {
+                        doc.addImage(imgObj, 'JPEG', x, y, width, height);
+                        URL.revokeObjectURL(imgData); // Clean up the object URL
+                        resolve();
+                    } catch (addImageError) {
+                        reject(new Error(`Error adding image to PDF: ${addImageError.message}`));
+                    }
+                };
+                imgObj.onerror = () => {
+                    reject(new Error('Error loading image.'));
+                };
+                imgObj.src = imgData;
+            });
+        } catch (error) {
+            console.error('Error loading image:', error.message);
+        }
+    }
+
     async function addContent() {
         for (const item of items) {
             const photoUrl = item.getAttribute('data-photo-url') || 'images/placeholder.jpg';
@@ -154,10 +186,10 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
             const trainerId = item.getAttribute('data-trainer-id');
             const shortBio = item.getAttribute('data-short-bio');
 
-            if (y + 40 > pageHeight - bottomMargin) {
+            if (y + 50 > pageHeight - bottomMargin) {
                 doc.addPage();
+                y = startY;
                 await addHeaderImage(headerImageUrl); // Add letterhead on new page
-                y = topMargin;
             }
 
             if (photoUrl) {
