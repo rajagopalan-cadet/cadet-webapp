@@ -3,6 +3,7 @@ let people = [];
 let selectedPeople = [];
 
 async function fetchPeople() {
+    document.getElementById('loader').style.display = 'flex'; // Show loader
     const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
     const accessToken = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb';  // Replace with your actual access token
@@ -34,6 +35,8 @@ async function fetchPeople() {
         console.log(people);  // You can process the 'people' array as needed
     } catch (error) {
         console.error('Error fetching data:', error);
+    } finally {
+        document.getElementById('loader').style.display = 'none'; // Hide loader
     }
 }
 
@@ -104,13 +107,14 @@ document.getElementById('search-name').addEventListener('click', () => {
 });
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
+    document.getElementById('loader').style.display = 'flex'; // Show loader
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
     const items = listElement.querySelectorAll('li');
     const topMargin = 20;  // Top margin in mm
-    const bottomMargin = 20; // Bottom margin in mm   
-    const startY = 30;
+    const bottomMargin = 10; // Bottom margin in mm   
+    const startY = 60;
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const fullPageImageUrl  = 'templates/trainer-intro.png'; // URL for letterhead
@@ -151,35 +155,41 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
 }
 
     async function addImageFromUrl(url, x, y, width, height) {
-        try {
-            const img = await fetch(url).then(res => {
-                if (!res.ok) {
-                    throw new Error(`Image fetch failed: ${res.statusText}`);
-                }
-                return res.blob();
-            });
-            const imgData = URL.createObjectURL(img);
-
-            return new Promise((resolve, reject) => {
-                const imgObj = new Image();
-                imgObj.onload = () => {
-                    try {
-                        doc.addImage(imgObj, 'JPEG', x, y, width, height);
-                        URL.revokeObjectURL(imgData); // Clean up the object URL
-                        resolve();
-                    } catch (addImageError) {
-                        reject(new Error(`Error adding image to PDF: ${addImageError.message}`));
-                    }
-                };
-                imgObj.onerror = () => {
-                    reject(new Error('Error loading image.'));
-                };
-                imgObj.src = imgData;
-            });
-        } catch (error) {
-            console.error('Error loading image:', error.message);
-        }
+    // Check if URL is valid
+    if (!url || url.trim() === '') {
+        console.warn('No URL provided for image.');
+        return; // Exit function if URL is empty
     }
+
+    try {
+        const img = await fetch(url).then(res => {
+            if (!res.ok) {
+                throw new Error(`Image fetch failed: ${res.statusText}`);
+            }
+            return res.blob();
+        });
+        const imgData = URL.createObjectURL(img);
+
+        return new Promise((resolve, reject) => {
+            const imgObj = new Image();
+            imgObj.onload = () => {
+                try {
+                    doc.addImage(imgObj, 'JPEG', x, y, width, height);
+                    URL.revokeObjectURL(imgData); // Clean up the object URL
+                    resolve();
+                } catch (addImageError) {
+                    reject(new Error(`Error adding image to PDF: ${addImageError.message}`));
+                }
+            };
+            imgObj.onerror = () => {
+                reject(new Error('Error loading image.'));
+            };
+            imgObj.src = imgData;
+        });
+    } catch (error) {
+        console.error('Error loading image:', error.message);
+    }
+}
 
 async function addContent() {
     const cellPadding = 10; // Padding between image and text
@@ -233,9 +243,15 @@ async function addContent() {
     }
 }
 
-await addFullPageImage(fullPageImageUrl);
-await addContent();
-doc.save('people-document.pdf');
+try {
+        await addFullPageImage(fullPageImageUrl);
+        await addContent();
+        doc.save('people-document.pdf');
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+    } finally {
+        document.getElementById('loader').style.display = 'none'; // Hide loader
+    }
 });
 
 // Initialize page
