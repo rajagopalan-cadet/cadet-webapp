@@ -112,7 +112,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const bottomMargin = 30; // Bottom margin in px   
     const startY = 40;
     const pageWidth = doc.internal.pageSize.getWidth();
-    const headerImageUrl = 'trainer-intro.png'; // Path to your PNG letterhead image
+    const headerImageUrl = 'generate-intro.png'; // Path to your PNG letterhead image
     let y = startY;
 
     // Add letterhead image
