@@ -140,7 +140,7 @@ function generateAndDownloadCertificate(data) {
         showErrorModal('Failed to load the certificate template. Please try again later.');
     };
 }
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
 
 async function generateAndDownloadLetter(data) {
     const templateUrl = 'trainer-letter-template.pdf'; // Path to the template PDF
@@ -150,8 +150,7 @@ async function generateAndDownloadLetter(data) {
     const templateBytes = await response.arrayBuffer();
 
     // Load the template PDF
-    const { PDFDocument } = PDFLib;
-    const pdfDoc = await PDFDocument.load(templateBytes);
+    const pdfDoc = await PDFLib.PDFDocument.load(templateBytes);
 
     // Get the first page of the PDF
     const pdfPage = pdfDoc.getPages()[0];
