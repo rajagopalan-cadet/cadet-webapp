@@ -105,14 +105,13 @@ document.getElementById('search-name').addEventListener('click', () => {
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
     const items = listElement.querySelectorAll('li');
     const startY = 20;
     const pageWidth = doc.internal.pageSize.getWidth();
     let y = startY;
 
-    // Helper function to add image from URL
     async function addImageFromUrl(url, x, y, width, height) {
         try {
             const img = await fetch(url).then(res => res.blob());
@@ -137,12 +136,11 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
         const trainerId = item.getAttribute('data-trainer-id');
         const shortBio = item.getAttribute('data-short-bio');
 
-        if (y + lineHeight > pageHeight) {
+        if (y + 40 > doc.internal.pageSize.height) {
             doc.addPage();
             y = 20; // Reset y to top after adding a new page
         }
 
-        // Add photo if URL is present
         if (photoUrl) {
             try {
                 await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
@@ -152,21 +150,18 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
             }
         }
 
-         // Add name if available
         if (name) {
             doc.setFontSize(12);
             doc.text(`Name: ${name}`, 50, y);
             y += 10;
         }
 
-        // Add CADET Trainer ID if available
         if (trainerId) {
             doc.text(`CADET Trainer ID: ${trainerId}`, 50, y);
             y += 10;
         }
 
-        // Add short bio if available
-         if (shortBio) {
+        if (shortBio) {
             const bioText = `Short Bio: ${shortBio}`;
             const bioWidth = pageWidth - 60; // Allow space for margins
             const bioLines = doc.splitTextToSize(bioText, bioWidth);
@@ -176,7 +171,6 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     }
     doc.save('people-document.pdf');
 });
-
 // Initialize page
 fetchPeople().then(() => {
     renderList();
