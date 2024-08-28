@@ -123,8 +123,7 @@ function generateAndDownloadCertificate(data) {
 
 
 function generateAndDownloadLetter(data) {
-    // Similar implementation as certificate, but using a letter template
-    const letterTemplate = 'path/to/trainer-letter-template.png';
+    const letterTemplate = 'trainer-letter-template.png'; // Path to the letter template
 
     const img = new Image();
     img.src = letterTemplate;
@@ -135,26 +134,91 @@ function generateAndDownloadLetter(data) {
         canvas.height = img.height;
         const ctx = canvas.getContext('2d');
 
+        // Draw the template image on the canvas
         ctx.drawImage(img, 0, 0);
 
-        // Draw the text on the image (adjust positions for letter template)
-        ctx.font = '30px Arial';
-        ctx.fillStyle = '#000';
+        // Set font and style for the letter text
+        ctx.font = '20px Arial';
+        ctx.fillStyle = '#000'; // Text color
 
+        // Extract full name, gender, and dates
         const fullName = data.Name || 'John Doe';
-        const cadetId = data.CADET_Trainer_ID__c || 'CT-000';
+        const gender = data.Gender__c || 'Other'; // Default to 'Other' if gender is not provided
+        const certificationStatus = data.Certification_Status__c;
+        const certificationDate = data.Certification_Date__c || 'Date Not Provided';
+        const decertificationDate = data.Date_of_Decertification__c || 'Present';
+
+        // Determine pronouns based on gender
+        let pronounSubject = 'He';
+        let pronounObject = 'him';
+        let pronounPossessive = 'his';
+
+        if (gender === 'Female') {
+            pronounSubject = 'She';
+            pronounObject = 'her';
+            pronounPossessive = 'her';
+        } else if (gender === 'Other') {
+            pronounSubject = 'They';
+            pronounObject = 'them';
+            pronounPossessive = 'their';
+        }
+
+        // Determine the date range based on certification status
+        const dateRange = certificationStatus === 'Certified'
+            ? `${certificationDate} till date`
+            : `${certificationDate} to ${decertificationDate}`;
+
+        // The content of the letter
+        const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
+
+        // Split text into lines and write it on the canvas (adjust positions as per the template)
+        const lines = splitTextToLines(ctx, letterText, canvas.width - 40); // Adjust width as necessary
+        let y = 300; // Starting y position for the text
+
+        lines.forEach(line => {
+            ctx.fillText(line, 20, y); // Adjust x and y coordinates based on the template
+            y += 30; // Move to the next line (adjust line height if necessary)
+        });
+
+        // Add the date of generation at the bottom
         const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        const dateX = 20; // X position for the date
+        const dateY = canvas.height - 50; // Y position for the date
 
-        ctx.fillText(fullName, 200, 300);  // Adjust position for letter
-        ctx.fillText(cadetId, 200, 350);   // Adjust position for letter
-        ctx.fillText(currentDate, 200, 400);  // Adjust position for letter
+        ctx.font = '15px Arial'; // Font size for the date
+        ctx.fillText(`Generated on: ${currentDate}`, dateX, dateY); // Add date to canvas
 
+        // Convert canvas to an image file and trigger download
         const link = document.createElement('a');
         link.download = `${fullName}_letter.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     };
 }
+
+// Utility function to split text into lines that fit within the specified width
+function splitTextToLines(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+
+    words.forEach(word => {
+        const testLine = currentLine + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+
+        if (testWidth > maxWidth && currentLine !== '') {
+            lines.push(currentLine.trim());
+            currentLine = word + ' ';
+        } else {
+            currentLine = testLine;
+        }
+    });
+
+    lines.push(currentLine.trim());
+    return lines;
+}
+
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
     const errorMessage = document.getElementById('errorMessage');
