@@ -113,22 +113,35 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     let y = startY;
 
     async function addImageFromUrl(url, x, y, width, height) {
-        try {
-            const img = await fetch(url).then(res => res.blob());
-            const imgData = URL.createObjectURL(img);
-            return new Promise((resolve, reject) => {
-                const imgObj = new Image();
-                imgObj.onload = () => {
+    try {
+        const img = await fetch(url).then(res => {
+            if (!res.ok) {
+                throw new Error(`Image fetch failed: ${res.statusText}`);
+            }
+            return res.blob();
+        });
+        const imgData = URL.createObjectURL(img);
+
+        return new Promise((resolve, reject) => {
+            const imgObj = new Image();
+            imgObj.onload = () => {
+                try {
                     doc.addImage(imgObj, 'JPEG', x, y, width, height);
+                    URL.revokeObjectURL(imgData); // Clean up the object URL
                     resolve();
-                };
-                imgObj.onerror = reject;
-                imgObj.src = imgData;
-            });
-        } catch (error) {
-            console.error('Error loading image:', error);
-        }
+                } catch (addImageError) {
+                    reject(new Error(`Error adding image to PDF: ${addImageError.message}`));
+                }
+            };
+            imgObj.onerror = () => {
+                reject(new Error('Error loading image.'));
+            };
+            imgObj.src = imgData;
+        });
+    } catch (error) {
+        console.error('Error loading image:', error.message);
     }
+}
 
     for (const item of items) {
         const photoUrl = item.getAttribute('data-photo-url');
