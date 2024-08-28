@@ -112,7 +112,7 @@ function renderList() {
                 <td>${person.name}</td>
                 <td>${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}</td>
                 <td>
-                    <button onclick="setTeamLead('${id}')" ${teamLead === id ? 'disabled' : ''}>
+                    <button onclick="setTeamLead('${id}')">
                         ${teamLead === id ? 'Remove as Team Lead' : 'Set as Team Lead'}
                     </button>
                 </td>
@@ -157,7 +157,7 @@ document.getElementById('search-name').addEventListener('input', () => {
 // Close dropdown when clicking outside the input box or dropdown list
 document.addEventListener('click', (event) => {
     const inputBox = document.getElementById('search-name');
-    const dropdown = document.getElementById('dropdown-list'); // Assuming your dropdown has this ID
+    const dropdown = document.getElementById('dropdown'); // Assuming your dropdown has this ID
 
     // Check if the click happened outside the input box and dropdown
     if (!inputBox.contains(event.target) && !dropdown.contains(event.target)) {
