@@ -192,9 +192,8 @@ async function generateAndDownloadLetter(data) {
     const margin = 20;
     const textWidth = width - 2 * margin;
 
-    // Embed a font
-    const fontBytes = await fetch('https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/fonts/Helvetica.ttf').then(res => res.arrayBuffer());
-    const font = await pdfDoc.embedFont(fontBytes);
+   // Use built-in Helvetica font
+    const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
     // Function to split text into lines that fit within the specified width
     function splitTextToLines(text, maxWidth) {
