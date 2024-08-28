@@ -69,6 +69,26 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+/* Add this CSS to your existing styles */
+button#generate-pdf {
+    position: fixed; /* Make the button stick to the viewport */
+    bottom: 20px;    /* Space from the bottom of the viewport */
+    left: 50%;       /* Center horizontally */
+    transform: translateX(-50%); /* Adjust centering */
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    text-align: center;
+    z-index: 1000;   /* Ensure the button is on top of other content */
+}
+
+button#generate-pdf:hover {
+    background-color: #003799;
+}
 /* Loader Styles */
 #loader {
     position: fixed;
