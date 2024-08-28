@@ -186,11 +186,6 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const pageHeight = doc.internal.pageSize.getHeight();
     const fullPageImageUrl = 'templates/trainer-intro.png'; // URL for letterhead
     let y = startY;
-
-// Log each row
-items.forEach((item, index) => {
-
-});
     
     // Add letterhead image
     async function addFullPageImage(url) {
