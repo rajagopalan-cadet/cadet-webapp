@@ -1,6 +1,26 @@
 let data = {};
 const token = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb'; // Hard-coded token
+document.addEventListener('DOMContentLoaded', function() {
+    const trainerIdPrefix = document.getElementById('trainerIdPrefix');
+    const trainerIdNumbers = document.getElementById('trainerIdNumbers');
+    const letterRadio = document.getElementById('letter');
+    const certificateRadio = document.getElementById('certificate');
+    const generateButton = document.getElementById('generateButton');
 
+    function validateForm() {
+        const trainerIdFilled = trainerIdNumbers.value.trim() !== '';
+        const documentTypeSelected = letterRadio.checked || certificateRadio.checked;
+        generateButton.disabled = !(trainerIdFilled && documentTypeSelected);
+    }
+
+    // Validate form on input change and radio button change
+    trainerIdNumbers.addEventListener('input', validateForm);
+    letterRadio.addEventListener('change', validateForm);
+    certificateRadio.addEventListener('change', validateForm);
+
+    // Initial validation
+    validateForm();
+});
 document.getElementById('generateButton').addEventListener('click', async function() {
     const prefix = document.getElementById('trainerIdPrefix').value;
     const numbers = document.getElementById('trainerIdNumbers').value;
