@@ -224,7 +224,7 @@ async function generateAndDownloadLetter(data) {
         lines.push(currentLine.trim());
         return lines;
     }
-
+const lineSpacing = 18; // Adjust this value to increase or decrease line spacing
     // Function to draw justified text on the PDF
     function drawJustifiedText(text, x, y, maxWidth) {
         const lines = splitTextToLines(text, maxWidth);
@@ -233,28 +233,28 @@ async function generateAndDownloadLetter(data) {
             const words = line.split(' ');
             const totalWidth = font.widthOfTextAtSize(line, fontSize);
             const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
-            const extraSpacing = (maxWidth - totalWidth) / (words.length - 1);
+            const extraSpacing = words.length > 1 ? (maxWidth - totalWidth) / (words.length - 1) : 0;
 
             let lineX = x;
-            words.forEach((word, wordIndex) => {
-                pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
-                lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
-            });
-
-            y -= fontSize; // Move to the next line
+        words.forEach((word) => {
+            pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
+            lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
         });
-    }
+
+         y -= (fontSize + lineSpacing); // Move to the next line
+    });
+}
 
     // Adjust the width for the text to fit within margins
     const maxWidth = width - 2 * margin;
-    const yPosition = height - 220; // Starting vertical position
+    const yPosition = height - 210; // Starting vertical position
 
     // Draw the text on the page
     drawJustifiedText(letterText, margin, yPosition, maxWidth);
 
     // Add the date of generation at the bottom
     const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    pdfPage.drawText(`Date: ${currentDate}`, { x: 82, y: 180, size: fontSize-1, font: font });
+    pdfPage.drawText(`${currentDate}`, { x: 82, y: 180, size: fontSize-1, font: font });
 
     // Serialize the PDF and trigger download
     const pdfBytes = await pdfDoc.save();
