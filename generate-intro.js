@@ -249,94 +249,95 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
         }
     }
 
-    async function addContent() {
-        const cellPadding = 10; // Padding between image and text
-        const imageWidth = 30; // Width of the image
-        const textWidth = pageWidth - imageWidth - 2 * cellPadding; // Width of the text area
-        
-        // Add Team Lead to the top of the PDF
-        if (teamLead) {
-            const leadPerson = people.find(p => p.id === teamLead);
-            if (leadPerson) {
-                const photoUrl = leadPerson.photoUrl;
-                const name = leadPerson.name;
-                const trainerId = leadPerson.CADET_Trainer_ID;
-                const shortBio = leadPerson.details;
-                
-                // Add Team Lead section
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.text('Team Lead', 10, y);
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'normal');
-                if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
-                    try {
-                        await addImageFromUrl(photoUrl, 10, y + 10, imageWidth, imageWidth);
-                    } catch (error) {
-                        console.error('Error adding image to PDF:', error);
-                    }
+async function addContent() {
+    const cellPadding = 10; // Padding between image and text
+    const imageWidth = 30; // Width of the image
+    const textWidth = pageWidth - imageWidth - 2 * cellPadding; // Width of the text area
+    
+    // Add Team Lead to the top of the PDF
+    if (teamLead) {
+        const leadPerson = people.find(p => p.id === teamLead);
+        if (leadPerson) {
+            const photoUrl = leadPerson.photoUrl;
+            const name = leadPerson.name;
+            const trainerId = leadPerson.CADET_Trainer_ID;
+            const shortBio = leadPerson.details || ''; // Ensure shortBio is a string
+            
+            // Add Team Lead section
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text('Team Lead', 10, y);
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'normal');
+            if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+                try {
+                    await addImageFromUrl(photoUrl, 10, y + 10, imageWidth, imageWidth);
+                } catch (error) {
+                    console.error('Error adding image to PDF:', error);
                 }
-                const textX = 10 + imageWidth + cellPadding;
-                const textY = y + 15;
-                doc.text(`Name: ${name}`, textX, textY);
-                doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
-                if (shortBio) {
-                    const bioText = `Short Bio: ${shortBio}`;
-                    const bioWidth = textWidth;
-                    const bioLines = doc.splitTextToSize(bioText, bioWidth);
-                    doc.text(bioLines, textX, textY + 20);
-                }
-                y = textY + Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
             }
-        }
-
-        // Add the remaining items in the list, excluding the team lead
-        for (const item of items) {
-            const personId = item.getAttribute('data-trainer-id');
-            if (personId !== teamLead) {  // Skip team lead since we've already added them
-                const photoUrl = item.getAttribute('data-photo-url');
-                const name = item.getAttribute('data-name');
-                const trainerId = item.getAttribute('data-trainer-id');
-                const shortBio = item.getAttribute('data-short-bio');
-
-                // Check if we need to add a new page
-                if (y + 50 > pageHeight - bottomMargin) {
-                    doc.addPage();
-                    y = startY;
-                    await addFullPageImage(fullPageImageUrl); // Add full-page image on new page
-                }
-
-                // Add table row with image and text details
-                doc.setFontSize(12);
-
-                if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
-                    try {
-                        await addImageFromUrl(photoUrl, 10, y, imageWidth, imageWidth);
-                    } catch (error) {
-                        console.error('Error adding image to PDF:', error);
-                    }
-                }
-
-                const textX = 10 + imageWidth + cellPadding;
-                const textY = y + 5;
-
-                if (name) {
-                    doc.text(`Name: ${name}`, textX, textY);
-                }
-                if (trainerId) {
-                    doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
-                }
-                if (shortBio) {
-                    const bioText = `Short Bio: ${shortBio}`;
-                    const bioWidth = textWidth;
-                    const bioLines = doc.splitTextToSize(bioText, bioWidth);
-                    doc.text(bioLines, textX, textY + 20);
-                }
-
-                y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
+            const textX = 10 + imageWidth + cellPadding;
+            const textY = y + 15;
+            doc.text(`Name: ${name}`, textX, textY);
+            doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+            if (shortBio) {
+                const bioText = `Short Bio: ${shortBio}`;
+                const bioWidth = textWidth;
+                const bioLines = doc.splitTextToSize(bioText, bioWidth);
+                doc.text(bioLines, textX, textY + 20);
             }
+            y = textY + Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
         }
     }
+
+    // Add the remaining items in the list, excluding the team lead
+    for (const item of items) {
+        const personId = item.getAttribute('data-trainer-id');
+        if (personId !== teamLead) {  // Skip team lead since we've already added them
+            const photoUrl = item.getAttribute('data-photo-url');
+            const name = item.getAttribute('data-name');
+            const trainerId = item.getAttribute('data-trainer-id');
+            const shortBio = item.getAttribute('data-short-bio') || ''; // Ensure shortBio is a string
+
+            // Check if we need to add a new page
+            if (y + 50 > pageHeight - bottomMargin) {
+                doc.addPage();
+                y = startY;
+                await addFullPageImage(fullPageImageUrl); // Add full-page image on new page
+            }
+
+            // Add table row with image and text details
+            doc.setFontSize(12);
+
+            if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+                try {
+                    await addImageFromUrl(photoUrl, 10, y, imageWidth, imageWidth);
+                } catch (error) {
+                    console.error('Error adding image to PDF:', error);
+                }
+            }
+
+            const textX = 10 + imageWidth + cellPadding;
+            const textY = y + 5;
+
+            if (name) {
+                doc.text(`Name: ${name}`, textX, textY);
+            }
+            if (trainerId) {
+                doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+            }
+            if (shortBio) {
+                const bioText = `Short Bio: ${shortBio}`;
+                const bioWidth = textWidth;
+                const bioLines = doc.splitTextToSize(bioText, bioWidth);
+                doc.text(bioLines, textX, textY + 20);
+            }
+
+            y += Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
+        }
+    }
+}
+
 
     try {
         await addFullPageImage(fullPageImageUrl);
