@@ -5,7 +5,7 @@ let selectedPeople = [];
 async function fetchPeople() {
     const query = "SELECT CADET_Trainer_ID__c, Name, Short_Bio__c, PhotoUrl FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
-    const accessToken = 'YOUR_ACCESS_TOKEN';  // Replace with your actual access token
+    const accessToken = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb';  // Replace with your actual access token
 
     try {
         const response = await fetch(endpoint, {
