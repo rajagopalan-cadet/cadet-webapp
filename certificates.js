@@ -64,13 +64,13 @@ function generateCertificate(data) {
 }
 
 function generateAndDownloadCertificate(data) {
-    // Template image for certificate (you need to replace this with the actual image URL or base64 string)
+    // Path to the certificate template image (update with your actual path)
     const certificateTemplate = 'trainer-certificate-template.png';
 
     // Load the image
     const img = new Image();
     img.src = certificateTemplate;
-    
+
     img.onload = function() {
         // Create a canvas to draw the image and text on it
         const canvas = document.createElement('canvas');
@@ -81,18 +81,27 @@ function generateAndDownloadCertificate(data) {
         // Draw the template image on the canvas
         ctx.drawImage(img, 0, 0);
 
-        // Set text style and positions (adjust these positions according to your template)
-        ctx.font = '30px Arial';
-        ctx.fillStyle = '#000';
-        
-        // Draw the text on the image (Replace {{full name}}, {{id}}, and {{date}} with actual values)
+        // Fetch values from the data object
         const fullName = data.Name || 'John Doe';
         const cadetId = data.CADET_Trainer_ID__c || 'CT-000';
         const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-        ctx.fillText(fullName, 200, 300);  // Position for full name
-        ctx.fillText(cadetId, 200, 350);   // Position for CADET Trainer ID
-        ctx.fillText(currentDate, 200, 400);  // Position for date
+        // Set styles and draw text on the canvas
+
+        // Name
+        ctx.font = '33px Poppins';
+        ctx.fillStyle = '#093A7B';  // Color for name
+        ctx.fillText(fullName, 102.5, 284.1);  // Adjust x and y coordinates based on template
+
+        // CADET Trainer ID
+        ctx.font = '17px Poppins';
+        ctx.fillStyle = '#093A7B';  // Color for ID
+        ctx.fillText(cadetId, 315, 353);   // Adjust x and y coordinates based on template
+
+        // Date
+        ctx.font = '11px Poppins';
+        ctx.fillStyle = '#000000';  // Color for date
+        ctx.fillText(currentDate, 241, 34);  // Adjust x and y coordinates based on template
 
         // Convert canvas to an image file and trigger download
         const link = document.createElement('a');
@@ -100,7 +109,13 @@ function generateAndDownloadCertificate(data) {
         link.href = canvas.toDataURL('image/png');
         link.click();
     };
+
+    img.onerror = function() {
+        console.error('Error loading the certificate template image.');
+        showErrorModal('Failed to load the certificate template. Please try again later.');
+    };
 }
+
 
 function generateAndDownloadLetter(data) {
     // Similar implementation as certificate, but using a letter template
