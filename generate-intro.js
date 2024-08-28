@@ -109,8 +109,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const listElement = document.getElementById('list');
     const items = listElement.querySelectorAll('li');
     const startY = 20;
-    const lineHeight = 40; // Adjust line height as needed
-    const pageHeight = doc.internal.pageSize.height;
+    const pageWidth = doc.internal.pageSize.getWidth();
     let y = startY;
 
     // Helper function to add image from URL
