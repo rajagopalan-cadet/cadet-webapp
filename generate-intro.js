@@ -173,7 +173,6 @@ document.addEventListener('click', (event) => {
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
 
-
     document.getElementById('loader').style.display = 'flex'; // Show loader
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -308,7 +307,15 @@ async function addContent() {
             const name = person.name;
             const trainerId = person.CADET_Trainer_ID;
             const shortBio = person.details || ''; // Ensure shortBio is a string
-            
+            // Check if we need to add a new page
+                if (y + 50 > pageHeight - bottomMargin) {
+                    doc.addPage();
+                    y = startY;
+                    await addFullPageImage(fullPageImageUrl); // Add full-page image on new page
+                }
+
+                // Add table row with image and text details
+                doc.setFontSize(12);
             // Add a space between the team lead and the next section
             if (teamLead) {
                 y += 10;
