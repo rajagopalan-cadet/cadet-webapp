@@ -81,10 +81,24 @@ main {
 .dropdown-item {
     padding: 8px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-item:hover {
     background-color: #f1f1f1;
+    
+}
+/* Style for checkbox */
+.dropdown-item input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and label */
+    width: 20px; /* Increase size of checkbox */
+    height: 20px; /* Increase size of checkbox */
+}
+
+/* Style for label */
+.dropdown-item label {
+    font-size: 16px; /* Adjust font size if needed */
 }
 
 footer {
