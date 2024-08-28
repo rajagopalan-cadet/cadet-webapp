@@ -197,10 +197,11 @@ async function generateAndDownloadLetter(data) {
     const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
     // Define text settings
-    const fontSize = 13.5;
+    const fontSize = 14;
     const margin = 60;
     const textWidth = width - 2 * margin;
-
+    const lineSpacing = fontSize * 1.5; // Line spacing set to 1.5 times the font size
+    
    // Use built-in Helvetica font
     const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
@@ -224,7 +225,7 @@ async function generateAndDownloadLetter(data) {
         lines.push(currentLine.trim());
         return lines;
     }
-const lineSpacing = 18; // Adjust this value to increase or decrease line spacing
+
     // Function to draw justified text on the PDF
     function drawJustifiedText(text, x, y, maxWidth) {
         const lines = splitTextToLines(text, maxWidth);
@@ -233,12 +234,13 @@ const lineSpacing = 18; // Adjust this value to increase or decrease line spacin
             const words = line.split(' ');
             const totalWidth = font.widthOfTextAtSize(line, fontSize);
             const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
+           // Calculate extra space between words for justification
             const extraSpacing = words.length > 1 ? (maxWidth - totalWidth) / (words.length - 1) : 0;
 
             let lineX = x;
         words.forEach((word) => {
             pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
-            lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
+            lineX += font.widthOfTextAtSize(word, fontSize) + spaceWidth + extraSpacing;
         });
 
          y -= (fontSize + lineSpacing); // Move to the next line
@@ -246,11 +248,11 @@ const lineSpacing = 18; // Adjust this value to increase or decrease line spacin
 }
 
     // Adjust the width for the text to fit within margins
-    const maxWidth = width - 2 * margin;
-    const yPosition = height - 210; // Starting vertical position
+   // const maxWidth = width - 2 * margin;
+    const yPosition = height - 195; // Starting vertical position
 
     // Draw the text on the page
-    drawJustifiedText(letterText, margin, yPosition, maxWidth);
+    drawJustifiedText(letterText, margin, yPosition, textWidth);
 
     // Add the date of generation at the bottom
     const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
