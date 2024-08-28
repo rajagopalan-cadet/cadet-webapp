@@ -189,7 +189,7 @@ async function generateAndDownloadLetter(data) {
 
     // Define text settings
     const fontSize = 12;
-    const margin = 20;
+    const margin = 60;
     const textWidth = width - 2 * margin;
 
    // Use built-in Helvetica font
@@ -259,7 +259,7 @@ async function generateAndDownloadLetter(data) {
     const lines = splitTextToLines(letterText, maxWidth);
 
     // Position for the text
-    let yPosition = height - 50; // Adjust as necessary
+    let yPosition = height - 250; // Adjust as necessary
 
     lines.forEach(line => {
         drawJustifiedText(line, margin, yPosition, maxWidth);
@@ -268,7 +268,7 @@ async function generateAndDownloadLetter(data) {
 
     // Add the date of generation at the bottom
     const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    pdfPage.drawText(`Generated on: ${currentDate}`, { x: margin, y: 30, size: fontSize, font: font });
+    pdfPage.drawText(`${currentDate}`, { x: 80, y: 180, size: fontSize, font: font });
 
     // Serialize the PDF and trigger download
     const pdfBytes = await pdfDoc.save();
