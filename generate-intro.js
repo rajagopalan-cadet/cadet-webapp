@@ -108,11 +108,15 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
     const items = listElement.querySelectorAll('li');
-    const startY = 20;
+    const topMargin = 60;  // Top margin in px
+    const bottomMargin = 30; // Bottom margin in px   
+    const startY = 40;
     const pageWidth = doc.internal.pageSize.getWidth();
+    const headerImageUrl = 'trainer-intro.png'; // Path to your PNG letterhead image
     let y = startY;
 
-    async function addImageFromUrl(url, x, y, width, height) {
+    // Add letterhead image
+    async function addHeaderImage(url) {
         try {
             const img = await fetch(url).then(res => {
                 if (!res.ok) {
@@ -126,62 +130,64 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
                 const imgObj = new Image();
                 imgObj.onload = () => {
                     try {
-                        doc.addImage(imgObj, 'JPEG', x, y, width, height);
+                        doc.addImage(imgObj, 'PNG', 0, 0, pageWidth, pageHeight);
                         URL.revokeObjectURL(imgData); // Clean up the object URL
                         resolve();
                     } catch (addImageError) {
-                        reject(new Error(`Error adding image to PDF: ${addImageError.message}`));
+                        reject(new Error(`Error adding letterhead image to PDF: ${addImageError.message}`));
                     }
                 };
                 imgObj.onerror = () => {
-                    reject(new Error('Error loading image.'));
+                    reject(new Error('Error loading letterhead image.'));
                 };
                 imgObj.src = imgData;
             });
         } catch (error) {
-            console.error('Error loading image:', error.message);
+            console.error('Error loading letterhead image:', error.message);
         }
     }
 
-    for (const item of items) {
-        const photoUrl = 'favicon.png'; // item.getAttribute('data-photo-url') || Use placeholder image if no photo URL
-        const name = item.getAttribute('data-name');
-        const trainerId = item.getAttribute('data-trainer-id');
-        const shortBio = item.getAttribute('data-short-bio');
+    async function addContent() {
+        for (const item of items) {
+            const photoUrl = item.getAttribute('data-photo-url') || 'images/placeholder.jpg';
+            const name = item.getAttribute('data-name');
+            const trainerId = item.getAttribute('data-trainer-id');
+            const shortBio = item.getAttribute('data-short-bio');
 
-        if (y + 40 > doc.internal.pageSize.height) {
-            doc.addPage();
-            y = 20; // Reset y to top after adding a new page
-        }
+            if (y + 40 > pageHeight - bottomMargin) {
+                doc.addPage();
+                await addHeaderImage(headerImageUrl); // Add letterhead on new page
+                y = topMargin;
+            }
 
-        if (photoUrl) {
-            try {
-                await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
-                y += 35; // Space between photo and text
-            } catch (error) {
-                console.error('Error adding image to PDF:', error);
+            if (photoUrl) {
+                try {
+                    await addImageFromUrl(photoUrl, 10, y, 30, 30); // Adjust size as needed
+                    doc.setFontSize(12);
+                    const textX = 50;
+                    const textY = y + 15;
+                    if (name) {
+                        doc.text(`Name: ${name}`, textX, textY);
+                    }
+                    if (trainerId) {
+                        doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+                    }
+                    if (shortBio) {
+                        const bioText = `Short Bio: ${shortBio}`;
+                        const bioWidth = pageWidth - 60; // Allow space for margins
+                        const bioLines = doc.splitTextToSize(bioText, bioWidth);
+                        doc.text(bioLines, textX, textY + 20);
+                    }
+                    y += 35; // Adjust for spacing between items
+                } catch (error) {
+                    console.error('Error adding image to PDF:', error);
+                }
             }
         }
-
-        if (name) {
-            doc.setFontSize(12);
-            doc.text(`Name: ${name}`, 50, y);
-            y += 10;
-        }
-
-        if (trainerId) {
-            doc.text(`CADET Trainer ID: ${trainerId}`, 50, y);
-            y += 10;
-        }
-
-        if (shortBio) {
-            const bioText = `Short Bio: ${shortBio}`;
-            const bioWidth = pageWidth - 60; // Allow space for margins
-            const bioLines = doc.splitTextToSize(bioText, bioWidth);
-            doc.text(bioLines, 50, y);
-            y += bioLines.length * 10 + 10; // Adjust space after bio
-        }
     }
+
+    await addHeaderImage(headerImageUrl);
+    await addContent();
     doc.save('people-document.pdf');
 });
 
