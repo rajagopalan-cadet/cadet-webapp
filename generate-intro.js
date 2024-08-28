@@ -22,12 +22,13 @@ async function fetchPeople() {
 
         const data = await response.json();
 // Assign fetched data to the global people array
+         const baseUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com';
         people = data.records.map(record => ({
             name: record.Name,
             id: record.Id,
             CADET_Trainer_ID: record.CADET_Trainer_ID__c,
             details: record.Short_Bio__c,
-            photoUrl: record.PhotoUrl
+            photoUrl: record.PhotoUrl ? `${baseUrl}${record.PhotoUrl}` : null // Prefix the PhotoUrl
         }));
    console.log(people);  // You can process the 'people' array as needed
     } catch (error) {
