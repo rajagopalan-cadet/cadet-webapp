@@ -154,8 +154,8 @@ async function generateAndDownloadLetter(data) {
     const pdfDoc = await PDFDocument.load(templateBytes);
 
     // Get the first page of the PDF
-    const page = pdfDoc.getPages()[0];
-    const { width, height } = page.getSize();
+    const pdfPage = pdfDoc.getPages()[0];
+    const { width, height } = pdfPage.getSize();
 
     // Extract full name, gender, and dates
     const fullName = data.Name || 'John Doe';
@@ -195,10 +195,6 @@ async function generateAndDownloadLetter(data) {
     // Embed a font
     const fontBytes = await fetch('https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/fonts/Helvetica.ttf').then(res => res.arrayBuffer());
     const font = await pdfDoc.embedFont(fontBytes);
-
-    // Add the letter text to the template
-    const page = pdfDoc.getPages()[0];
-    const { width: pageWidth, height: pageHeight } = page.getSize();
 
     // Function to split text into lines that fit within the specified width
     function splitTextToLines(text, maxWidth) {
@@ -244,7 +240,7 @@ async function generateAndDownloadLetter(data) {
 
                 let lineX = x;
                 lineWords.forEach((word, index) => {
-                    page.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
+                    pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
                     lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
                 });
 
@@ -256,7 +252,7 @@ async function generateAndDownloadLetter(data) {
         });
 
         // Draw the last line
-        page.drawText(line.trim(), { x: x, y: y, size: fontSize, font: font });
+        pdfPage.drawText(line.trim(), { x: x, y: y, size: fontSize, font: font });
     }
 
     // Adjust the width for the text to fit within margins
@@ -273,7 +269,7 @@ async function generateAndDownloadLetter(data) {
 
     // Add the date of generation at the bottom
     const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    page.drawText(`Generated on: ${currentDate}`, { x: margin, y: 30, size: fontSize, font: font });
+    pdfPage.drawText(`Generated on: ${currentDate}`, { x: margin, y: 30, size: fontSize, font: font });
 
     // Serialize the PDF and trigger download
     const pdfBytes = await pdfDoc.save();
@@ -283,6 +279,7 @@ async function generateAndDownloadLetter(data) {
     link.download = `${fullName}_letter.pdf`;
     link.click();
 }
+
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
     const errorMessage = document.getElementById('errorMessage');
