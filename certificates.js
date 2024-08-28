@@ -1,7 +1,7 @@
 let data = {};
 const token = '00DC1000000P5Nt!AQEAQN.rK.Zdu7BHHme8Aqkyu0adVn8alEp1oJdp_kt8OSPX7KWbNIXbY_YR.K.w8b8goOnsPjphctZDnxWHhhOCq6VFBsXU'; // Hard-coded token
 
-document.getElementById('fetchButton').addEventListener('click', async function() {
+document.getElementById('generateButton').addEventListener('click', async function() {
     const prefix = document.getElementById('trainerIdPrefix').value;
     const numbers = document.getElementById('trainerIdNumbers').value;
     const trainerId = `${prefix}${numbers}`;
