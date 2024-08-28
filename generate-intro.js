@@ -21,43 +21,44 @@ async function fetchPeople() {
         }
 
         const data = await response.json();
-        const people = data.records.map(record => ({
+// Assign fetched data to the global people array
+        people = data.records.map(record => ({
             name: record.Name,
             id: record.Id,
             CADET_Trainer_ID: record.CADET_Trainer_ID__c,
             details: record.Short_Bio__c,
             photoUrl: record.PhotoUrl
         }));
-
-        console.log(people);  // You can process the 'people' array as needed
+ // Render dropdown with fetched people
+        updateDropdown('');
     } catch (error) {
         console.error('Error fetching data:', error);
     }
-    updateDropdown(query);
 }
 
 
 function updateDropdown(query) {
     const dropdown = document.getElementById('dropdown');
     dropdown.innerHTML = '';
-    if (query) {
-        const filteredPeople = people.filter(person => person.name.toLowerCase().includes(query.toLowerCase()));
-        filteredPeople.forEach(person => {
-            const div = document.createElement('div');
-            div.classList.add('dropdown-item');
-            div.innerHTML = `
-                <input type="checkbox" id="${person.id}" data-name="${person.name}" ${selectedPeople.includes(person.id) ? 'checked' : ''}>
-                <label for="${person.id}">${person.name}</label>
-            `;
-            div.addEventListener('click', () => {
-                handleCheckboxChange(person.id);
-            });
-            dropdown.appendChild(div);
+    // Filter the people array based on the search query
+    const filteredPeople = people.filter(person => person.name.toLowerCase().includes(query.toLowerCase()));
+    
+   // Render the filtered list in the dropdown
+    filteredPeople.forEach(person => {
+        const div = document.createElement('div');
+        div.classList.add('dropdown-item');
+        div.innerHTML = `
+            <input type="checkbox" id="${person.id}" data-name="${person.name}" ${selectedPeople.includes(person.id) ? 'checked' : ''}>
+            <label for="${person.id}">${person.name}</label>
+        `;
+        div.addEventListener('click', () => {
+            handleCheckboxChange(person.id);
         });
-        dropdown.style.display = 'block';
-    } else {
-        dropdown.style.display = 'none';
-    }
+        dropdown.appendChild(div);
+    });
+
+    // Display dropdown if there's a query
+    dropdown.style.display = filteredPeople.length > 0 ? 'block' : 'none';
 }
 
 function handleCheckboxChange(id) {
@@ -95,7 +96,7 @@ function removeFromList(id) {
 }
 
 document.getElementById('search-name').addEventListener('input', (event) => {
-    updateDropdown(event.target.value);
+    updateDropdown(event.target.value);  // Pass the search query to updateDropdown
 });
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
@@ -161,8 +162,5 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     doc.save('people-document.pdf');
 });
 
-
-// Initialize page
-fetchPeople().then(() => {
-    renderList();
-});
+// Initialize page by fetching people
+fetchPeople();
