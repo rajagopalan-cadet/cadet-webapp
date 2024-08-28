@@ -1,6 +1,7 @@
 // Mock data
 let people = [];
 let selectedPeople = [];
+let teamLead = null; // Track the Team Lead
 
 async function fetchPeople() {
     document.getElementById('loader').style.display = 'flex'; // Show loader
@@ -45,7 +46,10 @@ function updateDropdown(query) {
     const dropdown = document.getElementById('dropdown');
     dropdown.innerHTML = '';
     if (query) {
-        const filteredPeople = people.filter(person => person.name.toLowerCase().includes(query.toLowerCase()));
+        const filteredPeople = people.filter(person => 
+            person.name.toLowerCase().includes(query.toLowerCase()) || 
+            person.CADET_Trainer_ID.toLowerCase().includes(query.toLowerCase())
+        );
         filteredPeople.forEach(person => {
             const div = document.createElement('div');
             div.classList.add('dropdown-item');
@@ -84,8 +88,9 @@ function renderList() {
         if (person) {
             const li = document.createElement('li');
             li.innerHTML = `
-                ${person.name} - ${person.CADET_Trainer_ID}
+                 ${person.name} - ${person.CADET_Trainer_ID}
                 <button onclick="removeFromList('${id}')">Remove</button>
+                ${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
             `;
             li.setAttribute('data-name', person.name);
             li.setAttribute('data-trainer-id', person.CADET_Trainer_ID);
@@ -98,11 +103,14 @@ function renderList() {
 
 function removeFromList(id) {
     selectedPeople = selectedPeople.filter(personId => personId !== id);
+    if (teamLead === id) {
+        teamLead = null; // Remove Team Lead if they are being removed from the list
+    }
     renderList();
     updateDropdown(document.getElementById('search-name').value);
 }
 
-document.getElementById('search-name').addEventListener('click', () => {
+document.getElementById('search-name').addEventListener('input', () => {
     updateDropdown(document.getElementById('search-name').value);
 });
 
@@ -196,6 +204,41 @@ async function addContent() {
     const imageWidth = 30; // Width of the image
     const textWidth = pageWidth - imageWidth - 2 * cellPadding; // Width of the text area
     
+     // Add Team Lead to the top of the PDF
+    if (teamLeadId) {
+        const teamLead = people.find(p => p.id === teamLeadId);
+        if (teamLead) {
+            const photoUrl = teamLead.photoUrl;
+            const name = teamLead.name;
+            const trainerId = teamLead.CADET_Trainer_ID;
+            const shortBio = teamLead.details;
+            
+            // Add Team Lead section
+            doc.setFontSize(16);
+            doc.setFontType('bold');
+            doc.text('Team Lead', 10, 10);
+            doc.setFontSize(12);
+            if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+                try {
+                    await addImageFromUrl(photoUrl, 10, 20, imageWidth, imageWidth);
+                } catch (error) {
+                    console.error('Error adding image to PDF:', error);
+                }
+            }
+            const textX = 10 + imageWidth + cellPadding;
+            const textY = 20 + 5;
+            doc.text(`Name: ${name}`, textX, textY);
+            doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
+            if (shortBio) {
+                const bioText = `Short Bio: ${shortBio}`;
+                const bioWidth = textWidth;
+                const bioLines = doc.splitTextToSize(bioText, bioWidth);
+                doc.text(bioLines, textX, textY + 20);
+            }
+            y = textY + Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
+        }
+    }
+    
     // Iterate through items and add them to the PDF
     for (const item of items) {
         const photoUrl = item.getAttribute('data-photo-url');
@@ -221,11 +264,9 @@ async function addContent() {
             }
         }
 
-        // Set text X and Y positions
         const textX = 10 + imageWidth + cellPadding;
-        const textY = y + 5; // Adjust vertical position of the text
+        const textY = y + 5;
 
-        // Add text details
         if (name) {
             doc.text(`Name: ${name}`, textX, textY);
         }
@@ -234,12 +275,12 @@ async function addContent() {
         }
         if (shortBio) {
             const bioText = `Short Bio: ${shortBio}`;
-            const bioWidth = textWidth; // Allow space for margins
+            const bioWidth = textWidth;
             const bioLines = doc.splitTextToSize(bioText, bioWidth);
             doc.text(bioLines, textX, textY + 20);
         }
 
-        y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding; // Adjust for spacing between rows
+        y += Math.max(imageWidth, doc.getTextDimensions(shortBio).h) + cellPadding;
     }
 }
 
