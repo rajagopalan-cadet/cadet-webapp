@@ -236,7 +236,7 @@ async function addContent() {
 await addFullPageImage(fullPageImageUrl);
 await addContent();
 doc.save('people-document.pdf');
-
+});
 
 // Initialize page
 fetchPeople().then(() => {
