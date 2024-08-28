@@ -179,6 +179,22 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const fullPageImageUrl = 'templates/trainer-intro.png'; // URL for letterhead
     let y = startY;
 
+        // Log all items intended to be included in the PDF
+    console.log('Items to be included in the PDF:');
+    const allItems = [];
+    for (const item of items) {
+        const personId = item.getAttribute('data-trainer-id');
+        const photoUrl = item.getAttribute('data-photo-url');
+        const name = item.getAttribute('data-name');
+        const trainerId = item.getAttribute('data-trainer-id');
+        const shortBio = item.getAttribute('data-short-bio') || ''; // Ensure shortBio is a string
+
+        allItems.push({ personId, photoUrl, name, trainerId, shortBio });
+    }
+
+    // Log the entire list of items
+    console.log(allItems);
+    
     // Add letterhead image
     async function addFullPageImage(url) {
         try {
@@ -269,7 +285,7 @@ async function addContent() {
             doc.text('Team Lead', 10, y);
             doc.setFontSize(12);
             doc.setFont(undefined, 'normal');
-            if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+            if (photoUrl && photoUrl) {
                 try {
                     await addImageFromUrl(photoUrl, 10, y + 10, imageWidth, imageWidth);
                 } catch (error) {
