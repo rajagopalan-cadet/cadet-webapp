@@ -74,6 +74,8 @@ main {
     max-height: 200px;
     overflow-y: auto;
     display: none;
+    z-index: 1000;
+    
 }
 
 .dropdown-item {
@@ -132,17 +134,22 @@ button#generate-pdf:hover {
 
 #people-list h2 {
     margin-top: 20px;
+     position: relative;
+    z-index: 1;
 }
 
 ul {
     list-style-type: none;
     padding: 0;
+     position: relative;
+    z-index: 1;
 }
 
 ul li {
     padding: 8px;
     border-bottom: 1px solid #ddd;
     position: relative;
+    z-index: 1;
 }
 
 .team-lead-tag {
@@ -154,6 +161,8 @@ ul li {
 #people-list ul {
     list-style: none;
     padding: 0;
+    position: relative;
+    z-index: 1;
 }
 
 #people-list li {
@@ -162,6 +171,8 @@ ul li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 #people-list button {
@@ -169,6 +180,8 @@ ul li {
     background-color: transparent;
     color: red;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
 
 /* Loader Styles */
