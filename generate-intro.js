@@ -77,6 +77,9 @@ function handleCheckboxChange(id) {
     } else {
         selectedPeople = selectedPeople.filter(personId => personId !== id);
     }
+    
+    console.log('Selected People after checkbox change:', selectedPeople);  // Log selected people
+    
     renderList();
 }
 
@@ -128,21 +131,27 @@ function renderList() {
 }
 
 function setTeamLead(id) {
+    console.log('Current Team Lead:', teamLead);
+    console.log('Trying to set Team Lead for ID:', id);
     if (teamLead === id) {
         // Remove the current team lead if the same person is clicked again
+         console.log(`Removing Team Lead for ID: ${id}`);
         teamLead = null;
     } else if (teamLead) {
         alert('You can only have one team lead. Remove the current team lead first.');
         return;
     } else {
+        console.log(`Setting Team Lead for ID: ${id}`);
         teamLead = id; // Set new team lead
     }
+     console.log('Updated Team Lead:', teamLead);
     renderList(); // Re-render the list
     updateDropdown(document.getElementById('search-name').value);
 }
 
 function removeFromList(id) {
     selectedPeople = selectedPeople.filter(personId => personId !== id);
+    console.log('Updated Selected People after removal:', selectedPeople);
     if (teamLead === id) {
         teamLead = null; // Remove Team Lead if they are being removed from the list
     }
@@ -166,6 +175,8 @@ document.addEventListener('click', (event) => {
 });
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
+    console.log('Selected People before generating PDF:', selectedPeople);  // Log selected people before PDF generation
+
     document.getElementById('loader').style.display = 'flex'; // Show loader
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -179,21 +190,10 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const fullPageImageUrl = 'templates/trainer-intro.png'; // URL for letterhead
     let y = startY;
 
-        // Log all items intended to be included in the PDF
-    console.log('Items to be included in the PDF:');
-    const allItems = [];
-    for (const item of items) {
-        const personId = item.getAttribute('data-trainer-id');
-        const photoUrl = item.getAttribute('data-photo-url');
-        const name = item.getAttribute('data-name');
-        const trainerId = item.getAttribute('data-trainer-id');
-        const shortBio = item.getAttribute('data-short-bio') || ''; // Ensure shortBio is a string
-
-        allItems.push({ personId, photoUrl, name, trainerId, shortBio });
-    }
-
-    // Log the entire list of items
-    console.log(allItems);
+// Log each row
+items.forEach((item, index) => {
+    console.log(`Row ${index + 1}:`, item.outerHTML);  // Logs the HTML of each <tr> element
+});
     
     // Add letterhead image
     async function addFullPageImage(url) {
