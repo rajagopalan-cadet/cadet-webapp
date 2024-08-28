@@ -140,7 +140,7 @@ function generateAndDownloadCertificate(data) {
         showErrorModal('Failed to load the certificate template. Please try again later.');
     };
 }
-
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 async function generateAndDownloadLetter(data) {
     const templateUrl = 'trainer-letter-template.pdf'; // Path to the template PDF
@@ -156,13 +156,23 @@ async function generateAndDownloadLetter(data) {
     // Get the first page of the PDF
     const pdfPage = pdfDoc.getPages()[0];
     const { width, height } = pdfPage.getSize();
+    
+    // Function to format dates as dd-mmm-yyyy
+    function formatDate(dateString) {
+        if (!dateString) return 'Date Not Provided'; // Handle case where no date is provided
 
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const date = new Date(dateString);
+        
+        return date.toLocaleDateString('en-GB', options); // 'en-GB' provides 'dd-mmm-yyyy' format
+    }
+    
     // Extract full name, gender, and dates
     const fullName = data.Name || 'John Doe';
     const gender = data.Gender__c || 'Other'; // Default to 'Other' if gender is not provided
     const certificationStatus = data.Certification_Status__c;
-    const certificationDate = data.Certification_Date__c || 'Date Not Provided';
-    const decertificationDate = data.Date_of_Decertification__c || 'Present';
+    const certificationDate = formatDate(data.Certification_Date__c) || 'Date Not Provided';
+    const decertificationDate = formatDate(data.Date_of_Decertification__c) || 'Present';
 
     // Determine pronouns based on gender
     let pronounSubject = 'He';
@@ -188,7 +198,7 @@ async function generateAndDownloadLetter(data) {
     const letterText = `This is to recognize that ${fullName} has graciously volunteered with EXPA as a CADET Trainer from ${dateRange}. ${pronounSubject} has contributed tremendously to the EXPA CADET Program and to the professional development of NCC cadets through ${pronounPossessive} dedication and focus. ${pronounSubject}'s skills in coaching young people in areas of Communication, Critical Thinking, Ethics and Gender Sensitivity have been exceptional. ${pronounSubject} would be an asset to any organization. We wish ${pronounObject} a brilliant and successful career ahead.`;
 
     // Define text settings
-    const fontSize = 12;
+    const fontSize = 13.5;
     const margin = 60;
     const textWidth = width - 2 * margin;
 
@@ -204,9 +214,7 @@ async function generateAndDownloadLetter(data) {
         words.forEach(word => {
             const testLine = currentLine + word + ' ';
             const metrics = font.widthOfTextAtSize(testLine, fontSize);
-            const testWidth = metrics;
-
-            if (testWidth > maxWidth && currentLine !== '') {
+             if (metrics > maxWidth && currentLine !== '') {
                 lines.push(currentLine.trim());
                 currentLine = word + ' ';
             } else {
@@ -220,55 +228,34 @@ async function generateAndDownloadLetter(data) {
 
     // Function to draw justified text on the PDF
     function drawJustifiedText(text, x, y, maxWidth) {
-        const words = text.split(' ');
-        let line = '';
-        let lineWidth = 0;
+        const lines = splitTextToLines(text, maxWidth);
 
-        words.forEach(word => {
-            const testLine = line + word + ' ';
-            const metrics = font.widthOfTextAtSize(testLine, fontSize);
-            const testWidth = metrics;
+        lines.forEach((line, index) => {
+            const words = line.split(' ');
+            const totalWidth = font.widthOfTextAtSize(line, fontSize);
+            const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
+            const extraSpacing = (maxWidth - totalWidth) / (words.length - 1);
 
-            if (testWidth > maxWidth && line !== '') {
-                // Draw the line with justified alignment
-                const lineWords = line.split(' ');
-                const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
-                const totalSpaces = lineWords.length - 1;
-                const totalLineWidth = font.widthOfTextAtSize(line, fontSize);
-                const extraSpacing = (maxWidth - totalLineWidth) / totalSpaces;
+            let lineX = x;
+            words.forEach((word, wordIndex) => {
+                pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
+                lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
+            });
 
-                let lineX = x;
-                lineWords.forEach((word, index) => {
-                    pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
-                    lineX += font.widthOfTextAtSize(word, fontSize) + extraSpacing;
-                });
-
-                y -= fontSize; // Move to the next line
-                line = word + ' ';
-            } else {
-                line = testLine;
-            }
+            y -= fontSize; // Move to the next line
         });
-
-        // Draw the last line
-        pdfPage.drawText(line.trim(), { x: x, y: y, size: fontSize, font: font });
     }
 
     // Adjust the width for the text to fit within margins
     const maxWidth = width - 2 * margin;
-    const lines = splitTextToLines(letterText, maxWidth);
+    const yPosition = height - 220; // Starting vertical position
 
-    // Position for the text
-    let yPosition = height - 250; // Adjust as necessary
-
-    lines.forEach(line => {
-        drawJustifiedText(line, margin, yPosition, maxWidth);
-        yPosition -= fontSize + 2; // Move to the next line
-    });
+    // Draw the text on the page
+    drawJustifiedText(letterText, margin, yPosition, maxWidth);
 
     // Add the date of generation at the bottom
     const currentDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    pdfPage.drawText(`${currentDate}`, { x: 80, y: 180, size: fontSize, font: font });
+    pdfPage.drawText(`Date: ${currentDate}`, { x: 82, y: 180, size: fontSize-1, font: font });
 
     // Serialize the PDF and trigger download
     const pdfBytes = await pdfDoc.save();
