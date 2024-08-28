@@ -89,9 +89,9 @@ function renderList() {
             const li = document.createElement('li');
             li.innerHTML = `
                 ${person.name} - ${person.CADET_Trainer_ID}
-                ${teamLeadId === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
+                ${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
                 <button onclick="removeFromList('${id}')">Remove</button>
-                <button onclick="setTeamLead('${id}')" ${teamLeadId === id ? 'disabled' : ''}>Set as Team Lead</button>
+                <button onclick="setTeamLead('${id}')" ${teamLead === id ? 'disabled' : ''}>Set as Team Lead</button>
             `;
             li.setAttribute('data-name', person.name);
             li.setAttribute('data-trainer-id', person.CADET_Trainer_ID);
@@ -103,11 +103,11 @@ function renderList() {
 }
 
 function setTeamLead(id) {
-    if (teamLeadId) {
+    if (teamLead) {
         alert('You can only have one team lead. Remove the current team lead first.');
         return;
     }
-    teamLeadId = id;
+    teamLead = id;
     renderList();
     updateDropdown(document.getElementById('search-name').value);
 }
@@ -216,8 +216,8 @@ async function addContent() {
     const textWidth = pageWidth - imageWidth - 2 * cellPadding; // Width of the text area
     
      // Add Team Lead to the top of the PDF
-    if (teamLeadId) {
-        const teamLead = people.find(p => p.id === teamLeadId);
+    if (teamLead) {
+        const teamLead = people.find(p => p.id === teamLead);
         if (teamLead) {
             const photoUrl = teamLead.photoUrl;
             const name = teamLead.name;
