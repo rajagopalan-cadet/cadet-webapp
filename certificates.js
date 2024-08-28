@@ -48,6 +48,11 @@ async function fetchDetails(trainerId, token) {
 }
 
 function generateCertificate(data) {
+    // Check if the trainer is certified
+    if (data.Certification_Status__c !== 'Certified') {
+        showErrorModal('This trainer is not Certified.');
+        return;
+    }
     // Check which document type is selected
     const documentType = document.querySelector('input[name="documentType"]:checked').value;
 
@@ -91,17 +96,17 @@ function generateAndDownloadCertificate(data) {
         // Name
         ctx.font = 'bold 35px Arial';
         ctx.fillStyle = '#093A7B';  // Color for name
-        ctx.fillText(fullName, 120, 300);  // Adjust x and y coordinates based on template
+        ctx.fillText(fullName, 117, 305);  // Adjust x and y coordinates based on template
 
         // CADET Trainer ID
         ctx.font = 'bold 22px Arial';
         ctx.fillStyle = '#093A7B';  // Color for ID
-        ctx.fillText(cadetId, 315, 355);   // Adjust x and y coordinates based on template
+        ctx.fillText(cadetId, 315, 360);   // Adjust x and y coordinates based on template
 
         // Date
-        ctx.font = 'bold 20px Arial';
+        ctx.font = '17px Arial';
         ctx.fillStyle = '#000000';  // Color for date
-        ctx.fillText(currentDate, 370, 725);  // Adjust x and y coordinates based on template
+        ctx.fillText(currentDate, 370, 732);  // Adjust x and y coordinates based on template
 
         // Convert canvas to an image file and trigger download
         const link = document.createElement('a');
