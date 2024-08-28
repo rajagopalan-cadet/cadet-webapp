@@ -3,7 +3,7 @@ let people = [];
 let selectedPeople = [];
 
 async function fetchPeople() {
-    const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, PhotoUrl FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
+    const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
     const accessToken = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb';  // Replace with your actual access token
 
@@ -22,13 +22,13 @@ async function fetchPeople() {
 
         const data = await response.json();
 // Assign fetched data to the global people array
-         const baseUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com';
+       
         people = data.records.map(record => ({
             name: record.Name,
             id: record.Id,
             CADET_Trainer_ID: record.CADET_Trainer_ID__c,
             details: record.Short_Bio__c,
-            photoUrl: record.PhotoUrl ? `${baseUrl}${record.PhotoUrl}` : null // Prefix the PhotoUrl
+            photoUrl: record.Photo_Link__c
         }));
    console.log(people);  // You can process the 'people' array as needed
     } catch (error) {
@@ -173,6 +173,7 @@ document.addEventListener('click', (event) => {
     }
     dropdown.style.display = 'none'; // Hide dropdown if clicking outside
 });
+
 
 // Initialize page
 fetchPeople().then(() => {
