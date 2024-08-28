@@ -88,9 +88,10 @@ function renderList() {
         if (person) {
             const li = document.createElement('li');
             li.innerHTML = `
-                 ${person.name} - ${person.CADET_Trainer_ID}
+                ${person.name} - ${person.CADET_Trainer_ID}
+                ${teamLeadId === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
                 <button onclick="removeFromList('${id}')">Remove</button>
-                ${teamLead === id ? '<span class="team-lead-tag">Team Lead</span>' : ''}
+                <button onclick="setTeamLead('${id}')" ${teamLeadId === id ? 'disabled' : ''}>Set as Team Lead</button>
             `;
             li.setAttribute('data-name', person.name);
             li.setAttribute('data-trainer-id', person.CADET_Trainer_ID);
@@ -99,6 +100,16 @@ function renderList() {
             listElement.appendChild(li);
         }
     });
+}
+
+function setTeamLead(id) {
+    if (teamLeadId) {
+        alert('You can only have one team lead. Remove the current team lead first.');
+        return;
+    }
+    teamLeadId = id;
+    renderList();
+    updateDropdown(document.getElementById('search-name').value);
 }
 
 function removeFromList(id) {
