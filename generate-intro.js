@@ -33,7 +33,7 @@ async function fetchPeople() {
                 photoUrl: record.Photo_Link__c // Directly use Cloudinary URL
             };
         });
-        console.log(people);  // You can process the 'people' array as needed
+        
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
@@ -77,9 +77,7 @@ function handleCheckboxChange(id) {
     } else {
         selectedPeople = selectedPeople.filter(personId => personId !== id);
     }
-    
-    console.log('Selected People after checkbox change:', selectedPeople);  // Log selected people
-    
+        
     renderList();
 }
 
@@ -131,27 +129,26 @@ function renderList() {
 }
 
 function setTeamLead(id) {
-    console.log('Current Team Lead:', teamLead);
-    console.log('Trying to set Team Lead for ID:', id);
+
     if (teamLead === id) {
         // Remove the current team lead if the same person is clicked again
-         console.log(`Removing Team Lead for ID: ${id}`);
+
         teamLead = null;
     } else if (teamLead) {
         alert('You can only have one team lead. Remove the current team lead first.');
         return;
     } else {
-        console.log(`Setting Team Lead for ID: ${id}`);
+
         teamLead = id; // Set new team lead
     }
-     console.log('Updated Team Lead:', teamLead);
+
     renderList(); // Re-render the list
     updateDropdown(document.getElementById('search-name').value);
 }
 
 function removeFromList(id) {
     selectedPeople = selectedPeople.filter(personId => personId !== id);
-    console.log('Updated Selected People after removal:', selectedPeople);
+
     if (teamLead === id) {
         teamLead = null; // Remove Team Lead if they are being removed from the list
     }
@@ -175,7 +172,7 @@ document.addEventListener('click', (event) => {
 });
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
-    console.log('Selected People before generating PDF:', selectedPeople);  // Log selected people before PDF generation
+
 
     document.getElementById('loader').style.display = 'flex'; // Show loader
     const { jsPDF } = window.jspdf;
@@ -192,7 +189,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
 
 // Log each row
 items.forEach((item, index) => {
-    console.log(`Row ${index + 1}:`, item.outerHTML);  // Logs the HTML of each <tr> element
+
 });
     
     // Add letterhead image
@@ -306,65 +303,58 @@ async function addContent() {
         }
     }
 
-    // Add the remaining items in the list, excluding the team lead
-    for (const item of items) {
-        const personId = item.getAttribute('data-trainer-id');
-        if (personId !== teamLead) {  // Skip team lead since we've already added them
-            const photoUrl = item.getAttribute('data-photo-url');
-            const name = item.getAttribute('data-name');
-            const trainerId = item.getAttribute('data-trainer-id');
-            const shortBio = item.getAttribute('data-short-bio') || ''; // Ensure shortBio is a string
-
-            // Check if we need to add a new page
-            if (y + 50 > pageHeight - bottomMargin) {
-                doc.addPage();
-                y = startY;
-                await addFullPageImage(fullPageImageUrl); // Add full-page image on new page
+    // Add the remaining selected trainers, excluding the team lead
+    const remainingPeople = selectedPeople.filter(id => id !== teamLead);
+    
+    for (const id of remainingPeople) {
+        const person = people.find(p => p.id === id);
+        if (person) {
+            const photoUrl = person.photoUrl;
+            const name = person.name;
+            const trainerId = person.CADET_Trainer_ID;
+            const shortBio = person.details || ''; // Ensure shortBio is a string
+            
+            // Add a space between the team lead and the next section
+            if (teamLead) {
+                y += 10;
             }
 
-            // Add table row with image and text details
+            // Add trainer section
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('Trainer', 10, y);
             doc.setFontSize(12);
-
-            if (photoUrl && photoUrl !== 'images/placeholder.jpg') {
+            doc.setFont(undefined, 'normal');
+            if (photoUrl) {
                 try {
-                    await addImageFromUrl(photoUrl, 10, y, imageWidth, imageWidth);
+                    await addImageFromUrl(photoUrl, 10, y + 10, imageWidth, imageWidth);
                 } catch (error) {
                     console.error('Error adding image to PDF:', error);
                 }
             }
-
             const textX = 10 + imageWidth + cellPadding;
-            const textY = y + 5;
-
-            if (name) {
-                doc.text(`Name: ${name}`, textX, textY);
-            }
-            if (trainerId) {
-                doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
-            }
+            const textY = y + 15;
+            doc.text(`Name: ${name}`, textX, textY);
+            doc.text(`CADET Trainer ID: ${trainerId}`, textX, textY + 10);
             if (shortBio) {
                 const bioText = `Short Bio: ${shortBio}`;
                 const bioWidth = textWidth;
                 const bioLines = doc.splitTextToSize(bioText, bioWidth);
                 doc.text(bioLines, textX, textY + 20);
             }
-
-            y += Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
+            y = textY + Math.max(imageWidth, (doc.getTextDimensions(shortBio).h || 0)) + cellPadding;
         }
     }
-}
-
 
     try {
         await addFullPageImage(fullPageImageUrl);
-        await addContent();
         doc.save('people-document.pdf');
     } catch (error) {
         console.error('Error generating PDF:', error);
     } finally {
         document.getElementById('loader').style.display = 'none'; // Hide loader
     }
-});
+}
 
 
 // Initialize page
