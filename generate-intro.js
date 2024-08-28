@@ -144,7 +144,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     }
 
     for (const item of items) {
-        const photoUrl = 'https://via.placeholder.com/150'; // item.getAttribute('data-photo-url') || Use placeholder image if no photo URL
+        const photoUrl = 'favicon.png'; // item.getAttribute('data-photo-url') || Use placeholder image if no photo URL
         const name = item.getAttribute('data-name');
         const trainerId = item.getAttribute('data-trainer-id');
         const shortBio = item.getAttribute('data-short-bio');
