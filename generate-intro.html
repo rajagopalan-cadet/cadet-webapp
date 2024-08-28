@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Intro Document</title>
+    <link rel="stylesheet" href="generate-intro.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Intro Document</h1>
+        <div class="form-group">
+            <label for="search-name">Search by Name:</label>
+            <input type="text" id="search-name" placeholder="Enter name">
+            <div id="dropdown" class="dropdown"></div>
+        </div>
+        <button id="generate-pdf">Generate Intro Document</button>
+
+        <div id="people-list">
+            <h2>People List</h2>
+            <ul id="list"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="generate-intro.js"></script>
+</body>
+</html>
