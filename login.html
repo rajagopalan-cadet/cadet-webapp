@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADET Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icons/favicon.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+        }
+        header img {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px; /* Add padding between the logo and the text */
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        h2{
+            font-size:21px;
+            text-align:center;
+            padding-top: 10px;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            text-align: left;
+        }
+        
+        footer {
+            background-color: #004aad;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: sticky;
+            bottom: 0;
+        }
+        #signInButton {
+        display: block;
+        margin: 0 auto; /* Horizontally center the image */
+        cursor: pointer;
+        padding-top: 40px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="home.html">
+            <img src="icons/favicon.png" alt="CADET Logo">
+            <h1>My CADET App</h1>
+        </a>
+    </header>
+
+    <main>
+        <h1>Welcome to the My CADET Web App</h1>
+        <h2>Please Sign In using your registered Google Account to continue</h2>
+        <img id="signInButton" src="icons/signIn.png" alt="Sign in with Google" style="cursor: pointer;">
+
+    </main>
+
+    <footer>
+        &copy; 2024 CADET Program. All rights reserved.
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
