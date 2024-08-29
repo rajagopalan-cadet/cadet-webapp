@@ -1,4 +1,18 @@
 let data = {};
+useEffect(() => {
+    // Fetch the trainerId from sessionStorage
+    const trainerId = sessionStorage.getItem('trainerId');
+    const trainerRecordId = sessionStorage.getItem('trainerRecordId');
+
+    if (trainerId || trainerRecordId) {
+        console.log('Trainer ID:', trainerId);
+        console.log('Trainer Record ID:', trainerRecordId);
+        // Use trainerId in your component logic
+    }
+  
+}, []);  // Empty dependency array ensures this runs on component mount
+
+
 window.onload = function() {
     // Trigger click on the image link on page load
     if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
