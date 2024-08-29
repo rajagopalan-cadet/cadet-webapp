@@ -271,7 +271,7 @@ async function addContent() {
             const shortBio = leadPerson.details || ''; // Ensure shortBio is a string
             
             // Add Team Lead section
-            doc.setFontSize(16);
+            doc.setFontSize(14);
             doc.setFont(undefined, 'bold');
             doc.text('Team Lead', 10, y);
             doc.setFontSize(12);
