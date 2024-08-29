@@ -240,3 +240,27 @@ th {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+header {
+    position: relative;
+    padding: 10px;
+}
+
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.header-buttons button {
+    padding: 5px 10px;
+    background-color: #f00; /* Change as needed */
+    color: #fff; /* Change as needed */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.header-buttons button:hover {
+    background-color: #c00; /* Change as needed */
+}
+
