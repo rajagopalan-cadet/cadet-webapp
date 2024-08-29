@@ -168,9 +168,9 @@ ul li {
 }
 
 .team-lead-tag {
-    color: red;
+    color: green;
     font-weight: bold;
-    margin-left: 10px;
+    margin-left: 2px;
 }
 
 #people-list ul {
@@ -234,11 +234,6 @@ th, td {
 
 th {
     background-color: #f4f4f4;
-}
-
-.team-lead-tag {
-    color: green;
-    font-weight: bold;
 }
 
 @keyframes spin {
