@@ -1,4 +1,8 @@
     let data = {};
+// Define global variables
+let trainerId = null;
+let trainerRecordId = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     const trainerId = sessionStorage.getItem('trainerId');
     const trainerRecordId = sessionStorage.getItem('trainerRecordId');
