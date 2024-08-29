@@ -76,6 +76,11 @@ async function checkSalesforceRecord(email) {
         if (record.Certification_Status__c === 'Certified') {
             trainerId = record.CADET_Trainer_ID__c;
             trainerRecordId = record.Id;
+
+            // Log trainerId and trainerRecordId to the console
+    console.log('Trainer ID:', trainerId);
+    console.log('Trainer Record ID:', trainerRecordId);
+
             return true;
         } else {
             throw new Error('Error Authenticating Certified Trainer: User is not certified');
