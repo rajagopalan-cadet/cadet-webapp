@@ -299,8 +299,9 @@ async function addContent() {
 
     // Add the remaining items in the list, excluding the team lead
     for (const id of selectedPeople) {
-        if (id !== teamLead) {  // Skip team lead since we've already added them
-            const person = people.find(p => p.id === id);
+        const person = people.find(p => p.id === id);
+        if (person && id !== teamLead) {  // Skip team lead since we've already added them
+            
             if (person) {
                 const photoUrl = person.photoUrl;
                 const name = person.name;
