@@ -1,5 +1,5 @@
 let data = {};
-const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt'; // Hard-coded token
+const token = '00DC1000000P5Nt!AQEAQIVrkTQQGhW.prvhAHZ6EsAigBsxFhNN3nb26.jF8BC6J_9SzjSpKsYBkqTwXJlAlYlHJMdxoWL7erSi3HMol1JkDWZP'; // Hard-coded token
 document.addEventListener('DOMContentLoaded', function() {
     const trainerIdPrefix = document.getElementById('trainerIdPrefix');
     const trainerIdNumbers = document.getElementById('trainerIdNumbers');
@@ -46,7 +46,7 @@ document.getElementById('generateButton').addEventListener('click', async functi
 
 async function fetchDetails(trainerId, token) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    //const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt';
+    //const token = '00DC1000000P5Nt!AQEAQIVrkTQQGhW.prvhAHZ6EsAigBsxFhNN3nb26.jF8BC6J_9SzjSpKsYBkqTwXJlAlYlHJMdxoWL7erSi3HMol1JkDWZP';
     try {
         const response = await fetch(url, {
             method: 'GET',
