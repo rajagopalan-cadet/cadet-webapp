@@ -91,7 +91,7 @@ function showErrorModal(message) {
 function displayDetails(data) {
     console.log('Display Data:', data);
     
-    document.getElementById('inputSection').style.display = 'none';
+   
     document.getElementById('detailsSection').style.display = 'block';
     document.getElementById('actionButtons').style.display = 'block';
 
