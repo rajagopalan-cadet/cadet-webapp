@@ -54,7 +54,7 @@ async function fetchDetails(trainerId) {
             const basicDetailsTab = document.getElementById('basicDetailsTab');
             if (basicDetailsTab) {
                 basicDetailsTab.click();
-                
+              }  
         } else {
             console.error('Error fetching details:', response.statusText);
         }
