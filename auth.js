@@ -113,7 +113,7 @@ onAuthStateChanged(auth, (user) => {
             signOut(auth);
         });
     } else {
-        document.getElementById('signInButton').style.display = "block";
+        
     }
 })
 // Attach event listener to the sign-in button
