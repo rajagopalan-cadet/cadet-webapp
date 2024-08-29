@@ -123,7 +123,7 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         checkSalesforceRecord(user.email).then(isCertified => {
             if (isCertified) {
-                window.location.href = "https://app.cadetprogram.org/home";
+                
             } else {
                 signOut(auth);
             }
