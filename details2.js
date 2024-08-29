@@ -33,7 +33,7 @@ window.onload = function() {
 };
 
 async function fetchDetails(trainerId) {
-    const token = '00DC1000000P5Nt!AQEAQIVrkTQQGhW.prvhAHZ6EsAigBsxFhNN3nb26.jF8BC6J_9SzjSpKsYBkqTwXJlAlYlHJMdxoWL7erSi3HMol1JkDWZP'; // Hard-coded token
+    const token = '00DC1000000P5Nt!AQEAQCOXWHeu5jg0wzYq1Qhn9kWK_EAE.8mpLW6I.42chhtBiPN_QT2G_21JjLm9Q_62Ovs2Od2o3qJ1itCbl7ffgribjvGT'; // Hard-coded token
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
 
     try {
@@ -313,7 +313,7 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     fetch(url, {
         method: 'PATCH',
         headers: {
-            'Authorization': `Bearer 00DC1000000P5Nt!AQEAQIVrkTQQGhW.prvhAHZ6EsAigBsxFhNN3nb26.jF8BC6J_9SzjSpKsYBkqTwXJlAlYlHJMdxoWL7erSi3HMol1JkDWZP`, // Replace with your actual token
+            'Authorization': `Bearer 00DC1000000P5Nt!AQEAQCOXWHeu5jg0wzYq1Qhn9kWK_EAE.8mpLW6I.42chhtBiPN_QT2G_21JjLm9Q_62Ovs2Od2o3qJ1itCbl7ffgribjvGT`, // Replace with your actual token
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(updatedData)
