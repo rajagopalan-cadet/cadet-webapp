@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,10 +19,6 @@ const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
 const signInButton = document.getElementById("signInButton");
-const signOutButton = document.getElementById("signOutButton");
-const message = document.getElementById("message");
-
-
 
 const userSignIn = async () => {
     try {
@@ -33,16 +29,6 @@ const userSignIn = async () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
-    }
-}
-
-const userSignOut = async () => {
-    try {
-        await signOut(auth);
-        alert("You have Signed Out!");
-        window.location.href = "https://app.cadetprogram.org/index"
-    } catch (error) {
-        console.error("Error signing out: ", error);
     }
 }
 
