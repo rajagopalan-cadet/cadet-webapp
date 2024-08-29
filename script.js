@@ -51,7 +51,6 @@ onAuthStateChanged(auth, (user) => {
         window.location.href = "https://app.cadetprogram.org/home"
     } else {
         signInButton.style.display = "block";
-        window.location.href = "https://app.cadetprogram.org/index"
     }
 })
 
