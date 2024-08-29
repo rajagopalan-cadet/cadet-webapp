@@ -81,6 +81,10 @@ async function checkSalesforceRecord(email) {
     console.log('Trainer ID:', trainerId);
     console.log('Trainer Record ID:', trainerRecordId);
 
+            // Store in localStorage or sessionStorage
+    sessionStorage.setItem('trainerId', trainerId);
+    sessionStorage.setItem('trainerRecordId', trainerRecordId);
+
             return true;
         } else {
             throw new Error('Error Authenticating Certified Trainer: User is not certified');
