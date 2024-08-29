@@ -1,5 +1,5 @@
 let data = {};
-const token = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb'; // Hard-coded token
+const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt'; // Hard-coded token
 document.addEventListener('DOMContentLoaded', function() {
     const trainerIdPrefix = document.getElementById('trainerIdPrefix');
     const trainerIdNumbers = document.getElementById('trainerIdNumbers');
@@ -46,7 +46,7 @@ document.getElementById('generateButton').addEventListener('click', async functi
 
 async function fetchDetails(trainerId, token) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    //const token = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb';
+    //const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt';
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -90,7 +90,7 @@ function generateCertificate(data) {
 
 function generateAndDownloadCertificate(data) {
     // Path to the certificate template image (update with your actual path)
-    const certificateTemplate = 'trainer-certificate-template.png';
+    const certificateTemplate = 'templates/trainer-certificate-template.png';
 
     // Load the image
     const img = new Image();
@@ -143,7 +143,7 @@ function generateAndDownloadCertificate(data) {
 
 
 async function generateAndDownloadLetter(data) {
-    const templateUrl = 'trainer-letter-template.pdf'; // Path to the template PDF
+    const templateUrl = 'templates/trainer-letter-template.pdf'; // Path to the template PDF
 
     // Fetch the template PDF
     const response = await fetch(templateUrl);
