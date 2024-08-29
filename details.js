@@ -14,7 +14,7 @@ document.getElementById('fetchButton').addEventListener('click', async function(
     document.getElementById('loader').style.display = 'flex';
 
     try {
-        const token = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb'; // Hard-coded token
+        const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt'; // Hard-coded token
         await fetchDetails(trainerId, token);
     } catch (error) {
         console.error('Error fetching details:', error);
@@ -26,7 +26,7 @@ document.getElementById('fetchButton').addEventListener('click', async function(
 
 async function fetchDetails(trainerId, token) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    //const token = '00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb';
+    //const token = '00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt';
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -302,7 +302,7 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     fetch(url, {
         method: 'PATCH',
         headers: {
-            'Authorization': `Bearer 00DC1000000P5Nt!AQEAQBSeEygBNh3t0GSsC64aMB7I21Ndb8fuK69NE8tUbyqN6T7DuvL3npLtNk7ax.n0l_CYNJx1wjybfKhIWrwjVCjo5TMb`, // Replace with your actual token
+            'Authorization': `Bearer 00DC1000000P5Nt!AQEAQGx41jAXAEGFv6UNR_k9cfdsGpAhCyEtkBK.y.j5IPHJcbdBFTnMP2ssZUVrJkjnYecYW_QNHJGghyB3g25kasJTgDxt`, // Replace with your actual token
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(updatedData)
