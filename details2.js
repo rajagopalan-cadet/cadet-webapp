@@ -12,7 +12,7 @@ window.onload = function() {
     }
 };
 
-sync function fetchDetails(trainerId) {
+async function fetchDetails(trainerId) {
     const token = '00DC1000000P5Nt!AQEAQIVrkTQQGhW.prvhAHZ6EsAigBsxFhNN3nb26.jF8BC6J_9SzjSpKsYBkqTwXJlAlYlHJMdxoWL7erSi3HMol1JkDWZP'; // Hard-coded token
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
 
