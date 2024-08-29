@@ -79,9 +79,7 @@ const userSignIn = async () => {
 
         if (isCertified) {
             window.location.href = "https://app.cadetprogram.org/home";
-        } else {
-            // Error message and logout handled in checkSalesforceRecord
-        }
+        } 
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
