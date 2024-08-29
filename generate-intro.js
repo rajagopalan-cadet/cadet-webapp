@@ -351,7 +351,7 @@ async function addContent() {
     try {
         await addFullPageImage(fullPageImageUrl);
         await addContent();
-        doc.save('people-document.pdf');
+        doc.save('Trainer-Details.pdf');
     } catch (error) {
         console.error('Error generating PDF:', error);
     } finally {
