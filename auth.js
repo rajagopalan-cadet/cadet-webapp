@@ -25,12 +25,9 @@ let trainerRecordId = null;
 // Function to handle sign-out
 function handleSignOut() {
   signOut(auth).then(() => {
-    // Sign-out successful.
     console.log('User signed out');
-    // Redirect to the login page
-    window.location.href = 'login.html'; // Adjust this URL as necessary
+    window.location.href = 'login.html';
   }).catch((error) => {
-    // An error happened.
     console.error('Sign-out error:', error);
   });
 }
@@ -43,7 +40,7 @@ async function checkSalesforceRecord(email) {
         const response = await fetch(queryUrl, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer YOUR_ACCESS_TOKEN`, // Replace with your Salesforce access token
+                'Authorization': `Bearer 00DC1000000P5Nt!AQEAQCOXWHeu5jg0wzYq1Qhn9kWK_EAE.8mpLW6I.42chhtBiPN_QT2G_21JjLm9Q_62Ovs2Od2o3qJ1itCbl7ffgribjvGT`, // Replace with your Salesforce access token
                 'Content-Type': 'application/json'
             }
         });
@@ -109,6 +106,8 @@ onAuthStateChanged(auth, (user) => {
         checkSalesforceRecord(user.email).then(isCertified => {
             if (isCertified) {
                 window.location.href = "https://app.cadetprogram.org/home";
+            } else {
+                signOut(auth);
             }
         }).catch(() => {
             signOut(auth);
@@ -117,7 +116,6 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById('signInButton').style.display = "block";
     }
 })
-
 // Attach event listener to the sign-in button
 document.addEventListener('DOMContentLoaded', () => {
     const signInButton = document.getElementById('signInButton');
@@ -129,23 +127,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signOutButton) {
         signOutButton.addEventListener('click', handleSignOut);
     }
-
-    // Check auth status on page load
-    checkAuth();
 });
 
-
-// Function to check if the user is authenticated
-function checkAuth() {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in.
-      console.log('User is signed in:', user);
-    } else {
-      // No user is signed in.
-      console.log('No user signed in');
-      // Redirect to the login page
-      window.location.href = 'login.html'; // Adjust this URL as necessary
-    }
-  });
-}
