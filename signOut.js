@@ -1,25 +1,43 @@
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 // Initialize Firebase Auth
 const auth = getAuth();
 
-// Function to handle sign-out
-const userSignOut = async () => {
-    signOut(auth)
-    .then(() => {
-        alert("You have signed out!");
-        // Optionally, redirect to a login page after sign-out
-        window.location.href = "https://app.cadetprogram.org/index";
-    })
-    .catch((error) => {
-        console.log("Error signing out:", error.message);
-    });
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyADwHvTveDow6kx2cIjKnNuG7gYlsfzNWk",
+  authDomain: "my-cadet-web-app.firebaseapp.com",
+  projectId: "my-cadet-web-app",
+  storageBucket: "my-cadet-web-app.appspot.com",
+  messagingSenderId: "1094130867052",
+  appId: "1:1094130867052:web:54157e132f5c7e64f1b149",
+  measurementId: "G-8SJV2FFEJ8"
 };
 
-// Attach event listener to sign-out button
-document.addEventListener('DOMContentLoaded', () => {
-    const signOutButton = document.getElementById('signOutButton');
-    if (signOutButton) {
-        signOutButton.addEventListener('click', userSignOut);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+const signOutButton = document.getElementById("signOutButton");
+
+const userSignOut = async () => {
+    try {
+        await signOut(auth);
+        alert("You have Signed Out!");
+        window.location.href = "https://app.cadetprogram.org/index"
+    } catch (error) {
+        console.error("Error signing out: ", error);
     }
-});
+}
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+console.log('User is signed in:', user);
+    } else {
+             alert("You have Signed Out!");
+        window.location.href = "https://app.cadetprogram.org/index"
+    }
+})
+
+signInButton.addEventListener('click', userSignIn);
