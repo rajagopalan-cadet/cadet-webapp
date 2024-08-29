@@ -26,6 +26,8 @@ let trainerRecordId = null;
 function handleSignOut() {
   signOut(auth).then(() => {
     console.log('User signed out');
+              localStorage.removeItem('authToken'); // If using local storage
+        sessionStorage.clear();
     window.location.href = 'login.html';
   }).catch((error) => {
     console.error('Sign-out error:', error);
