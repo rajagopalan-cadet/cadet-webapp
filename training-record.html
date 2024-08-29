@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -295,15 +295,43 @@ h2 {
 .pagination a:hover {
     background-color: #f4f4f4;
 }
+        header {
+    position: relative;
+    padding: 10px;
+}
+
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.header-buttons button {
+    padding: 5px 10px;
+    background-color: #f00; /* Change as needed */
+    color: #fff; /* Change as needed */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.header-buttons button:hover {
+    background-color: #c00; /* Change as needed */
+}
+
     </style>
 </head>
 <body>
-    <header>
-        <a href="home.html">
-            <img src="icons/favicon.png" alt="CADET Logo">
-            <h1>My CADET App</h1>
-        </a>
-    </header>
+  <header>
+    <a href="home.html">
+        <img src="icons/favicon.png" alt="CADET Logo">
+        <h1>My CADET App</h1>
+    </a>
+    <div class="header-buttons">
+        <button onclick="signOut()">Sign out</button>
+    </div>
+</header>
+
 
     <main>
         <div class="form-container" id="inputSection">
