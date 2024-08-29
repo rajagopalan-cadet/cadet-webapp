@@ -25,11 +25,17 @@ let trainerRecordId = null;
 // Function to handle sign-out
 function handleSignOut() {
   signOut(auth).then(() => {
+         // Show loader
+    document.getElementById('loader').style.display = 'flex';
+      
     console.log('User signed out');
               localStorage.removeItem('authToken'); // If using local storage
         sessionStorage.clear();
     window.location.href = 'login.html';
   }).catch((error) => {
+         // Show loader
+    document.getElementById('loader').style.display = 'none';
+      
     console.error('Sign-out error:', error);
   });
 }
@@ -86,6 +92,10 @@ async function checkSalesforceRecord(email) {
 
 // Function to handle user sign-in
 const userSignIn = async () => {
+     // Show loader
+    document.getElementById('loader').style.display = 'flex';
+      
+      
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
@@ -96,6 +106,9 @@ const userSignIn = async () => {
             window.location.href = "https://app.cadetprogram.org/home";
         }
     } catch (error) {
+           // Show loader
+    document.getElementById('loader').style.display = 'none';
+      
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
