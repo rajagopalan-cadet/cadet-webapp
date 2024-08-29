@@ -35,7 +35,8 @@ window.onload = function() {
 async function fetchDetails(trainerId) {
     const token = '00DC1000000P5Nt!AQEAQCOXWHeu5jg0wzYq1Qhn9kWK_EAE.8mpLW6I.42chhtBiPN_QT2G_21JjLm9Q_62Ovs2Od2o3qJ1itCbl7ffgribjvGT'; // Hard-coded token
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-
+             // Show loader
+    document.getElementById('loader').style.display = 'flex';
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -48,11 +49,20 @@ async function fetchDetails(trainerId) {
         if (response.ok) {
             data = await response.json(); // Assign fetched data to global variable
             displayDetails(data);
+
+                        // Automatically open the "Basic Details" tab
+            const basicDetailsTab = document.getElementById('basicDetailsTab');
+            if (basicDetailsTab) {
+                basicDetailsTab.click();
+                
         } else {
             console.error('Error fetching details:', response.statusText);
         }
     } catch (error) {
         console.error('Error:', error);
+    } finally {
+        // Hide loader regardless of success or failure
+        document.getElementById('loader').style.display = 'none';
     }
 }
 
