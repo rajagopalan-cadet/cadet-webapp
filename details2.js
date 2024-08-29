@@ -26,7 +26,7 @@ window.onload = function() {
        // Show loader
     document.getElementById('loader').style.display = 'flex';
       
-        document.getElementById('fetchDetails').click();
+        fetchDetails(trainerId);
     } else {
         console.error('Invalid or missing trainerId.');
     }
