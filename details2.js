@@ -1,19 +1,18 @@
-let data = {};
+    let data = {};
 document.addEventListener('DOMContentLoaded', () => {
-    // Fetch the trainerId from sessionStorage
     const trainerId = sessionStorage.getItem('trainerId');
     const trainerRecordId = sessionStorage.getItem('trainerRecordId');
 
-
+    if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
         console.log('Trainer Record ID:', trainerRecordId);
-        // Use trainerId in your component logic
-    
-  } else {
+        
+        // You can add further logic here to use the retrieved values
+    } else {
         console.log('No trainer information found in sessionStorage.');
-        window.location.href = "https://app.cadetprogram.org/home";
     }
 });
+
 
 
 window.onload = function() {
