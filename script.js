@@ -25,7 +25,7 @@ let trainerRecordId = null;
 
 // Function to check Salesforce records
 async function checkSalesforceRecord(email) {
-    const instanceUrl = "https://{{Instance URL}}"; // Replace with your Salesforce instance URL
+    const instanceUrl = "https://cadetprogram--charcoal.sandbox.my.salesforce.com"; // Replace with your Salesforce instance URL
     const queryUrl = `${instanceUrl}/services/data/v52.0/sobjects/Contact/CADET_Official_Email__c/${email}`;
     
     try {
@@ -37,19 +37,19 @@ async function checkSalesforceRecord(email) {
             }
         });
 
-        if (!response.ok) {
+        if (response.status === 404) {
+           // Handle the case where no records are found
+            throw new Error('Error Authenticating Certified Trainer: No records found');
+        }
+      if (response.status === 300) {
+            // Handle the case where multiple records are found
+            throw new Error('Contact Admin. Multiple trainers found with this email.');
+        }
+      if (!response.ok) {
             throw new Error('Error fetching Salesforce record');
         }
 
         const data = await response.json();
-      
-      if (data.records.length === 0) {
-            throw new Error('Error Authenticating Certified Trainer: No records found');
-        } else if (data.records.length > 1) {
-            throw new Error('Contact Admin. Multiple trainers found with this email.');
-        }
-      
-      const record = data.records[0];
       
         if (data.Certification_Status__c === 'Certified') {
             trainerId = data.CADET_Trainer_ID__c;
