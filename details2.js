@@ -29,7 +29,6 @@ window.onload = function() {
         document.getElementById('fetchDetails').click();
     } else {
         console.error('Invalid or missing trainerId.');
-       window.location.href = "https://app.cadetprogram.org/home";
     }
 };
 
