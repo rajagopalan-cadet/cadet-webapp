@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
         console.log('Trainer Record ID:', trainerRecordId);
+         console.log('Trainer Details fetched from session');
         
         // You can add further logic here to use the retrieved values
     } else {
