@@ -1,11 +1,13 @@
+/* General Body Styles */
 body {
-    margin: 0; /* From Style Set A */
+    margin: 0;
     font-family: Arial, sans-serif;
-    display: flex; /* From Style Set A */
-    flex-direction: column; /* From Style Set A */
-    min-height: 100vh; /* From Style Set A */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* Header */
 header {
     background-color: #004aad;
     color: white;
@@ -15,6 +17,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    position: relative;
 }
 
 header a {
@@ -35,6 +38,26 @@ header h1 {
     margin: 0;
 }
 
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.header-buttons button {
+    padding: 5px 10px;
+    background-color: #f00; /* Change as needed */
+    color: #fff; /* Change as needed */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.header-buttons button:hover {
+    background-color: #c00; /* Change as needed */
+}
+
+/* Main Content */
 main {
     flex-grow: 1;
     padding: 20px;
@@ -48,7 +71,7 @@ main {
 
 .form-group {
     margin-bottom: 15px;
-    text-align: left; /* From Style Set A */
+    text-align: left;
 }
 
 .form-group label {
@@ -58,7 +81,7 @@ main {
 }
 
 .form-group input, .form-group select {
-    width: calc(100% - 20px); /* Adjusted to match Style Set A */
+    width: calc(100% - 20px);
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -70,12 +93,11 @@ main {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: calc(100% - 20px); /* From Style Set B */
+    width: calc(100% - 20px);
     max-height: 200px;
     overflow-y: auto;
     display: none;
     z-index: 1000;
-    
 }
 
 .dropdown-item {
@@ -87,20 +109,21 @@ main {
 
 .dropdown-item:hover {
     background-color: #f1f1f1;
-    
 }
+
 /* Style for checkbox */
 .dropdown-item input[type="checkbox"] {
-    margin-right: 10px; /* Space between checkbox and label */
-    width: 20px; /* Increase size of checkbox */
-    height: 20px; /* Increase size of checkbox */
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 /* Style for label */
 .dropdown-item label {
-    font-size: 16px; /* Adjust font size if needed */
+    font-size: 16px;
 }
 
+/* Footer */
 footer {
     background-color: #004aad;
     color: white;
@@ -108,14 +131,15 @@ footer {
     padding: 10px;
     position: sticky;
     bottom: 0;
-     z-index: 10;
+    z-index: 10;
 }
 
+/* Button Styles */
 button {
     background-color: #004aad;
     color: white;
     border: none;
-    padding: 10px 20px; /* Adjusted to match Style Set B */
+    padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;
@@ -128,7 +152,7 @@ button:hover {
 
 button#generate-pdf {
     position: fixed;
-    bottom: 45px; /* Moved 25px up from the previous 20px */
+    bottom: 45px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #004aad;
@@ -146,17 +170,17 @@ button#generate-pdf:hover {
     background-color: #003799;
 }
 
-
+/* People List */
 #people-list h2 {
     margin-top: 20px;
-     position: relative;
+    position: relative;
     z-index: 1;
 }
 
 ul {
     list-style-type: none;
     padding: 0;
-     position: relative;
+    position: relative;
     z-index: 1;
 }
 
@@ -199,6 +223,22 @@ ul li {
     z-index: 1;
 }
 
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
 /* Loader Styles */
 #loader {
     position: fixed;
@@ -221,46 +261,41 @@ ul li {
     height: 50px;
     animation: spin 1s linear infinite;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f4f4f4;
-}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-header {
-    position: relative;
+
+/* Password Section */
+#password-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#password-container input {
+    margin-bottom: 15px;
     padding: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.header-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.header-buttons button {
-    padding: 5px 10px;
-    background-color: #f00; /* Change as needed */
-    color: #fff; /* Change as needed */
+/* Password Button */
+#password-container button {
+    background-color: #004aad;
+    color: white;
     border: none;
-    border-radius: 3px;
+    padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-.header-buttons button:hover {
-    background-color: #c00; /* Change as needed */
+#password-container button:hover {
+    background-color: #003799;
 }
-
