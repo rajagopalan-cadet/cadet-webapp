@@ -129,8 +129,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
-    position: sticky;
-    bottom: 0;
+    margin-top: auto; /* Pushes the footer to the bottom */
     z-index: 10;
 }
 
