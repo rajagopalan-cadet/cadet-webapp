@@ -17,7 +17,6 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    position: relative;
 }
 
 header a {
@@ -129,8 +128,10 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
-    margin-top: auto; /* Pushes the footer to the bottom */
+    position: fixed;
+    bottom: 0;
     z-index: 10;
+    width: 100%;
 }
 
 /* Button Styles */
@@ -150,8 +151,8 @@ button:hover {
 }
 
 button#generate-pdf {
-    position: fixed;
-    bottom: 45px;
+    position: relative;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #004aad;
