@@ -7,7 +7,7 @@ async function fetchPeople() {
     document.getElementById('loader').style.display = 'flex'; // Show loader
     const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
-    const accessToken = '00DC1000000P5Nt!AQEAQN7ZffiKQO8ALjKPkyLVP31CBlXhdLm5WSrk.zoRQFhtBD2F1IyTQK6VTFxj1Jx4MlhymCI80NpzBnl3a4V8LP41zk5y';  // Replace with your actual access token
+    const accessToken = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P';  // Replace with your actual access token
 
     try {
         const response = await fetch(endpoint, {
