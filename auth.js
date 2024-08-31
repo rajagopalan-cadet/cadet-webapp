@@ -46,7 +46,7 @@ async function checkSalesforceRecord(email) {
         const response = await fetch(queryUrl, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer 00DC1000000P5Nt!AQEAQN7ZffiKQO8ALjKPkyLVP31CBlXhdLm5WSrk.zoRQFhtBD2F1IyTQK6VTFxj1Jx4MlhymCI80NpzBnl3a4V8LP41zk5y`, // Replace with your Salesforce access token
+                'Authorization': `Bearer 00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P`, // Replace with your Salesforce access token
                 'Content-Type': 'application/json'
             }
         });
