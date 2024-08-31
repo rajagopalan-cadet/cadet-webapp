@@ -22,18 +22,24 @@ const provider = new GoogleAuthProvider();
 let trainerId = null;
 let trainerRecordId = null;
 
-// Function to handle sign-out
 function handleSignOut() {
   signOut(auth).then(() => {
-
-      
     console.log('User signed out');
-              localStorage.removeItem('authToken'); // If using local storage
-        sessionStorage.clear();
+    
+    // Clear any additional storage if you use it
+    localStorage.removeItem('auth'); // If you stored tokens here
+    sessionStorage.clear(); // Clear session storage
+
+    // Ensure all Firebase related session is cleared
+    auth.signOut().then(() => {
+      console.log('Firebase auth session cleared');
+    }).catch((error) => {
+      console.error('Error clearing Firebase auth session:', error);
+    });
+
+    // Redirect to login page
     window.location.href = 'login.html';
   }).catch((error) => {
-
-      
     console.error('Sign-out error:', error);
   });
 }
