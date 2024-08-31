@@ -17,32 +17,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+    prompt: 'select_account' // Forces the user to choose an account or re-authenticate
+});
+
 
 // Global variables to store trainer information
 let trainerId = null;
 let trainerRecordId = null;
 
-function handleSignOut() {
-  signOut(auth).then(() => {
-    console.log('User signed out');
-    
-    // Clear any additional storage if you use it
-    localStorage.removeItem('auth'); // If you stored tokens here
-    sessionStorage.clear(); // Clear session storage
 
-    // Ensure all Firebase related session is cleared
-    auth.signOut().then(() => {
-      console.log('Firebase auth session cleared');
-    }).catch((error) => {
-      console.error('Error clearing Firebase auth session:', error);
-    });
-
-    // Redirect to login page
-    window.location.href = 'login.html';
-  }).catch((error) => {
-    console.error('Sign-out error:', error);
-  });
-}
 // Function to check Salesforce records
 async function checkSalesforceRecord(email) {
     const instanceUrl = "https://cadetprogram--charcoal.sandbox.my.salesforce.com"; // Replace with your Salesforce instance URL
@@ -103,10 +87,9 @@ async function checkSalesforceRecord(email) {
     }
 }
 
+
 // Function to handle user sign-in
 const userSignIn = async () => {
-
-      
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
@@ -122,6 +105,18 @@ const userSignIn = async () => {
         const errorMessage = error.message;
         console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
     }
+}
+
+function handleSignOut() {
+    signOut(auth).then(() => {
+        console.log('User signed out');
+        localStorage.removeItem('authToken');
+        sessionStorage.clear();
+        // Redirect to login page
+        window.location.href = 'login.html';
+    }).catch((error) => {
+        console.error('Sign-out error:', error);
+    });
 }
 
 // Handle auth state changes
