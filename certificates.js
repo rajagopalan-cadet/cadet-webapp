@@ -1,20 +1,38 @@
 let data = {};
+let trainerId = null;
+let trainerRecordId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+     trainerId = sessionStorage.getItem('trainerId');
+     trainerRecordId = sessionStorage.getItem('trainerRecordId');
+
+    if (trainerId || trainerRecordId) {
+        console.log('Trainer ID:', trainerId);
+        console.log('Trainer Record ID:', trainerRecordId);
+         console.log('Trainer Details fetched from session');
+        
+        // You can add further logic here to use the retrieved values
+    } else {
+        console.log('No trainer information found in sessionStorage.');
+    }
+});
+
 const token = '00DC1000000P5Nt!AQEAQN7ZffiKQO8ALjKPkyLVP31CBlXhdLm5WSrk.zoRQFhtBD2F1IyTQK6VTFxj1Jx4MlhymCI80NpzBnl3a4V8LP41zk5y'; // Hard-coded token
 document.addEventListener('DOMContentLoaded', function() {
-    const trainerIdPrefix = document.getElementById('trainerIdPrefix');
-    const trainerIdNumbers = document.getElementById('trainerIdNumbers');
+    // const trainerIdPrefix = document.getElementById('trainerIdPrefix');
+    // const trainerIdNumbers = document.getElementById('trainerIdNumbers');
     const letterRadio = document.getElementById('letter');
     const certificateRadio = document.getElementById('certificate');
     const generateButton = document.getElementById('generateButton');
 
     function validateForm() {
-        const trainerIdFilled = trainerIdNumbers.value.trim() !== '';
+        const trainerIdFilled = trainerId.value.trim() !== '';
         const documentTypeSelected = letterRadio.checked || certificateRadio.checked;
         generateButton.disabled = !(trainerIdFilled && documentTypeSelected);
     }
 
     // Validate form on input change and radio button change
-    trainerIdNumbers.addEventListener('input', validateForm);
+    // trainerIdNumbers.addEventListener('input', validateForm);
     letterRadio.addEventListener('change', validateForm);
     certificateRadio.addEventListener('change', validateForm);
 
@@ -22,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
     validateForm();
 });
 document.getElementById('generateButton').addEventListener('click', async function() {
-    const prefix = document.getElementById('trainerIdPrefix').value;
-    const numbers = document.getElementById('trainerIdNumbers').value;
-    const trainerId = `${prefix}${numbers}`;
+    // const prefix = document.getElementById('trainerIdPrefix').value;
+    // const numbers = document.getElementById('trainerIdNumbers').value;
+    // const trainerId = `${prefix}${numbers}`;
 
-    if (!trainerId.match(/^CT-\d{3}$/)) {
-        showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
-        return;
-    }
+    // if (!trainerId.match(/^CT-\d{3}$/)) {
+    //     showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
+    //     return;
+    // }
 
     // Show loader
     document.getElementById('loader').style.display = 'flex';
