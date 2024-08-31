@@ -8,6 +8,12 @@
     <link rel="icon" href="icons/favicon.png" type="image/x-icon">
 </head>
 <body>
+    <div id="password-container">
+        <h2>Please enter the Password to Access</h2>
+        <input type="password" id="password" placeholder="Enter password" />
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+    <div id="content-container" style="display: none;">
     <header>
     <a href="home.html">
         <img src="icons/favicon.png" alt="CADET Logo">
@@ -25,10 +31,10 @@
         <div class="container">
             <h1>Generate Intro Document</h1>
             <div class="form-group" style="position: relative;">
-    <label for="search-name">Search by Name or CADET Trainer ID:</label>
-    <input type="text" id="search-name" placeholder="Enter name or CADET Trainer ID">
-    <div id="dropdown" class="dropdown"></div>
-</div>
+                    <label for="search-name">Search by Name or CADET Trainer ID:</label>
+                    <input type="text" id="search-name" placeholder="Enter name or CADET Trainer ID">
+                    <div id="dropdown" class="dropdown"></div>
+                </div>
 
             <div id="people-list">
                 <h2>Trainer List</h2>
