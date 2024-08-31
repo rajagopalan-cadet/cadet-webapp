@@ -1,18 +1,25 @@
 let data = {};
+let trainerId = null;
+let trainerRecordId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+     trainerId = sessionStorage.getItem('trainerId');
+     trainerRecordId = sessionStorage.getItem('trainerRecordId');
+
+    if (trainerId || trainerRecordId) {
+        console.log('Trainer ID:', trainerId);
+        console.log('Trainer Record ID:', trainerRecordId);
+         console.log('Trainer Details fetched from session');
+        
+        // You can add further logic here to use the retrieved values
+    } else {
+        console.log('No trainer information found in sessionStorage.');
+    }
+});
 const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
 
-document.getElementById('fetchButton').addEventListener('click', async function() {
-    const prefix = document.getElementById('trainerIdPrefix').value;
-    const numbers = document.getElementById('trainerIdNumbers').value;
-    const trainerId = `${prefix}${numbers}`;
-
-    if (!trainerId.match(/^CT-\d{3}$/)) {
-        showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
-        return;
-    }
-
-    // Show loader
-    document.getElementById('loader').style.display = 'flex';
+window.onload = function() {
+document.getElementById('loader').style.display = 'flex';
 
     try {
                 await fetchDetails(trainerId, token);
@@ -22,7 +29,20 @@ document.getElementById('fetchButton').addEventListener('click', async function(
         // Hide loader
         document.getElementById('loader').style.display = 'none';
     }
-});
+    
+};
+
+// document.getElementById('fetchButton').addEventListener('click', async function() {
+//      const prefix = document.getElementById('trainerIdPrefix').value;
+//      const numbers = document.getElementById('trainerIdNumbers').value;
+//      const trainerId = `${prefix}${numbers}`;
+
+//      if (!trainerId.match(/^CT-\d{3}$/)) {
+//          showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
+//          return;
+//      }
+  
+// });
 
 async function fetchDetails(trainerId, token) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
