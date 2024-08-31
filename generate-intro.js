@@ -3,6 +3,32 @@ let people = [];
 let selectedPeople = [];
 let teamLead = null; // Track the Team Lead
 
+ function getCurrentISTDate() {
+            // Get current time in IST
+            const now = new Date();
+            const istOffset = 5 * 60 * 60 * 1000 + 30 * 60 * 1000; // IST is UTC+5:30
+            const istDate = new Date(now.getTime() + istOffset);
+
+            // Format the date as dd-mm-yyyy
+            const day = String(istDate.getUTCDate()).padStart(2, '0');
+            const month = String(istDate.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const year = istDate.getUTCFullYear();
+
+            return `${day}-${month}-${year}`;
+        }
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('password').value;
+            const correctPassword = "Raj@" + getCurrentISTDate();
+
+            if (inputPassword === correctPassword) {
+                document.getElementById('password-container').style.display = 'none';
+                document.getElementById('content-container').style.display = 'block';
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
 async function fetchPeople() {
     document.getElementById('loader').style.display = 'flex'; // Show loader
     const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
