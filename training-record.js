@@ -21,8 +21,7 @@ const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It
 window.onload = function() {
 document.getElementById('loader').style.display = 'flex';
 
-    try {
-                await fetchDetails(trainerId, token);
+    try { fetchDetails(trainerId, token);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
