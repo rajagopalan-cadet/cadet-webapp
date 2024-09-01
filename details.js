@@ -16,8 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log('Trainer Details fetched from session');
         
         // You can add further logic here to use the retrieved values
-    } else {
-        console.log('No trainer information found in sessionStorage.');
+    }else {
+            console.log('No trainer information found in sessionStorage.');
+            showErrorModal('No trainer information found in sessionStorage. Please log in again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showErrorModal('An unexpected error occurred while loading trainer information. Please try again.');
+    } finally {
+        hideLoader(); // Hide loader after checking sessionStorage
     }
 });
 
@@ -33,11 +40,15 @@ window.onload = function() {
             fetchDetails(trainerId); // Fetch the details (synchronous)
         } catch (error) {
             console.error('Error fetching details:', error);
+                     showErrorModal('An error occurred while fetching details. Please try again.'); // Show error modal
+
         } finally {
             hideLoader(); // Hide loader after fetching details
         }
     } else {
         console.error('Invalid or missing trainerId.');
+    showErrorModal('Invalid or missing trainerId.'); // Show error modal
+        hideLoader(); // Ensure loader is hidden even if trainerId is invalid
     }
 };
 
@@ -224,9 +235,12 @@ function toggleEditMode(editMode) {
     document.getElementById('editButton').style.display = editMode ? 'none' : 'inline';
     document.getElementById('saveButton').style.display = editMode ? 'inline' : 'none';
     document.getElementById('cancelButton').style.display = editMode ? 'inline' : 'none';
-
+} catch (error) {
+        console.error('Error toggling edit mode:', error);
+        showErrorModal('An error occurred while toggling edit mode. Please try again.'); // Show error modal if there's an error
+    } finally {
         hideLoader(); // Hide loader after toggling edit mode
-
+    }
 }
     document.getElementById('editButton').addEventListener('click', function() {
         toggleEditMode(true);
@@ -237,9 +251,17 @@ function toggleEditMode(editMode) {
         displayDetails(data); // Revert to original data
     });
 
-    document.getElementById('saveButton').addEventListener('click', function() {
-        updateDetails(data.Id);
-    });
+   document.getElementById('saveButton').addEventListener('click', async function() {
+    showLoader(); // Show loader when saving
+    try {
+        await updateDetails(data.Id); // Wait for the updateDetails function to complete
+    } catch (error) {
+        console.error('Error saving details:', error);
+        showErrorModal('An error occurred while saving details. Please try again.'); // Show error modal if there's an error
+    } finally {
+        hideLoader(); // Hide loader after saving details
+    }
+});
 
 
 function updateDetails(Id) {
@@ -326,37 +348,40 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     COVID_Vaccination_Status__c: document.getElementById('covidVaccinationStatus').value
     };
 
-    fetch(url, {
-        method: 'PATCH',
-        headers: {
-            'Authorization': `Bearer 00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P`, // Replace with your actual token
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedData)
-    })
-    .then(response => {
-    if (response.ok) {
-        if (response.status === 204) {
-            hideLoader(); // Hide loader if there's an error
-            // No content to parse, just handle the success case
-            alert('Details updated successfully');
-        } else {
-            // Parse the response JSON if the status is not 204
-           return response.json().then(data => {
-            hideLoader(); // Hide loader if there's an error
-                alert('Details updated successfully');
-                displayDetails(data);
-            });
-        }
-    } else {
-        // Handle non-200 status codes
-        return response.text().then(text => {
-            throw new Error(`Error ${response.status}: ${text}`);
+try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${salesforceToken}`, // Use the Salesforce token from sessionStorage
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
         });
+
+        if (response.ok) {
+            if (response.status === 204) {
+                // No content to parse, just handle the success case
+                hideLoader(); // Hide loader after the response is processed
+                showSuccessModal('Details updated successfully'); // Show success modal
+            } else {
+                // Parse the response JSON if the status is not 204
+                const data = await response.json();
+                hideLoader(); // Hide loader after the response is processed
+                showSuccessModal('Details updated successfully'); // Show success modal
+                displayDetails(data); // Display updated details
+            }
+        } else {
+            // Handle non-200 status codes
+            const text = await response.text();
+            throw new Error(`Error ${response.status}: ${text}`);
+        }
+    } catch (error) {
+        console.error('Error updating details:', error);
+        hideLoader(); // Hide loader in case of error
+        showErrorModal(`Error updating details: ${error.message}`); // Show error modal
+    } finally {
+        disableFields(); // Disable fields after the update attempt
     }
-})
-.catch(error => console.error('Error updating details:', error));
-    disableFields();
 }
 
 function openTab(evt, tabName) {
