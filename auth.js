@@ -155,14 +155,13 @@ onAuthStateChanged(auth, (user) => {
     }
 })
 
-async function fetchSalesforceToken(email) {
+async function fetchSalesforceToken() {
     try {
         const response = await fetch(functionUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: email }),
+            }
         });
 
         if (!response.ok) {
@@ -170,7 +169,7 @@ async function fetchSalesforceToken(email) {
         }
 
         const data = await response.json();
-        return data.salesforceToken; // Assuming the function returns { salesforceToken: 'token' }
+        return data.access_token; // Assuming the function returns { salesforceToken: 'token' }
     } catch (error) {
         console.error('Error calling fetchSalesforceToken', error);
         throw error;
