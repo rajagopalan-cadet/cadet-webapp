@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 window.onload = function() {
-    // Trigger click on the image link on page load
+        
+    showLoader(); // Show loader when the page loads and before fetching details
+    
     if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
     
-        showLoader(); // Show loader when the page loads and before fetching details
-    
-        try {
+     try {
             fetchDetails(trainerId); // Fetch the details (synchronous)
         } catch (error) {
             console.error('Error fetching details:', error);
