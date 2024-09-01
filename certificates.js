@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('generateButton').addEventListener('click', async function() {
 
     // Show loader
-    document.getElementById('loader').style.display = 'flex';
+    // document.getElementById('loader').style.display = 'flex';
 
     try {
                 await fetchDetails(trainerId, salesforceToken);
@@ -52,7 +52,7 @@ document.getElementById('generateButton').addEventListener('click', async functi
         console.error('Error fetching details:', error);
     } finally {
         // Hide loader
-        document.getElementById('loader').style.display = 'none';
+        // document.getElementById('loader').style.display = 'none';
     }
 });
 
@@ -81,14 +81,14 @@ async function fetchDetails(trainerId, salesforceToken) {
 function generateCertificate(data) {
     // Check if the trainer is certified
     if (data.Certification_Status__c !== 'Certified') {
-        showErrorModal('This trainer is not Certified.');
+        // showErrorModal('This trainer is not Certified.');
         return;
     }
     // Check which document type is selected
     const documentType = document.querySelector('input[name="documentType"]:checked').value;
 
     if (!documentType) {
-        showErrorModal('Please select either "Letter" or "Certificate".');
+        // showErrorModal('Please select either "Letter" or "Certificate".');
         return;
     }
 
@@ -148,7 +148,7 @@ function generateAndDownloadCertificate(data) {
 
     img.onerror = function() {
         console.error('Error loading the certificate template image.');
-        showErrorModal('Failed to load the certificate template. Please try again later.');
+        // showErrorModal('Failed to load the certificate template. Please try again later.');
     };
 }
 
@@ -276,24 +276,5 @@ async function generateAndDownloadLetter(data) {
     link.href = URL.createObjectURL(blob);
     link.download = `${fullName}_letter.pdf`;
     link.click();
-}
-
-function showErrorModal(message) {
-    const modal = document.getElementById('errorModal');
-    const errorMessage = document.getElementById('errorMessage');
-    const closeModal = document.getElementById('closeModal');
-
-    errorMessage.textContent = message;
-    modal.style.display = 'block';
-
-    closeModal.onclick = function() {
-        modal.style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    }
 }
 
