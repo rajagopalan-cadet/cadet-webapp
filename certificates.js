@@ -19,13 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
 document.addEventListener('DOMContentLoaded', function() {
-    // const trainerIdPrefix = document.getElementById('trainerIdPrefix');
-    // const trainerIdNumbers = document.getElementById('trainerIdNumbers');
-    const letterRadio = document.getElementById('letter');
-    const certificateRadio = document.getElementById('certificate');
-    const generateButton = document.getElementById('generateButton');
+     const letterRadio = document.getElementById('letter');
+     const certificateRadio = document.getElementById('certificate');
+     const generateButton = document.getElementById('generateButton');
 
     function validateForm() {
         const trainerIdFilled = trainerId && trainerId.trim() !== '';
@@ -34,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Validate form on input change and radio button change
-    // trainerIdNumbers.addEventListener('input', validateForm);
     letterRadio.addEventListener('change', validateForm);
     certificateRadio.addEventListener('change', validateForm);
 
@@ -43,16 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 document.getElementById('generateButton').addEventListener('click', async function() {
 
-    // Show loader
-    // document.getElementById('loader').style.display = 'flex';
-
     try {
-                await fetchDetails(trainerId, salesforceToken);
+         showLoader(); // Show loader when the button is clicked
+         
+         await fetchDetails(trainerId, salesforceToken);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
-        // Hide loader
-        // document.getElementById('loader').style.display = 'none';
+        hideLoader(); // Hide loader after fetching details is complete
     }
 });
 
