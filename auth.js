@@ -26,17 +26,29 @@ provider.setCustomParameters({
 let trainerId = null;
 let trainerRecordId = null;
 
+// URL for your Google Cloud Function
+const fetchSalesforceTokenUrl = 'https://us-central1-my-cadet-web-app.cloudfunctions.net/fetchSalesforceToken';
 
 // Function to check Salesforce records
 async function checkSalesforceRecord(email) {
     const instanceUrl = "https://cadetprogram--charcoal.sandbox.my.salesforce.com"; // Replace with your Salesforce instance URL
     const queryUrl = `${instanceUrl}/services/data/v52.0/query/?q=SELECT+CADET_Trainer_ID__c,Id,Certification_Status__c+FROM+Contact+WHERE+CADET_Official_Email__c='${encodeURIComponent(email)}'`;
 
+    // Retrieve the Salesforce token from sessionStorage
+    const salesforceToken = sessionStorage.getItem('salesforceToken');
+
+    if (!salesforceToken) {
+        console.error('Salesforce token not found');
+        await signOut(auth);
+        alert('Unable to authenticate. Please sign in again.');
+        return false;
+    }
+    
     try {
         const response = await fetch(queryUrl, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer 00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P`, // Replace with your Salesforce access token
+                'Authorization': `Bearer $(salesforceToken)`, // Replace with your Salesforce access token
                 'Content-Type': 'application/json'
             }
         });
@@ -122,6 +134,10 @@ function handleSignOut() {
 // Handle auth state changes
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        callFunctionabc(user.email).then(token => {
+            // Store the Salesforce token in a session variable
+            sessionStorage.setItem('salesforceToken', token);
+
         checkSalesforceRecord(user.email).then(isCertified => {
             if (isCertified) {
                 
@@ -131,10 +147,36 @@ onAuthStateChanged(auth, (user) => {
         }).catch(() => {
             signOut(auth);
         });
+             }).catch(() => {
+            signOut(auth);
+        });
     } else {
         document.getElementById('signInButton').style.display = "block";
     }
 })
+
+async function fetchSalesforceToken(email) {
+    try {
+        const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data.salesforceToken; // Assuming the function returns { salesforceToken: 'token' }
+    } catch (error) {
+        console.error('Error calling functionabc:', error);
+        throw error;
+    }
+}
+
 // Attach event listener to the sign-in button
 document.addEventListener('DOMContentLoaded', () => {
     const signInButton = document.getElementById('signInButton');
