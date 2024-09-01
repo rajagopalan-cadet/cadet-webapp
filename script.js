@@ -6,18 +6,24 @@ function loadHTML(id, url) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  loadHTML('header', 'header.html');
-  loadHTML('footer', 'footer.html');
-});
 // Show loader
 function showLoader() {
-    document.getElementById('loader').style.display = 'flex';
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = 'flex';
+    } else {
+        console.error('Loader element not found.');
+    }
 }
 
 // Hide loader
 function hideLoader() {
-    document.getElementById('loader').style.display = 'none';
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = 'none';
+    } else {
+        console.error('Loader element not found.');
+    }
 }
 
 // Show error modal
@@ -62,7 +68,11 @@ function loadGlobalComponents() {
     xhr.send();
 }
 
-// Load Global Components content on page load
-window.addEventListener('DOMContentLoaded', loadGlobalComponents);
-
+// Load global components content on page load
+document.addEventListener('DOMContentLoaded', function() {
+    showLoader(); // Show loader before starting to load components
+    loadGlobalComponents();
+    loadHTML('header', 'header.html');
+    loadHTML('footer', 'footer.html');
+});
 
