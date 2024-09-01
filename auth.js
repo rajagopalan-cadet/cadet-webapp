@@ -134,7 +134,7 @@ function handleSignOut() {
 // Handle auth state changes
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        callFunctionabc(user.email).then(token => {
+        fetchSalesforceToken(user.email).then(token => {
             // Store the Salesforce token in a session variable
             sessionStorage.setItem('salesforceToken', token);
 
@@ -172,7 +172,7 @@ async function fetchSalesforceToken(email) {
         const data = await response.json();
         return data.salesforceToken; // Assuming the function returns { salesforceToken: 'token' }
     } catch (error) {
-        console.error('Error calling functionabc:', error);
+        console.error('Error calling fetchSalesforceToken', error);
         throw error;
     }
 }
