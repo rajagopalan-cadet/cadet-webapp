@@ -30,9 +30,8 @@ header h1 {
 
 .header-buttons {
     position: absolute;
-    right: 10px; /* Align to the right of the header */
-    top: 50%; /* Vertically center */
-    transform: translateY(-50%); /* Adjust for vertical centering */
+    top: 10px; /* Distance from the top of the header */
+    right: 10px; /* Distance from the right edge of the header */
 }
 
 .header-buttons button {
@@ -47,6 +46,12 @@ header h1 {
 .header-buttons button:hover {
     background-color: #c00; /* Change as needed */
 }
+
+/* Hide the button on login page */
+.login-page .header-buttons {
+    display: none;
+}
+
 
 footer {
     background-color: #004aad;
