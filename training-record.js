@@ -99,8 +99,8 @@ async function getRecords(data) {
         
         // Trigger the processing of API response
         processAPIResponse(allTimeData, currentFyData);
-
-          // Initialize pagination controls after processing the data
+        
+        // Initialize pagination controls after processing the data
         initializePagination();
         
     } catch (error) {
@@ -182,13 +182,12 @@ function initializePagination() {
     // Define the number of records per page
     const recordsPerPage = 10;
     
-    const table = document.getElementById('currentYearDetailsTable');   
+    const table = document.getElementById('currentYearDetailsTable');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.getElementsByTagName('tr'));
     const numPages = Math.ceil(rows.length / recordsPerPage);
 
     function showPage(pageNum) {
-         
         // Hide all rows
         rows.forEach(row => row.style.display = 'none');
         
@@ -197,13 +196,12 @@ function initializePagination() {
         const end = start + recordsPerPage;
         rows.slice(start, end).forEach(row => row.style.display = '');
         
-     // Update pagination controls
+        // Update pagination controls
         const paginationLinks = document.querySelectorAll('.pagination a');
         paginationLinks.forEach(link => link.classList.remove('active'));
         document.querySelector(`.pagination a[data-page="${pageNum}"]`).classList.add('active');
     }
 
-         
     function createPaginationControls() {
         const paginationContainer = document.createElement('div');
         paginationContainer.className = 'pagination';
@@ -227,8 +225,7 @@ function initializePagination() {
     // Initialize pagination
     createPaginationControls();
     showPage(1); // Show the first page by default
-});
-
+}
 function showErrorModal(message) {
     const modal = document.getElementById('errorModal');
     const errorMessage = document.getElementById('errorMessage');
