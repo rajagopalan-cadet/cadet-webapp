@@ -2,6 +2,11 @@ let data = {};
 let trainerId = null;
 let trainerRecordId = null;
 let salesforceToken = null;
+let currentPage = {
+    allTime: 1,
+    currentYear: 1
+};
+const recordsPerPage = 10; // Number of records per page
 
 document.addEventListener('DOMContentLoaded', () => {
     trainerId = sessionStorage.getItem('trainerId');
@@ -169,4 +174,45 @@ function openTab(evt, tabName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
+    // Show the current tab and add an "active" class to the corresponding link
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
 }
+
+function updateTable(data, type) {
+    const tableBody = document.getElementById(`${type}DetailsTable`).getElementsByTagName('tbody')[0];
+    const start = (currentPage[type] - 1) * recordsPerPage;
+    const end = start + recordsPerPage;
+    const pageRecords = data.records.slice(start, end);
+
+    tableBody.innerHTML = ''; // Clear the table
+
+    pageRecords.forEach((record, index) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = start + index + 1; // Sl No
+        row.insertCell(1).textContent = record.Name || ''; // SF Event ID
+        row.insertCell(2).textContent = record.Event_Name__c || ''; // Event Name
+        row.insertCell(3).textContent = record.Camp_Start_Date_F__c || ''; // Start Date
+    });
+
+    updatePagination(data, type);
+}
+
+function updatePagination(data, type) {
+    const totalPages = Math.ceil(data.records.length / recordsPerPage);
+    document.getElementById(`${type}PageInfo`).textContent = `Page ${currentPage[type]} of ${totalPages}`;
+
+    document.querySelector(`#${type}Pagination .prev`).disabled = (currentPage[type] === 1);
+    document.querySelector(`#${type}Pagination .next`).disabled = (currentPage[type] === totalPages);
+}
+
+function changePage(type, direction) {
+    const newPage = currentPage[type] + direction;
+    const totalPages = Math.ceil(data.records.length / recordsPerPage);
+
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentPage[type] = newPage;
+        updateTable(data, type);
+    }
+}
+
