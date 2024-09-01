@@ -352,17 +352,11 @@ h2 {
     <main>
        <h2>Training Records</h2>
 <div class="tabs">
-    <button class="tablink" onclick="openTab(event, 'allTimeTab')">All Time (Total: <span id="allTimeTabCount">0</span>)</button>
-    <button class="tablink" onclick="openTab(event, 'currentYearTab')">Current Year (Total: <span id="currentYearTabCount">0</span>)</button>
-</div>
+      <button class="tablink" data-tab="allTime" onclick="openTab(event, 'allTimeTab')">All Time (Total: <span id="allTimeTabCount">0</span>)</button>
+      <button class="tablink" data-tab="currentYear" onclick="openTab(event, 'currentYearTab')">Current Year (Total: <span id="currentYearTabCount">0</span>)</button>
+    </div>
 
 <div id="allTimeTab" class="tabcontent">
-    <div class="summary-view">
-        <div class="summary-counter" id="allTimeTotalCamps">Total Camps: 0</div>
-        <div class="summary-counter" id="allTimeTotalTeamLead">Total Camps as Team Lead: 0</div>
-        <div class="summary-counter" id="allTimeTotalTrainer">Total Camps as Trainer: 0</div>
-        <div class="summary-counter" id="allTimeTotalObserver">Total Camps as Observer: 0</div>
-    </div>
     <div class="details-view">
         <table id="allTimeDetailsTable">
             <div id="allTimePagination" class="pagination">
@@ -383,6 +377,12 @@ h2 {
             </tbody>
         </table>
     </div>
+    <div class="summary-view">
+        <div class="summary-counter" id="allTimeTotalCamps">Total Camps: 0</div>
+        <div class="summary-counter" id="allTimeTotalTeamLead">Total Camps as Team Lead: 0</div>
+        <div class="summary-counter" id="allTimeTotalTrainer">Total Camps as Trainer: 0</div>
+        <div class="summary-counter" id="allTimeTotalObserver">Total Camps as Observer: 0</div>
+    </div>
 </div>
 
 <div id="currentYearTab" class="tabcontent">
@@ -391,12 +391,7 @@ h2 {
     <span id="currentYearPageInfo">Page 1</span>
     <button class="next" onclick="changePage('currentYear', 1)">Next</button>
 </div>
-    <div class="summary-view">
-        <div class="summary-counter" id="currentYearTotalCamps">Total Camps: 0</div>
-        <div class="summary-counter" id="currentYearTotalTeamLead">Total Camps as Team Lead: 0</div>
-        <div class="summary-counter" id="currentYearTotalTrainer">Total Camps as Trainer: 0</div>
-        <div class="summary-counter" id="currentYearTotalObserver">Total Camps as Observer: 0</div>
-    </div>
+   
     <div class="details-view">
         <table id="currentYearDetailsTable">
             <thead>
@@ -412,6 +407,12 @@ h2 {
                 
             </tbody>
         </table>
+    </div>
+     <div class="summary-view">
+        <div class="summary-counter" id="currentYearTotalCamps">Total Camps: 0</div>
+        <div class="summary-counter" id="currentYearTotalTeamLead">Total Camps as Team Lead: 0</div>
+        <div class="summary-counter" id="currentYearTotalTrainer">Total Camps as Trainer: 0</div>
+        <div class="summary-counter" id="currentYearTotalObserver">Total Camps as Observer: 0</div>
     </div>
 </div>
     </main>
