@@ -350,6 +350,11 @@ h2 {
     </div>
     <div class="details-view">
         <table id="allTimeDetailsTable">
+            <div id="allTimePagination" class="pagination">
+    <button class="prev" onclick="changePage('allTime', -1)">Prev</button>
+    <span id="allTimePageInfo">Page 1</span>
+    <button class="next" onclick="changePage('allTime', 1)">Next</button>
+</div>
             <thead>
                 <tr>
                     <th>Sl No</th>
@@ -366,6 +371,11 @@ h2 {
 </div>
 
 <div id="currentYearTab" class="tabcontent">
+    <div id="currentYearPagination" class="pagination">
+    <button class="prev" onclick="changePage('currentYear', -1)">Prev</button>
+    <span id="currentYearPageInfo">Page 1</span>
+    <button class="next" onclick="changePage('currentYear', 1)">Next</button>
+</div>
     <div class="summary-view">
         <div class="summary-counter" id="currentYearTotalCamps">Total Camps: 0</div>
         <div class="summary-counter" id="currentYearTotalTeamLead">Total Camps as Team Lead: 0</div>
@@ -384,6 +394,7 @@ h2 {
             </thead>
             <tbody>
                 <!-- Table rows will be populated here -->
+                
             </tbody>
         </table>
     </div>
