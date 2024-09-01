@@ -20,7 +20,7 @@ let salesforceToken = null;
 
         function checkPassword() {
             const inputPassword = document.getElementById('password').value;
-            const correctPassword = "Raj@" + getCurrentISTDate();
+            const correctPassword = "Intro@" + getCurrentISTDate();
 
             if (inputPassword === correctPassword) {
                 document.getElementById('password-container').style.display = 'none';
