@@ -26,10 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
 window.onload = function() {
     // Trigger click on the image link on page load
     if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
-       // Show loader
-    // document.getElementById('loader').style.display = 'flex';
-      
-        fetchDetails(trainerId);
+    
+        showLoader(); // Show loader when the page loads and before fetching details
+    
+        try {
+            fetchDetails(trainerId); // Fetch the details (synchronous)
+        } catch (error) {
+            console.error('Error fetching details:', error);
+        } finally {
+            hideLoader(); // Hide loader after fetching details
+        }
     } else {
         console.error('Invalid or missing trainerId.');
     }
@@ -37,8 +43,8 @@ window.onload = function() {
 
 async function fetchDetails(trainerId) {
        const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-             // Show loader
-    // document.getElementById('loader').style.display = 'flex';
+        showLoader(); // Show loader before fetching details
+
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -63,8 +69,7 @@ async function fetchDetails(trainerId) {
     } catch (error) {
         console.error('Error:', error);
     } finally {
-        // Hide loader regardless of success or failure
-        // document.getElementById('loader').style.display = 'none';
+            hideLoader(); // Hide loader after fetching details
     }
 }
 
@@ -162,32 +167,49 @@ document.getElementById('covidVaccinationStatus').value = data.COVID_Vaccination
     });
 };
 function enableFields() {
-        // Get all input and select elements inside the form containers
-        const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry','state','educationalQualification', 'nccDirectorate','yepCountry', 'nccWing', 'jdJwSdSw','nccCertificate','tShirtSize','foodPreference', 'covidVaccinationStatus'];
-            
-            fieldIds.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) {
-                    field.removeAttribute('disabled');
-                    field.removeAttribute('readonly');
-                }
-            });
-    }
-function disableFields() {
-             const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry','state','educationalQualification', 'nccDirectorate','yepCountry', 'nccWing', 'jdJwSdSw','nccCertificate','tShirtSize','foodPreference', 'covidVaccinationStatus'];
-        
-            fieldIds.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) {
-                    field.setAttribute('readonly', true);
-                    field.setAttribute('disabled', true);
-                }
-            });
-        }
+        showLoader(); // Show the loader before enabling fields
 
+    try {
+        // Get all input and select elements inside the form containers
+        const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry', 'state', 'educationalQualification', 'nccDirectorate', 'yepCountry', 'nccWing', 'jdJwSdSw', 'nccCertificate', 'tShirtSize', 'foodPreference', 'covidVaccinationStatus'];
+        
+        fieldIds.forEach(id => {
+            const field = document.getElementById(id);
+            if (field) {
+                field.removeAttribute('disabled');
+                field.removeAttribute('readonly');
+            }
+        });
+    } catch (error) {
+        console.error('Error enabling fields:', error);
+    } finally {
+        hideLoader(); // Hide the loader after fields are enabled
+    }
+}
+function disableFields() {
+            showLoader(); // Show the loader before disabling fields
+
+  try {
+        const fieldIds = ['salutation', 'gender', 'emergencyContactRelationship', 'mailingState', 'mailingCountry', 'state', 'educationalQualification', 'nccDirectorate', 'yepCountry', 'nccWing', 'jdJwSdSw', 'nccCertificate', 'tShirtSize', 'foodPreference', 'covidVaccinationStatus'];
+        
+        fieldIds.forEach(id => {
+            const field = document.getElementById(id);
+            if (field) {
+                field.setAttribute('readonly', true);
+                field.setAttribute('disabled', true);
+            }
+        });
+    } catch (error) {
+        console.error('Error disabling fields:', error);
+    } finally {
+        hideLoader(); // Hide the loader after fields are disabled
+    }
+}
 
 
 function toggleEditMode(editMode) {
+    showLoader(); // Show loader when toggling edit mode
+
      if (editMode) {
         enableFields();
     } else {
@@ -202,6 +224,9 @@ function toggleEditMode(editMode) {
     document.getElementById('editButton').style.display = editMode ? 'none' : 'inline';
     document.getElementById('saveButton').style.display = editMode ? 'inline' : 'none';
     document.getElementById('cancelButton').style.display = editMode ? 'inline' : 'none';
+
+        hideLoader(); // Hide loader after toggling edit mode
+
 }
     document.getElementById('editButton').addEventListener('click', function() {
         toggleEditMode(true);
@@ -218,8 +243,8 @@ function toggleEditMode(editMode) {
 
 
 function updateDetails(Id) {
-   // Show loader
-    // document.getElementById('loader').style.display = 'flex';
+    showLoader(); // Show loader when toggling edit mode
+
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
         // Gathering selected JD/JW/SD/SW values for update
 const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
@@ -312,15 +337,13 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     .then(response => {
     if (response.ok) {
         if (response.status === 204) {
-           // Hideloader
-    // document.getElementById('loader').style.display = 'none';
+            hideLoader(); // Hide loader if there's an error
             // No content to parse, just handle the success case
             alert('Details updated successfully');
         } else {
             // Parse the response JSON if the status is not 204
            return response.json().then(data => {
-              // Show loader
-    // document.getElementById('loader').style.display = 'none';
+            hideLoader(); // Hide loader if there's an error
                 alert('Details updated successfully');
                 displayDetails(data);
             });
@@ -337,6 +360,8 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
 }
 
 function openTab(evt, tabName) {
+        showLoader(); // Show loader when opening a new tab
+
     const tabcontent = document.getElementsByClassName('tabcontent');
     for (let i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = 'none';
@@ -349,4 +374,7 @@ function openTab(evt, tabName) {
 
     document.getElementById(tabName).style.display = 'block';
     evt.currentTarget.className += ' active';
+
+        hideLoader(); // Hide loader after tab content is displayed
+
 }
