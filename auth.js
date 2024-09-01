@@ -94,6 +94,18 @@ async function checkSalesforceRecord(email) {
         return false;
     }
 }
+// Attach event listener to the sign-in button
+document.addEventListener('DOMContentLoaded', () => {
+    const signInButton = document.getElementById('signInButton');
+    if (signInButton) {
+        signInButton.addEventListener('click', userSignIn);
+    }
+    
+    const signOutButton = document.getElementById('signOutButton');
+    if (signOutButton) {
+        signOutButton.addEventListener('click', handleSignOut);
+    }
+});
 
 
 // Function to handle user sign-in
@@ -180,16 +192,4 @@ async function fetchSalesforceToken() {
     }
 }
 
-// Attach event listener to the sign-in button
-document.addEventListener('DOMContentLoaded', () => {
-    const signInButton = document.getElementById('signInButton');
-    if (signInButton) {
-        signInButton.addEventListener('click', userSignIn);
-    }
-    
-    const signOutButton = document.getElementById('signOutButton');
-    if (signOutButton) {
-        signOutButton.addEventListener('click', handleSignOut);
-    }
-});
 
