@@ -106,6 +106,7 @@ const userSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
+        fetchSalesforceToken();
         const isCertified = await checkSalesforceRecord(user.email);
 
         if (isCertified) {
