@@ -40,7 +40,7 @@ async function checkSalesforceRecord(email) {
     if (!salesforceToken) {
         console.error('Salesforce token not found');
         await signOut(auth);
-        alert('Error Authenticating Certified Trainer: Please sign in using official CADET Trainer Email ID.');
+        showErrorModal('Error Authenticating Certified Trainer: Please sign in using official CADET Trainer Email ID.');
         return false;
     }
     
@@ -90,7 +90,7 @@ async function checkSalesforceRecord(email) {
     } catch (error) {
         console.error(error.message);
         await signOut(auth);
-        alert(error.message);
+         showErrorModal(error.message);
         return false;
     }
 }
@@ -155,10 +155,15 @@ function handleSignOut() {
         console.log('User signed out');
         localStorage.removeItem('authToken');
         sessionStorage.clear();
-        // Redirect to login page
-        window.location.href = 'login.html';
+ // Optionally, show a success modal before redirecting
+        showSuccessModal('You have been successfully signed out. Redirecting to the login page.');
+        
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 2000); // Delay to show success message before redirecting
     }).catch((error) => {
         console.error('Sign-out error:', error);
+        showErrorModal('An error occurred during sign-out. Please try again.'); // Show error modal
     }).finally(() => {
         hideLoader(); // Hide loader after sign-out is complete, whether successful or failed
     });
@@ -202,7 +207,7 @@ async function fetchSalesforceToken() {
         const data = await response.json();
         return data.access_token; // Assuming the function returns { salesforceToken: 'token' }
     } catch (error) {
-        console.error('Error calling fetchSalesforceToken', error);
+        showErrorModal(error.message);
         throw error;
     }
 }
