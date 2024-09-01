@@ -48,10 +48,10 @@ function showSuccessModal(message) {
     }
 }
 
-// Function to load common HTML content
+// Function to load Global Components
 function loadGlobalComponents() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'common.html', true);
+    xhr.open('GET', 'global-components.html', true);
     xhr.onload = function() {
         if (this.status >= 200 && this.status < 400) {
             document.body.insertAdjacentHTML('beforeend', this.responseText);
@@ -62,7 +62,7 @@ function loadGlobalComponents() {
     xhr.send();
 }
 
-// Load common content on page load
+// Load Global Components content on page load
 window.addEventListener('DOMContentLoaded', loadGlobalComponents);
 
 
