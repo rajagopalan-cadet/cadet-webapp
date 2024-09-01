@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.onload = function() {
-    document.getElementById('loader').style.display = 'flex';
+    // document.getElementById('loader').style.display = 'flex';
 
     try { 
         fetchDetails(trainerId, salesforceToken);
@@ -29,7 +29,7 @@ window.onload = function() {
         console.error('Error fetching details:', error);
     } finally {
         // Hide loader
-        document.getElementById('loader').style.display = 'none';
+        // document.getElementById('loader').style.display = 'none';
     }
 };
 
