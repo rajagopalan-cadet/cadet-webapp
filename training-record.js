@@ -99,6 +99,9 @@ async function getRecords(data) {
         
         // Trigger the processing of API response
         processAPIResponse(allTimeData, currentFyData);
+
+          // Initialize pagination controls after processing the data
+        initializePagination();
         
     } catch (error) {
         console.error('Error fetching records:', error);
@@ -174,31 +177,17 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-// Optionally, you can set a default tab to be opened when the page loads
-document.addEventListener("DOMContentLoaded", function() {
-    // Open the 'allTimeTab' by default
-    document.querySelector(".tablink").click();
-});
-document.addEventListener('DOMContentLoaded', function() {
+
+function initializePagination() {
     // Define the number of records per page
     const recordsPerPage = 10;
     
-    const table = document.getElementById('currentYearDetailsTable');
-         if (!table) {
-        console.error('Table with ID currentYearDetailsTable not found.');
-        return;
-    }
-     
+    const table = document.getElementById('currentYearDetailsTable');   
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.getElementsByTagName('tr'));
     const numPages = Math.ceil(rows.length / recordsPerPage);
 
     function showPage(pageNum) {
-         // Check if rows and pagination links exist
-        if (!rows || rows.length === 0) {
-            console.error('No rows to display.');
-            return;
-        }
          
         // Hide all rows
         rows.forEach(row => row.style.display = 'none');
@@ -208,20 +197,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const end = start + recordsPerPage;
         rows.slice(start, end).forEach(row => row.style.display = '');
         
-        // Update pagination controls
+     // Update pagination controls
         const paginationLinks = document.querySelectorAll('.pagination a');
-        if (paginationLinks.length === 0) {
-            console.error('No pagination links found.');
-            return;
-        }
-
-           paginationLinks.forEach(link => link.classList.remove('active'));
-        const currentPageLink = document.querySelector(`.pagination a[data-page="${pageNum}"]`);
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
-        } else {
-            console.error(`Pagination link for page ${pageNum} not found.`);
-        }
+        paginationLinks.forEach(link => link.classList.remove('active'));
+        document.querySelector(`.pagination a[data-page="${pageNum}"]`).classList.add('active');
     }
 
          
