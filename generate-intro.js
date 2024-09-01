@@ -386,16 +386,6 @@ async function addContent() {
     }
 });
 
-function loadGlobalComponents() {
-            fetch('global-components.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.body.insertAdjacentHTML('beforeend', data);
-                })
-                .catch(error => console.error('Error loading global components:', error));
-        }
-
-        window.addEventListener('DOMContentLoaded', loadGlobalComponents);
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
