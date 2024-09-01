@@ -31,7 +31,7 @@ let salesforceToken = null;
         }
 
 async function fetchPeople() {
-    document.getElementById('loader').style.display = 'flex'; // Show loader
+    // document.getElementById('loader').style.display = 'flex'; // Show loader
     const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
     salesforceToken = sessionStorage.getItem('salesforceToken');
@@ -64,7 +64,7 @@ async function fetchPeople() {
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
-        document.getElementById('loader').style.display = 'none'; // Hide loader
+        // document.getElementById('loader').style.display = 'none'; // Hide loader
     }
 }
 
@@ -200,7 +200,7 @@ document.addEventListener('click', (event) => {
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
 
-    document.getElementById('loader').style.display = 'flex'; // Show loader
+    // document.getElementById('loader').style.display = 'flex'; // Show loader
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
@@ -382,7 +382,7 @@ async function addContent() {
     } catch (error) {
         console.error('Error generating PDF:', error);
     } finally {
-        document.getElementById('loader').style.display = 'none'; // Hide loader
+        // document.getElementById('loader').style.display = 'none'; // Hide loader
     }
 });
 
