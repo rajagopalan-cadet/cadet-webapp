@@ -40,7 +40,7 @@ async function checkSalesforceRecord(email) {
     if (!salesforceToken) {
         console.error('Salesforce token not found');
         await signOut(auth);
-        alert('Unable to authenticate. Please sign in again.');
+        alert('Error Authenticating Certified Trainer: Please sign in using official CADET Trainer Email ID.');
         return false;
     }
     
