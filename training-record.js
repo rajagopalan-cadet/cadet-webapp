@@ -1,10 +1,12 @@
 let data = {};
 let trainerId = null;
 let trainerRecordId = null;
+let salesforceToken = null;
 
 document.addEventListener('DOMContentLoaded', () => {
      trainerId = sessionStorage.getItem('trainerId');
      trainerRecordId = sessionStorage.getItem('trainerRecordId');
+     salesforceToken = sessionStorage.getItem('salesforceToken');
 
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
@@ -16,12 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('No trainer information found in sessionStorage.');
     }
 });
-const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
 
 window.onload = function() {
 document.getElementById('loader').style.display = 'flex';
 
-    try { fetchDetails(trainerId, token);
+    try { fetchDetails(trainerId, salesforceToken);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
@@ -31,26 +32,14 @@ document.getElementById('loader').style.display = 'flex';
     
 };
 
-// document.getElementById('fetchButton').addEventListener('click', async function() {
-//      const prefix = document.getElementById('trainerIdPrefix').value;
-//      const numbers = document.getElementById('trainerIdNumbers').value;
-//      const trainerId = `${prefix}${numbers}`;
 
-//      if (!trainerId.match(/^CT-\d{3}$/)) {
-//          showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
-//          return;
-//      }
-  
-// });
-
-async function fetchDetails(trainerId, token) {
+async function fetchDetails(trainerId, salesforceToken) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    //const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P';
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${salesforceToken}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -83,13 +72,13 @@ async function getRecords(data) {
         const [allTimeResponse, currentFyResponse] = await Promise.all([
             fetch(allTimeUrl, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Replace with your access token
+                    'Authorization': `Bearer ${salesforceToken}`, 
                     'Content-Type': 'application/json'
                 }
             }),
             fetch(currentFyUrl, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Replace with your access token
+                    'Authorization': `Bearer ${salesforceToken}`, 
                     'Content-Type': 'application/json'
                 }
             })
