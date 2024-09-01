@@ -26,6 +26,24 @@ header h1 {
     font-size: 24px;
     margin: 0;
 }
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.header-buttons button {
+    padding: 5px 10px;
+    background-color: #f00; /* Change as needed */
+    color: #fff; /* Change as needed */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.header-buttons button:hover {
+    background-color: #c00; /* Change as needed */
+}
 
 footer {
     background-color: #004aad;
@@ -48,6 +66,7 @@ footer {
 h1 {
     text-align: center;
 }
+
 
 .section {
     margin-bottom: 20px;
