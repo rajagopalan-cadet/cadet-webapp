@@ -4,27 +4,25 @@ let trainerRecordId = null;
 let salesforceToken = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-     trainerId = sessionStorage.getItem('trainerId');
-     trainerRecordId = sessionStorage.getItem('trainerRecordId');
-     salesforceToken = sessionStorage.getItem('salesforceToken');
+    trainerId = sessionStorage.getItem('trainerId');
+    trainerRecordId = sessionStorage.getItem('trainerRecordId');
+    salesforceToken = sessionStorage.getItem('salesforceToken');
 
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
         console.log('Trainer Record ID:', trainerRecordId);
-         console.log('Trainer Details fetched from session');
+        console.log('Trainer Details fetched from session');
         
         // You can add further logic here to use the retrieved values
     } else {
         console.log('No trainer information found in sessionStorage.');
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-     const letterRadio = document.getElementById('letter');
-     const certificateRadio = document.getElementById('certificate');
-     const generateButton = document.getElementById('generateButton');
+    const letterRadio = document.getElementById('letter');
+    const certificateRadio = document.getElementById('certificate');
+    const generateButton = document.getElementById('generateButton');
 
-     function validateForm() {
+    function validateForm() {
         const trainerIdFilled = trainerId && trainerId.trim() !== '';
         const documentTypeSelected = letterRadio.checked || certificateRadio.checked;
 
@@ -48,12 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('generateButton').addEventListener('click', async function() {
-
     try {
-         showLoader(); // Show loader when the button is clicked
-         
-         await fetchDetails(trainerId, salesforceToken);
-    showSuccessModal('Details have been successfully fetched.');
+        showLoader(); // Show loader when the button is clicked
+        
+        await fetchDetails(trainerId, salesforceToken);
+        showSuccessModal('Details have been successfully fetched.');
     } catch (error) {
         console.error('Error fetching details:', error);
         
@@ -92,7 +89,6 @@ async function fetchDetails(trainerId, salesforceToken) {
 }
 
 function generateCertificate(data) {
-    }
     // Check which document type is selected
     const documentType = document.querySelector('input[name="documentType"]:checked').value;
 
@@ -156,7 +152,6 @@ function generateAndDownloadCertificate(data) {
     };
 }
 
-
 async function generateAndDownloadLetter(data) {
     const templateUrl = 'templates/trainer-letter-template.pdf'; // Path to the template PDF
 
@@ -217,7 +212,7 @@ async function generateAndDownloadLetter(data) {
     const textWidth = width - 2 * margin;
     const lineSpacing = fontSize * .75; // Line spacing set to 1.5 times the font size
     
-   // Use built-in Helvetica font
+    // Use built-in Helvetica font
     const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
     // Function to split text into lines that fit within the specified width
@@ -229,7 +224,7 @@ async function generateAndDownloadLetter(data) {
         words.forEach(word => {
             const testLine = currentLine + word + ' ';
             const metrics = font.widthOfTextAtSize(testLine, fontSize);
-             if (metrics > maxWidth && currentLine !== '') {
+            if (metrics > maxWidth && currentLine !== '') {
                 lines.push(currentLine.trim());
                 currentLine = word + ' ';
             } else {
@@ -249,21 +244,26 @@ async function generateAndDownloadLetter(data) {
             const words = line.split(' ');
             const totalWidth = font.widthOfTextAtSize(line, fontSize);
             const spaceWidth = font.widthOfTextAtSize(' ', fontSize);
+           
            // Calculate extra space between words for justification
             const extraSpacing = words.length > 1 ? (maxWidth - totalWidth) / (words.length - 1) : 0;
 
             let lineX = x;
-        words.forEach((word) => {
+             words.forEach((word, wordIndex) => {
             pdfPage.drawText(word, { x: lineX, y: y, size: fontSize, font: font });
-            lineX += font.widthOfTextAtSize(word, fontSize) + spaceWidth + extraSpacing;
+            lineX += font.widthOfTextAtSize(word, fontSize) + spaceWidth;
+
+            // Add extra spacing between words, but not after the last word
+            if (wordIndex < words.length - 1) {
+                lineX += extraSpacing;
+            }
         });
 
-         y -= (fontSize + lineSpacing); // Move to the next line
+        y -= (fontSize + lineSpacing); // Move to the next line
     });
 }
 
     // Adjust the width for the text to fit within margins
-   // const maxWidth = width - 2 * margin;
     const yPosition = height - 200; // Starting vertical position
 
     // Draw the text on the page
@@ -281,4 +281,3 @@ async function generateAndDownloadLetter(data) {
     link.download = `${fullName}_letter.pdf`;
     link.click();
 }
-
