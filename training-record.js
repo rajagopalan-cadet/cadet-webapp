@@ -156,31 +156,31 @@ function populateDetailsTable(data, type) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-     // Set the default active tab to 'allTimeTab'
-    const allTimeTabButton = document.querySelector(".tablink[data-tab='allTime']");
-    if (allTimeTabButton) {
-        openTab({ currentTarget: allTimeTabButton }, 'allTimeTab');
-    }
-});
-
 function openTab(evt, tabName) {
     // Get all elements with class="tabcontent" and hide them
-    const tabcontents = document.getElementsByClassName("tabcontent");
-    tabcontents.forEach(tabcontent => {
-        tabcontent.style.display = "none";
-    });
+    var tabcontents = document.getElementsByClassName("tabcontent");
+    for (var i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].style.display = "none";
+    }
 
-      // Get all elements with class="tablink" and remove the "active" class
-    const tablinks = document.querySelectorAll(".tablink");
-    tablinks.forEach(tablink => {
-        tablink.classList.remove("active");
-    });
+    // Get all elements with class="tablink" and remove the "active" class
+    var tablinks = document.getElementsByClassName("tablink");
+    for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 
-     // Show the current tab and add an "active" class to the corresponding link
+    // Show the current tab and add an "active" class to the clicked button
     document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.classList.add("active");
+    evt.currentTarget.className += " active";
 }
+
+// Set the default tab to be 'allTimeTab' on page load
+document.addEventListener('DOMContentLoaded', () => {
+    var defaultTab = document.querySelector(".tablink[data-tab='allTime']");
+    if (defaultTab) {
+        openTab({ currentTarget: defaultTab }, 'allTimeTab');
+    }
+});
 
 function updateTable(data, type) {
     const tableBody = document.getElementById(`${type}DetailsTable`).getElementsByTagName('tbody')[0];
