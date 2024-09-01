@@ -184,11 +184,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const recordsPerPage = 10;
     
     const table = document.getElementById('currentYearDetailsTable');
+         if (!table) {
+        console.error('Table with ID currentYearDetailsTable not found.');
+        return;
+    }
+     
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.getElementsByTagName('tr'));
     const numPages = Math.ceil(rows.length / recordsPerPage);
 
     function showPage(pageNum) {
+         // Check if rows and pagination links exist
+        if (!rows || rows.length === 0) {
+            console.error('No rows to display.');
+            return;
+        }
+         
         // Hide all rows
         rows.forEach(row => row.style.display = 'none');
         
@@ -199,10 +210,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update pagination controls
         const paginationLinks = document.querySelectorAll('.pagination a');
-        paginationLinks.forEach(link => link.classList.remove('active'));
-        document.querySelector(`.pagination a[data-page="${pageNum}"]`).classList.add('active');
+        if (paginationLinks.length === 0) {
+            console.error('No pagination links found.');
+            return;
+        }
+
+           paginationLinks.forEach(link => link.classList.remove('active'));
+        const currentPageLink = document.querySelector(`.pagination a[data-page="${pageNum}"]`);
+        if (currentPageLink) {
+            currentPageLink.classList.add('active');
+        } else {
+            console.error(`Pagination link for page ${pageNum} not found.`);
+        }
     }
 
+         
     function createPaginationControls() {
         const paginationContainer = document.createElement('div');
         paginationContainer.className = 'pagination';
