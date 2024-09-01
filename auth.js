@@ -100,10 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signInButton) {
         signInButton.addEventListener('click', userSignIn);
     }
-    
+});
+
+// Attach event listener to the sign-out button
+document.addEventListener('DOMContentLoaded', () => {
     const signOutButton = document.getElementById('signOutButton');
     if (signOutButton) {
-        signOutButton.addEventListener('click', handleSignOut);
+        signOutButton.addEventListener('click', () => {
+            console.log('Sign-out button clicked');
+            handleSignOut();
+        });
+    } else {
+        console.error('Sign-out button not found');
     }
 });
 
