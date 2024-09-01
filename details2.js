@@ -2,10 +2,13 @@
 // Define global variables
 let trainerId = null;
 let trainerRecordId = null;
+let salesforceToken = null;
 
 document.addEventListener('DOMContentLoaded', () => {
      trainerId = sessionStorage.getItem('trainerId');
      trainerRecordId = sessionStorage.getItem('trainerRecordId');
+    salesforceToken = sessionStorage.getItem('salesforceToken');
+
 
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
@@ -33,15 +36,14 @@ window.onload = function() {
 };
 
 async function fetchDetails(trainerId) {
-    const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
-    const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
+       const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
              // Show loader
     document.getElementById('loader').style.display = 'flex';
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${salesforceToken}`,
                 'Content-Type': 'application/json'
             }
         });
