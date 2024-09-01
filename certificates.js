@@ -1,10 +1,12 @@
 let data = {};
 let trainerId = null;
 let trainerRecordId = null;
+let salesforceToken = null;
 
 document.addEventListener('DOMContentLoaded', () => {
      trainerId = sessionStorage.getItem('trainerId');
      trainerRecordId = sessionStorage.getItem('trainerRecordId');
+     salesforceToken = sessionStorage.getItem('salesforceToken');
 
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
+// const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P'; // Hard-coded token
 document.addEventListener('DOMContentLoaded', function() {
     // const trainerIdPrefix = document.getElementById('trainerIdPrefix');
     // const trainerIdNumbers = document.getElementById('trainerIdNumbers');
@@ -69,7 +71,7 @@ async function fetchDetails(trainerId, token) {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${salesforceToken}`,
                 'Content-Type': 'application/json'
             }
         });
