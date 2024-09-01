@@ -24,9 +24,18 @@ document.addEventListener('DOMContentLoaded', function() {
      const certificateRadio = document.getElementById('certificate');
      const generateButton = document.getElementById('generateButton');
 
-    function validateForm() {
+     function validateForm() {
         const trainerIdFilled = trainerId && trainerId.trim() !== '';
         const documentTypeSelected = letterRadio.checked || certificateRadio.checked;
+
+        if (!trainerIdFilled) {
+            showErrorModal('Trainer ID is required.');
+        } else if (!documentTypeSelected) {
+            showErrorModal('Please select a document type.');
+        } else {
+            hideErrorModal(); // Hide error modal if validation is successful
+        }
+
         generateButton.disabled = !(trainerIdFilled && documentTypeSelected);
     }
 
@@ -37,14 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial validation
     validateForm();
 });
+
 document.getElementById('generateButton').addEventListener('click', async function() {
 
     try {
          showLoader(); // Show loader when the button is clicked
          
          await fetchDetails(trainerId, salesforceToken);
+    showSuccessModal('Details have been successfully fetched.');
     } catch (error) {
         console.error('Error fetching details:', error);
+        
+        // Show error message if there was an issue fetching details
+        showErrorModal('Failed to fetch details. Please try again.');
     } finally {
         hideLoader(); // Hide loader after fetching details is complete
     }
@@ -62,29 +76,25 @@ async function fetchDetails(trainerId, salesforceToken) {
         });
 
         if (response.ok) {
-            data = await response.json(); // Assign fetched data to global variable
+            const data = await response.json(); // Assign fetched data to global variable
             generateCertificate(data);
+            showSuccessModal('Details have been successfully fetched and processed.');
         } else {
             console.error('Error fetching details:', response.statusText);
+            showErrorModal('Failed to fetch details. Please check the trainer ID and try again.');
         }
     } catch (error) {
         console.error('Error:', error);
+        showErrorModal('An unexpected error occurred while fetching details. Please try again.');
+    } finally {
+        hideLoader(); // Hide loader after fetching details is complete
     }
 }
 
 function generateCertificate(data) {
-    // Check if the trainer is certified
-    if (data.Certification_Status__c !== 'Certified') {
-        // showErrorModal('This trainer is not Certified.');
-        return;
     }
     // Check which document type is selected
     const documentType = document.querySelector('input[name="documentType"]:checked').value;
-
-    if (!documentType) {
-        // showErrorModal('Please select either "Letter" or "Certificate".');
-        return;
-    }
 
     if (documentType === 'certificate') {
         generateAndDownloadCertificate(data);
