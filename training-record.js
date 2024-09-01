@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.onload = function() {
-    // document.getElementById('loader').style.display = 'flex';
+    showLoader(); // Show loader before updating dropdown
 
     try { 
         fetchDetails(trainerId, salesforceToken);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
-        // Hide loader
-        // document.getElementById('loader').style.display = 'none';
+    hideLoader(); // Hide loader after dropdown update is complete
+
     }
 };
 
