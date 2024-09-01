@@ -32,7 +32,7 @@ let salesforceToken = null;
 async function fetchPeople() {
     showLoader(); // Show loader when opening a new tab
 
- const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
+    const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
     salesforceToken = sessionStorage.getItem('salesforceToken');
 
@@ -46,7 +46,7 @@ async function fetchPeople() {
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
+            throw new Error(`Error fetching data: ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -163,7 +163,7 @@ function setTeamLead(id) {
 
         teamLead = null;
     } else if (teamLead) {
-        alert('You can only have one team lead. Remove the current team lead first.');
+        showErrorModal('You can only have one team lead. Remove the current team lead first.');
              hideLoader(); // Hide loader if unable to set new team lead
 
         return;
