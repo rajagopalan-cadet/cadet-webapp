@@ -1,4 +1,3 @@
-// Mock data
 let people = [];
 let selectedPeople = [];
 let teamLead = null; // Track the Team Lead
@@ -31,8 +30,9 @@ let salesforceToken = null;
         }
 
 async function fetchPeople() {
-    // document.getElementById('loader').style.display = 'flex'; // Show loader
-    const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
+    showLoader(); // Show loader when opening a new tab
+
+ const query = "SELECT CADET_Trainer_ID__c,Id, Name, Short_Bio__c, Photo_Link__c FROM Contact WHERE Certification_Status__c='Certified' ORDER BY Name";
     const endpoint = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/query?q=${encodeURIComponent(query)}`;
     salesforceToken = sessionStorage.getItem('salesforceToken');
 
@@ -64,7 +64,7 @@ async function fetchPeople() {
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
-        // document.getElementById('loader').style.display = 'none'; // Hide loader
+         hideLoader(); // Hide loader after tab content is displayed
     }
 }
 
@@ -156,6 +156,7 @@ function renderList() {
 }
 
 function setTeamLead(id) {
+    showLoader(); // Show loader before processing
 
     if (teamLead === id) {
         // Remove the current team lead if the same person is clicked again
@@ -163,6 +164,8 @@ function setTeamLead(id) {
         teamLead = null;
     } else if (teamLead) {
         alert('You can only have one team lead. Remove the current team lead first.');
+             hideLoader(); // Hide loader if unable to set new team lead
+
         return;
     } else {
 
@@ -171,9 +174,13 @@ function setTeamLead(id) {
 
     renderList(); // Re-render the list
     updateDropdown(document.getElementById('search-name').value);
+         hideLoader(); // Hide loader if unable to set new team lead
+
 }
 
 function removeFromList(id) {
+     showLoader(); // Show loader before processing
+
     selectedPeople = selectedPeople.filter(personId => personId !== id);
 
     if (teamLead === id) {
@@ -181,10 +188,16 @@ function removeFromList(id) {
     }
     renderList();
     updateDropdown(document.getElementById('search-name').value);
+     hideLoader(); // Hide loader after processing is complete
+
 }
 
 document.getElementById('search-name').addEventListener('input', () => {
+     showLoader(); // Show loader before updating dropdown
+
     updateDropdown(document.getElementById('search-name').value);
+     hideLoader(); // Hide loader after dropdown update is complete
+
 });
 
 // Close dropdown when clicking outside the input box or dropdown list
@@ -200,7 +213,8 @@ document.addEventListener('click', (event) => {
 
 document.getElementById('generate-pdf').addEventListener('click', async () => {
 
-    // document.getElementById('loader').style.display = 'flex'; // Show loader
+    showLoader(); // Show loader before updating dropdown
+ 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const listElement = document.getElementById('list');
@@ -382,7 +396,7 @@ async function addContent() {
     } catch (error) {
         console.error('Error generating PDF:', error);
     } finally {
-        // document.getElementById('loader').style.display = 'none'; // Hide loader
+    hideLoader(); // Hide loader after dropdown update is complete
     }
 });
 
