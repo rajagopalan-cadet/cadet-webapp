@@ -128,16 +128,23 @@ const userSignIn = async () => {
         
         const isCertified = await checkSalesforceRecord(user.email);
 
-        if (isCertified) {
-            window.location.href = "https://app.cadetprogram.org/home";
+         if (isCertified) {
+            hideLoader(); // Hide loader before redirecting
+            showSuccessModal('Sign-in successful! Redirecting to the home page.');
+            setTimeout(() => {
+                window.location.href = "https://app.cadetprogram.org/home";
+            }, 2000); // Delay to show success message before redirecting
+        } else {
+            throw new Error('Certification check failed. Please contact support.');
         }
     } catch (error) {
-      
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
+        showErrorModal('An error occurred during sign-in. Please try again.');
     } finally {
-        hideLoader();  // Hide loader after the process is complete, regardless of success or failure
+        // Loader is hidden in both success and error scenarios
+        hideLoader();
     }
 }
 
