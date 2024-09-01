@@ -24,7 +24,7 @@ window.onload = function() {
     showLoader(); // Show loader before updating dropdown
 
     try {
-        await fetchDetails(trainerId, salesforceToken); // Fetch details and wait for completion
+        fetchDetails(trainerId, salesforceToken); // Fetch details and wait for completion
         showSuccessModal('Details fetched successfully'); // Show success modal if fetch is successful
     } catch (error) {
         showErrorModal(`Error fetching details: ${error.message}`); // Show error modal if there's an issue
