@@ -4,14 +4,14 @@ let trainerRecordId = null;
 let salesforceToken = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-     trainerId = sessionStorage.getItem('trainerId');
-     trainerRecordId = sessionStorage.getItem('trainerRecordId');
-     salesforceToken = sessionStorage.getItem('salesforceToken');
+    trainerId = sessionStorage.getItem('trainerId');
+    trainerRecordId = sessionStorage.getItem('trainerRecordId');
+    salesforceToken = sessionStorage.getItem('salesforceToken');
 
     if (trainerId || trainerRecordId) {
         console.log('Trainer ID:', trainerId);
         console.log('Trainer Record ID:', trainerRecordId);
-         console.log('Trainer Details fetched from session');
+        console.log('Trainer Details fetched from session');
         
         // You can add further logic here to use the retrieved values
     } else {
@@ -20,18 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.onload = function() {
-document.getElementById('loader').style.display = 'flex';
+    document.getElementById('loader').style.display = 'flex';
 
-    try { fetchDetails(trainerId, salesforceToken);
+    try { 
+        fetchDetails(trainerId, salesforceToken);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
         // Hide loader
         document.getElementById('loader').style.display = 'none';
     }
-    
 };
-
 
 async function fetchDetails(trainerId, salesforceToken) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
@@ -54,6 +53,7 @@ async function fetchDetails(trainerId, salesforceToken) {
         console.error('Error:', error);
     }
 }
+
 async function getRecords(data) {
     const instanceUrl = 'https://cadetprogram--charcoal.sandbox.my.salesforce.com'; // Replace with your actual instance URL
     const id = encodeURIComponent(data.Id);
@@ -100,13 +100,11 @@ async function getRecords(data) {
         // Trigger the processing of API response
         processAPIResponse(allTimeData, currentFyData);
         
-        // Initialize pagination controls after processing the data
-        initializePagination();
-        
     } catch (error) {
         console.error('Error fetching records:', error);
     }
 }
+
 function processAPIResponse(allTimeData, currentFyData) {
     // Populate the tab counts
     populateTabCounts(allTimeData.totalSize, currentFyData.totalSize);
@@ -118,6 +116,7 @@ function processAPIResponse(allTimeData, currentFyData) {
     populateDetailsTable(allTimeData, 'allTime');
     populateDetailsTable(currentFyData, 'currentYear');
 }
+
 function populateTabCounts(allTimeTotalSize, currentFyTotalSize) {
     // Update the tab headers with total counts
     document.getElementById('allTimeTabCount').textContent = allTimeTotalSize || 0;
@@ -159,6 +158,7 @@ function populateDetailsTable(data, type) {
         row.insertCell(3).textContent = record.Camp_Start_Date_F__c || ''; // Start Date
     });
 }
+
 function openTab(evt, tabName) {
     // Get all elements with class="tabcontent" and hide them
     var tabcontents = document.getElementsByClassName("tabcontent");
@@ -177,70 +177,63 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
+function createPaginationControls(tableId, rows, recordsPerPage) {
+    const table = document.getElementById(tableId);
+    const paginationContainer = document.createElement('div');
+    paginationContainer.className = 'pagination ' + tableId + 'Pagination';
 
-function initializePagination() {
-    // Define the number of records per page
-    const recordsPerPage = 10;
-    
-    const table = document.getElementById('currentYearDetailsTable');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.getElementsByTagName('tr'));
     const numPages = Math.ceil(rows.length / recordsPerPage);
 
-    function showPage(pageNum) {
-        // Hide all rows
-        rows.forEach(row => row.style.display = 'none');
-        
-        // Show the rows for the current page
-        const start = (pageNum - 1) * recordsPerPage;
-        const end = start + recordsPerPage;
-        rows.slice(start, end).forEach(row => row.style.display = '');
-        
-        // Update pagination controls
-        const paginationLinks = document.querySelectorAll('.pagination a');
-        paginationLinks.forEach(link => link.classList.remove('active'));
-        document.querySelector(`.pagination a[data-page="${pageNum}"]`).classList.add('active');
+    for (let i = 1; i <= numPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.dataset.page = i;
+        pageLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            showPage(parseInt(pageLink.dataset.page, 10), tableId, rows, recordsPerPage);
+        });
+        paginationContainer.appendChild(pageLink);
     }
 
-    function createPaginationControls() {
-        const paginationContainer = document.createElement('div');
-        paginationContainer.className = 'pagination';
-
-        for (let i = 1; i <= numPages; i++) {
-            const pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.textContent = i;
-            pageLink.dataset.page = i;
-            pageLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                showPage(parseInt(pageLink.dataset.page, 10));
-            });
-            paginationContainer.appendChild(pageLink);
-        }
-        
-        // Append pagination controls to the DOM
-        table.parentNode.insertBefore(paginationContainer, table.nextSibling);
-    }
-
-    // Initialize pagination
-    createPaginationControls();
-    showPage(1); // Show the first page by default
+    // Append pagination controls to the DOM
+    table.parentNode.insertBefore(paginationContainer, table.nextSibling);
 }
-function showErrorModal(message) {
-    const modal = document.getElementById('errorModal');
-    const errorMessage = document.getElementById('errorMessage');
-    const closeModal = document.getElementById('closeModal');
 
-    errorMessage.textContent = message;
-    modal.style.display = 'block';
+function showPage(pageNum, tableId, rows, recordsPerPage) {
+    const table = document.getElementById(tableId);
+    if (!table) return; // Ensure the table exists
 
-    closeModal.onclick = function() {
-        modal.style.display = 'none';
-    }
+    // Hide all rows
+    rows.forEach(row => row.style.display = 'none');
+    
+    // Show the rows for the current page
+    const start = (pageNum - 1) * recordsPerPage;
+    const end = start + recordsPerPage;
+    rows.slice(start, end).forEach(row => row.style.display = '');
 
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    }
+    // Update pagination controls
+    const paginationLinks = document.querySelectorAll(`.${tableId}Pagination a`);
+    paginationLinks.forEach(link => link.classList.remove('active'));
+    const activeLink = document.querySelector(`.${tableId}Pagination a[data-page="${pageNum}"]`);
+    if (activeLink) activeLink.classList.add('active');
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Define the number of records per page
+    const recordsPerPage = 10;
+
+    // Assuming allTimeData and currentFyData are available here
+    populateDetailsTable(allTimeData, 'allTime');
+    populateDetailsTable(currentFyData, 'currentYear');
+
+    // Create pagination controls for each tab
+    const allTimeRows = Array.from(document.getElementById('allTimeDetailsTable').querySelector('tbody').getElementsByTagName('tr'));
+    const currentYearRows = Array.from(document.getElementById('currentYearDetailsTable').querySelector('tbody').getElementsByTagName('tr'));
+
+    createPaginationControls('allTimeDetailsTable', allTimeRows, recordsPerPage);
+    createPaginationControls('currentYearDetailsTable', currentYearRows, recordsPerPage);
+
+    // Open the 'allTimeTab' by default
+    openTab({ currentTarget: document.querySelector(".tablink[data-tab='allTime']") }, 'allTime');
+});
