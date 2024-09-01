@@ -1,3 +1,42 @@
+header {
+    background-color: #004aad;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+header img {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+footer {
+    background-color: #004aad;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+}
+
+
 .container {
     display: flex;
     flex-direction: column;
