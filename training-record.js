@@ -157,26 +157,29 @@ function populateDetailsTable(data, type) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Set the default active tab to 'allTimeTab'
-    openTab({ currentTarget: document.querySelector(".tablink[data-tab='allTime']") }, 'allTime');
+     // Set the default active tab to 'allTimeTab'
+    const allTimeTabButton = document.querySelector(".tablink[data-tab='allTime']");
+    if (allTimeTabButton) {
+        openTab({ currentTarget: allTimeTabButton }, 'allTimeTab');
+    }
 });
 
 function openTab(evt, tabName) {
     // Get all elements with class="tabcontent" and hide them
-    var tabcontents = document.getElementsByClassName("tabcontent");
-    for (var i = 0; i < tabcontents.length; i++) {
-        tabcontents[i].style.display = "none";
-    }
+    const tabcontents = document.getElementsByClassName("tabcontent");
+    tabcontents.forEach(tabcontent => {
+        tabcontent.style.display = "none";
+    });
 
-    // Get all elements with class="tablink" and remove the "active" class
-    var tablinks = document.getElementsByClassName("tablink");
-    for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+      // Get all elements with class="tablink" and remove the "active" class
+    const tablinks = document.querySelectorAll(".tablink");
+    tablinks.forEach(tablink => {
+        tablink.classList.remove("active");
+    });
 
-    // Show the current tab and add an "active" class to the corresponding link
+     // Show the current tab and add an "active" class to the corresponding link
     document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
+    evt.currentTarget.classList.add("active");
 }
 
 function updateTable(data, type) {
