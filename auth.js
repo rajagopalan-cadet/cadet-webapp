@@ -48,7 +48,7 @@ async function checkSalesforceRecord(email) {
         const response = await fetch(queryUrl, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer $(salesforceToken)`, // Replace with your Salesforce access token
+                'Authorization': `Bearer ${salesforceToken}`, // Replace with your Salesforce access token
                 'Content-Type': 'application/json'
             }
         });
@@ -106,7 +106,9 @@ const userSignIn = async () => {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        fetchSalesforceToken();
+        const token = await fetchSalesforceToken();
+        sessionStorage.setItem('salesforceToken', token);
+        
         const isCertified = await checkSalesforceRecord(user.email);
 
         if (isCertified) {
@@ -135,20 +137,18 @@ function handleSignOut() {
 // Handle auth state changes
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        fetchSalesforceToken(user.email).then(token => {
+        fetchSalesforceToken().then(token => {
             // Store the Salesforce token in a session variable
             sessionStorage.setItem('salesforceToken', token);
 
         checkSalesforceRecord(user.email).then(isCertified => {
-            if (isCertified) {
-                
-            } else {
+                if (!isCertified) {
+                    signOut(auth);
+                }
+            }).catch(() => {
                 signOut(auth);
-            }
+            });
         }).catch(() => {
-            signOut(auth);
-        });
-             }).catch(() => {
             signOut(auth);
         });
     } else {
@@ -166,7 +166,7 @@ async function fetchSalesforceToken() {
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Contact Admin. Cloud Function Failed.');
         }
 
         const data = await response.json();
