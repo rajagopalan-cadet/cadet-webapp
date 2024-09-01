@@ -63,6 +63,8 @@ async function fetchPeople() {
         
     } catch (error) {
         console.error('Error fetching data:', error);
+             showErrorModal(`Error fetching data: ${error.message}`); // Show error modal
+
     } finally {
          hideLoader(); // Hide loader after tab content is displayed
     }
@@ -172,10 +174,15 @@ function setTeamLead(id) {
         teamLead = id; // Set new team lead
     }
 
-    renderList(); // Re-render the list
-    updateDropdown(document.getElementById('search-name').value);
-         hideLoader(); // Hide loader if unable to set new team lead
-
+   try {
+        renderList(); // Re-render the list
+        updateDropdown(document.getElementById('search-name').value);
+        showSuccessModal('Team Lead updated successfully'); // Show success modal
+    } catch (error) {
+        showErrorModal(`Error updating Team Lead: ${error.message}`); // Show error modal
+    } finally {
+        hideLoader(); // Hide loader after processing
+    }
 }
 
 function removeFromList(id) {
@@ -186,19 +193,30 @@ function removeFromList(id) {
     if (teamLead === id) {
         teamLead = null; // Remove Team Lead if they are being removed from the list
     }
-    renderList();
-    updateDropdown(document.getElementById('search-name').value);
-     hideLoader(); // Hide loader after processing is complete
-
+    try {
+        renderList();
+        updateDropdown(document.getElementById('search-name').value);
+        showSuccessModal('Person removed from list successfully'); // Show success modal
+    } catch (error) {
+        showErrorModal(`Error removing person from list: ${error.message}`); // Show error modal
+    } finally {
+        hideLoader(); // Hide loader after processing
+    }
 }
 
 document.getElementById('search-name').addEventListener('input', () => {
      showLoader(); // Show loader before updating dropdown
 
-    updateDropdown(document.getElementById('search-name').value);
-     hideLoader(); // Hide loader after dropdown update is complete
-
+  try {
+        updateDropdown(document.getElementById('search-name').value);
+        showSuccessModal('Dropdown updated successfully'); // Show success modal
+    } catch (error) {
+        showErrorModal(`Error updating dropdown: ${error.message}`); // Show error modal
+    } finally {
+        hideLoader(); // Hide loader after dropdown update is complete
+    }
 });
+
 
 // Close dropdown when clicking outside the input box or dropdown list
 document.addEventListener('click', (event) => {
