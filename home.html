@@ -14,33 +14,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        
-        header {
-            background-color: #004aad;
-            color: white;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        header a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-        }
-        header img {
-            width: 80px;
-            height: 80px;
-            margin-right: 20px; /* Add padding between the logo and the text */
-        }
-
-        header h1 {
-            font-size: 24px;
-            margin: 0;
-        }
 
         main {
             flex-grow: 1;
@@ -86,47 +59,13 @@
             border-color: #003799; /* Darker border color on click */
         }
 
-
-        footer {
-            background-color: #004aad;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: sticky;
-            bottom: 0;
-        }
-                
-.header-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.header-buttons button {
-    padding: 5px 10px;
-    background-color: #f00; /* Change as needed */
-    color: #fff; /* Change as needed */
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.header-buttons button:hover {
-    background-color: #c00; /* Change as needed */
-}
     </style>
 </head>
 <body>
-    <header>
-    <a href="home.html" style="display: flex; align-items: left; text-decoration: none; color: white;">
-        <img src="icons/favicon.png" alt="CADET Logo" style="width: 80px; height: 80px; margin-right: 20px;">
-        <h1 style="margin: 0; font-size: 24px;">My CADET App</h1>
-    </a>
-        <div class="header-buttons">
-        <button id="signOutButton">Sign out</button>
-    </div>
-        <script type="module" src="auth.js" defer></script>
-</header>
+<header>
+        <div id="header"></div>
+        
+    </header>
 
     <main>
         <div class="icon">
@@ -149,8 +88,7 @@
         </div>
     </main>
 
-    <footer>
-        &copy; 2024 CADET Program. All rights reserved.
-    </footer>
+   <div id="footer"></div>
+    <script src="script.js" defer></script>
 </body>
 </html>
