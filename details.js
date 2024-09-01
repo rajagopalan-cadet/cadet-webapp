@@ -27,7 +27,7 @@ window.onload = function() {
     // Trigger click on the image link on page load
     if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
        // Show loader
-    document.getElementById('loader').style.display = 'flex';
+    // document.getElementById('loader').style.display = 'flex';
       
         fetchDetails(trainerId);
     } else {
@@ -38,7 +38,7 @@ window.onload = function() {
 async function fetchDetails(trainerId) {
        const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
              // Show loader
-    document.getElementById('loader').style.display = 'flex';
+    // document.getElementById('loader').style.display = 'flex';
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -64,28 +64,7 @@ async function fetchDetails(trainerId) {
         console.error('Error:', error);
     } finally {
         // Hide loader regardless of success or failure
-        document.getElementById('loader').style.display = 'none';
-    }
-}
-
-
-
-function showErrorModal(message) {
-    const modal = document.getElementById('errorModal');
-    const errorMessage = document.getElementById('errorMessage');
-    const closeModal = document.getElementById('closeModal');
-
-    errorMessage.textContent = message;
-    modal.style.display = 'block';
-
-    closeModal.onclick = function() {
-        modal.style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
+        // document.getElementById('loader').style.display = 'none';
     }
 }
 
@@ -240,7 +219,7 @@ function toggleEditMode(editMode) {
 
 function updateDetails(Id) {
    // Show loader
-    document.getElementById('loader').style.display = 'flex';
+    // document.getElementById('loader').style.display = 'flex';
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/${Id}`;
         // Gathering selected JD/JW/SD/SW values for update
 const selectedJdJwSdSw = Array.from(document.querySelectorAll('input[name="jdJwSdSw"]:checked'))
@@ -334,14 +313,14 @@ const selectedNccCertificate = Array.from(document.querySelectorAll('input[name=
     if (response.ok) {
         if (response.status === 204) {
            // Hideloader
-    document.getElementById('loader').style.display = 'none';
+    // document.getElementById('loader').style.display = 'none';
             // No content to parse, just handle the success case
             alert('Details updated successfully');
         } else {
             // Parse the response JSON if the status is not 204
            return response.json().then(data => {
               // Show loader
-    document.getElementById('loader').style.display = 'none';
+    // document.getElementById('loader').style.display = 'none';
                 alert('Details updated successfully');
                 displayDetails(data);
             });
