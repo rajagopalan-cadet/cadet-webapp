@@ -12,14 +12,6 @@ function loadGlobalComponents() {
     xhr.send();
 }
 
-function loadHTML(id, url) {
-  fetch(url)
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById(id).innerHTML = data;
-    });
-}
-
 // Show loader
 function showLoader() {
     const loader = document.getElementById('loader');
@@ -67,13 +59,18 @@ function showSuccessModal(message) {
         modal.style.display = 'none';
     }
 }
-
-
+function loadHTML(id, url) {
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById(id).innerHTML = data;
+    });
+}
 
 // Load global components content on page load
 document.addEventListener('DOMContentLoaded', function() {
-    showLoader(); // Show loader before starting to load components
     loadGlobalComponents();
+
     loadHTML('header', 'header.html');
     loadHTML('footer', 'footer.html');
 });
