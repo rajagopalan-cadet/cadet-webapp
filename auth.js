@@ -79,10 +79,6 @@ async function checkSalesforceRecord(email) {
             trainerId = record.CADET_Trainer_ID__c;
             trainerRecordId = record.Id;
 
-            // Log trainerId and trainerRecordId to the console
-    console.log('Trainer ID:', trainerId);
-    console.log('Trainer Record ID:', trainerRecordId);
-
             // Store in localStorage or sessionStorage
     sessionStorage.setItem('trainerId', trainerId);
     sessionStorage.setItem('trainerRecordId', trainerRecordId);
