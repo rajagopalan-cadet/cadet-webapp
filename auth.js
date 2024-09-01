@@ -99,9 +99,10 @@ async function checkSalesforceRecord(email) {
 // Function to handle user sign-in
 const userSignIn = async () => {
     try {
+        showLoader(); // Show loader at the start of the sign-in process
+
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-
         const token = await fetchSalesforceToken();
         sessionStorage.setItem('salesforceToken', token);
         
@@ -115,10 +116,14 @@ const userSignIn = async () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
+    } finally {
+        hideLoader();  // Hide loader after the process is complete, regardless of success or failure
     }
 }
 
 function handleSignOut() {
+    showLoader(); // Show loader when the sign-out process starts
+    
     signOut(auth).then(() => {
         console.log('User signed out');
         localStorage.removeItem('authToken');
@@ -127,6 +132,8 @@ function handleSignOut() {
         window.location.href = 'login.html';
     }).catch((error) => {
         console.error('Sign-out error:', error);
+    }).finally(() => {
+        hideLoader(); // Hide loader after sign-out is complete, whether successful or failed
     });
 }
 
