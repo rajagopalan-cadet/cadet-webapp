@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 window.onload = function() {
     showLoader(); // Show loader before updating dropdown
 
-    try { 
-        fetchDetails(trainerId, salesforceToken);
+    try {
+        await fetchDetails(trainerId, salesforceToken); // Fetch details and wait for completion
+        showSuccessModal('Details fetched successfully'); // Show success modal if fetch is successful
     } catch (error) {
-        console.error('Error fetching details:', error);
+        showErrorModal(`Error fetching details: ${error.message}`); // Show error modal if there's an issue
     } finally {
-    hideLoader(); // Hide loader after dropdown update is complete
-
+        hideLoader(); // Hide loader after fetch operation is complete
     }
 };
 
