@@ -157,7 +157,7 @@ onAuthStateChanged(auth, (user) => {
 
 async function fetchSalesforceToken() {
     try {
-        const response = await fetch(functionUrl, {
+        const response = await fetch(fetchSalesforceTokenUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
