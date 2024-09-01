@@ -25,7 +25,7 @@ provider.setCustomParameters({
 // Global variables to store trainer information
 let trainerId = null;
 let trainerRecordId = null;
-
+let salesforceToken = null;
 // URL for your Google Cloud Function
 const fetchSalesforceTokenUrl = 'https://us-central1-my-cadet-web-app.cloudfunctions.net/fetchSalesforceToken';
 
@@ -35,7 +35,7 @@ async function checkSalesforceRecord(email) {
     const queryUrl = `${instanceUrl}/services/data/v52.0/query/?q=SELECT+CADET_Trainer_ID__c,Id,Certification_Status__c+FROM+Contact+WHERE+CADET_Official_Email__c='${encodeURIComponent(email)}'`;
 
     // Retrieve the Salesforce token from sessionStorage
-    const salesforceToken = sessionStorage.getItem('salesforceToken');
+    salesforceToken = sessionStorage.getItem('salesforceToken');
 
     if (!salesforceToken) {
         console.error('Salesforce token not found');
