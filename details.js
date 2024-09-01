@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     salesforceToken = sessionStorage.getItem('salesforceToken');
 
 
-    if (trainerId || trainerRecordId) {
-        console.log('Trainer ID:', trainerId);
-        console.log('Trainer Record ID:', trainerRecordId);
-         console.log('Trainer Details fetched from session');
-        
-        // You can add further logic here to use the retrieved values
-    }else {
+     try {
+        if (trainerId || trainerRecordId) {
+            console.log('Trainer ID:', trainerId);
+            console.log('Trainer Record ID:', trainerRecordId);
+            console.log('Trainer Details fetched from session');
+            // You can add further logic here to use the retrieved values
+        } else {
             console.log('No trainer information found in sessionStorage.');
             showErrorModal('No trainer information found in sessionStorage. Please log in again.');
         }
@@ -34,20 +34,18 @@ window.onload = function() {
         
     showLoader(); // Show loader when the page loads and before fetching details
     
-    if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
-    
-     try {
+   if (trainerId && trainerId.match(/^CT-\d{3}$/)) {
+        try {
             fetchDetails(trainerId); // Fetch the details (synchronous)
         } catch (error) {
             console.error('Error fetching details:', error);
-                     showErrorModal('An error occurred while fetching details. Please try again.'); // Show error modal
-
+            showErrorModal('An error occurred while fetching details. Please try again.'); // Show error modal
         } finally {
             hideLoader(); // Hide loader after fetching details
         }
     } else {
         console.error('Invalid or missing trainerId.');
-    showErrorModal('Invalid or missing trainerId.'); // Show error modal
+        showErrorModal('Invalid or missing trainerId.'); // Show error modal
         hideLoader(); // Ensure loader is hidden even if trainerId is invalid
     }
 };
@@ -56,7 +54,7 @@ async function fetchDetails(trainerId) {
        const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
         showLoader(); // Show loader before fetching details
 
-    try {
+   try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -69,18 +67,18 @@ async function fetchDetails(trainerId) {
             data = await response.json(); // Assign fetched data to global variable
             displayDetails(data);
 
-                        // Automatically open the "Basic Details" tab
+            // Automatically open the "Basic Details" tab
             const basicDetailsTab = document.getElementById('basicDetailsTab');
             if (basicDetailsTab) {
                 basicDetailsTab.click();
-              }  
+            }
         } else {
             console.error('Error fetching details:', response.statusText);
         }
     } catch (error) {
         console.error('Error:', error);
     } finally {
-            hideLoader(); // Hide loader after fetching details
+        hideLoader(); // Hide loader after fetching details
     }
 }
 
