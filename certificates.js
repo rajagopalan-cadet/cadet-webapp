@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateButton = document.getElementById('generateButton');
 
     function validateForm() {
-        const trainerIdFilled = trainerId.value.trim() !== '';
+        const trainerIdFilled = trainerId && trainerId.trim() !== '';
         const documentTypeSelected = letterRadio.checked || certificateRadio.checked;
         generateButton.disabled = !(trainerIdFilled && documentTypeSelected);
     }
@@ -42,20 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
     validateForm();
 });
 document.getElementById('generateButton').addEventListener('click', async function() {
-    // const prefix = document.getElementById('trainerIdPrefix').value;
-    // const numbers = document.getElementById('trainerIdNumbers').value;
-    // const trainerId = `${prefix}${numbers}`;
-
-    // if (!trainerId.match(/^CT-\d{3}$/)) {
-    //     showErrorModal('Please enter a valid CADET Trainer ID (e.g., CT-123) with exactly 3 digits.');
-    //     return;
-    // }
 
     // Show loader
     document.getElementById('loader').style.display = 'flex';
 
     try {
-                await fetchDetails(trainerId, token);
+                await fetchDetails(trainerId, salesforceToken);
     } catch (error) {
         console.error('Error fetching details:', error);
     } finally {
@@ -64,9 +56,8 @@ document.getElementById('generateButton').addEventListener('click', async functi
     }
 });
 
-async function fetchDetails(trainerId, token) {
+async function fetchDetails(trainerId, salesforceToken) {
     const url = `https://cadetprogram--charcoal.sandbox.my.salesforce.com/services/data/v52.0/sobjects/Contact/CADET_Trainer_ID__c/${trainerId}`;
-    //const token = '00DC1000000P5Nt!AQEAQDdRv.lfFGamJrAzgYZEfMUMZDF87l0NOvKnKSlqeT2It2_AjCG58VlW1qrmWTjDMse.rJsNgXffGTuuUBHAZkX5X__P';
     try {
         const response = await fetch(url, {
             method: 'GET',
