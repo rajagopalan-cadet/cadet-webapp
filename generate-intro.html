@@ -14,17 +14,10 @@
         <button onclick="checkPassword()">Submit</button>
     </div>
     <div id="content-container" style="display: none;">
-    <header>
-    <a href="home.html">
-        <img src="icons/favicon.png" alt="CADET Logo">
-        <h1>My CADET App</h1>
-         <script type="module" src="auth.js"></script>
-    </a>
-        <div class="header-buttons">
-        <button id="signOutButton">Sign out</button>
-    </div>
-        <script type="module" src="auth.js" defer></script>
-</header>
+  <header>
+        <div id="header"></div>
+        
+    </header>
 
 
     <main>
@@ -45,9 +38,7 @@
         <button id="generate-pdf">Generate Intro Document</button>
     </main>
 
-    <footer>
-        &copy; 2024 CADET Program. All rights reserved.
-    </footer>
+    <div id="footer"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="generate-intro.js"></script>
@@ -55,6 +46,6 @@
     <div id="loader" style="display: none;">
         <div class="spinner"></div>
     </div>
-
+<script src="script.js" defer></script>
 </body>
 </html>
