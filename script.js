@@ -1,3 +1,17 @@
+// Function to load Global Components
+function loadGlobalComponents() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'global-components.html', true);
+    xhr.onload = function() {
+        if (this.status >= 200 && this.status < 400) {
+            document.body.insertAdjacentHTML('beforeend', this.responseText);
+        } else {
+            console.error('Failed to load global components.');
+        }
+    };
+    xhr.send();
+}
+
 function loadHTML(id, url) {
   fetch(url)
     .then(response => response.text())
@@ -54,19 +68,7 @@ function showSuccessModal(message) {
     }
 }
 
-// Function to load Global Components
-function loadGlobalComponents() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'global-components.html', true);
-    xhr.onload = function() {
-        if (this.status >= 200 && this.status < 400) {
-            document.body.insertAdjacentHTML('beforeend', this.responseText);
-        } else {
-            console.error('Failed to load global components.');
-        }
-    };
-    xhr.send();
-}
+
 
 // Load global components content on page load
 document.addEventListener('DOMContentLoaded', function() {
